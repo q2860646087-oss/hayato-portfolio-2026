@@ -1,0 +1,63 @@
+.circularText {
+  --circular-size: clamp(104px, 8.5vw, 148px);
+  --circular-radius: calc(var(--circular-size) * 0.43);
+  position: relative;
+  width: var(--circular-size);
+  height: var(--circular-size);
+  border-radius: 50%;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-family: var(--font-en);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  animation: circularTextSpin var(--spin-duration) linear infinite;
+  scale: 1;
+  transform-origin: 50% 50%;
+  transition: scale 220ms ease;
+}
+
+.circularText::after {
+  position: absolute;
+  inset: 41%;
+  border-radius: 50%;
+  background: var(--color-highlight);
+  box-shadow: 0 0 0 7px var(--color-background);
+  content: "";
+}
+
+.circularText span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-block;
+  color: inherit;
+  font-size: var(--circular-font-size, clamp(0.58rem, 0.75vw, 0.78rem));
+  line-height: 1;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(calc(var(--circular-radius) * -1)) rotate(90deg);
+  transform-origin: center;
+}
+
+.slowDown:hover,
+.speedUp:hover,
+.goBonkers:hover {
+  animation-duration: var(--hover-duration);
+}
+
+.pause:hover {
+  animation-play-state: paused;
+}
+
+.goBonkers:hover {
+  scale: 0.88;
+}
+
+@keyframes circularTextSpin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}

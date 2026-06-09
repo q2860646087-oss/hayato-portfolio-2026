@@ -1,0 +1,10 @@
+
+> portfolio-2026@1.0.0 dev
+> next dev --hostname 127.0.0.1 --port 3020
+
+   ▲ Next.js 15.5.19
+   - Local:        http://127.0.0.1:3020
+   - Network:      http://127.0.0.1:3020
+
+ ✓ Starting...
+ ✓ Ready in 1425ms
