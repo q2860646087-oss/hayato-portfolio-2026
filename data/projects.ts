@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/assetPath";
+
 export type BilingualText = {
   zh: string;
   en: string;
@@ -73,7 +75,7 @@ export type Project = {
   conclusion: ProjectSection;
 };
 
-const projectImageBase = "/projects";
+const projectImageBase = assetPath("/projects");
 
 export const projects: Project[] = [
   {
@@ -97,67 +99,67 @@ export const projects: Project[] = [
     imageSlots: {
       cover: {
         label: "COVER",
-        src: `${projectImageBase}/children-fashion/cover/cover.png`,
+        src: `${projectImageBase}/children-fashion/cover.jpg`,
         alt: "儿童服装图案设计封面图",
         placeholder: "COVER PLACEHOLDER",
       },
       projectName: {
         label: "PROJECT NAME",
-        src: `${projectImageBase}/children-fashion/project-name/project-name.png`,
+        src: `${projectImageBase}/children-fashion/cover.jpg`,
         alt: "儿童服装图案设计项目名称图片",
         placeholder: "PROJECT NAME PLACEHOLDER",
       },
       moodboard: {
         label: "MOODBOARD",
-        src: `${projectImageBase}/children-fashion/moodboard/moodboard.png`,
+        src: `${projectImageBase}/children-fashion/moodboard.jpg`,
         alt: "儿童服装图案设计灵感板图片",
         placeholder: "MOODBOARD PLACEHOLDER",
       },
       design: {
         label: "PATTERN DESIGN",
-        src: `${projectImageBase}/children-fashion/pattern-design/pattern-design.png`,
+        src: `${projectImageBase}/children-fashion/process-01.jpg`,
         alt: "儿童服装图案设计图片",
         placeholder: "PATTERN DESIGN PLACEHOLDER",
       },
       application: {
         label: "PRODUCT APPLICATION",
-        src: `${projectImageBase}/children-fashion/application/application.png`,
+        src: `${projectImageBase}/children-fashion/final-01.jpg`,
         alt: "儿童服装图案设计产品应用图片",
         placeholder: "PRODUCT APPLICATION PLACEHOLDER",
       },
     },
-    coverImage: `${projectImageBase}/children-fashion/cover/cover.png`,
+    coverImage: `${projectImageBase}/children-fashion/cover.jpg`,
     detailImages: [
       {
-        src: `${projectImageBase}/children-fashion/moodboard/moodboard.png`,
+        src: `${projectImageBase}/children-fashion/moodboard.jpg`,
         alt: "儿童服饰图案设计灵感板",
         captionZh: "灵感板",
         captionEn: "Moodboard",
         role: "moodboard",
       },
       {
-        src: `${projectImageBase}/children-fashion/pattern-design/pattern-design.png`,
+        src: `${projectImageBase}/children-fashion/process-01.jpg`,
         alt: "儿童服饰图案设计过程一",
         captionZh: "设计过程 01",
         captionEn: "Process 01",
         role: "process",
       },
       {
-        src: `${projectImageBase}/children-fashion/pattern-design/process-02.png`,
+        src: `${projectImageBase}/children-fashion/process-02.jpg`,
         alt: "儿童服饰图案设计过程二",
         captionZh: "设计过程 02",
         captionEn: "Process 02",
         role: "process",
       },
       {
-        src: `${projectImageBase}/children-fashion/application/application.png`,
+        src: `${projectImageBase}/children-fashion/final-01.jpg`,
         alt: "儿童服饰图案设计最终展示一",
         captionZh: "关键视觉 01",
         captionEn: "Final 01",
         role: "final",
       },
       {
-        src: `${projectImageBase}/children-fashion/application/final-02.png`,
+        src: `${projectImageBase}/children-fashion/final-02.jpg`,
         alt: "儿童服饰图案设计最终展示二",
         captionZh: "应用展示 02",
         captionEn: "Final 02",
@@ -281,67 +283,67 @@ export const projects: Project[] = [
     imageSlots: {
       cover: {
         label: "COVER",
-        src: `${projectImageBase}/eyecare-ip/cover/cover.png`,
+        src: `${projectImageBase}/eyecare-ip/cover.jpg`,
         alt: "儿童护眼 IP 与文创设计封面图",
         placeholder: "COVER PLACEHOLDER",
       },
       projectName: {
         label: "PROJECT NAME",
-        src: `${projectImageBase}/eyecare-ip/project-name/project-name.png`,
+        src: `${projectImageBase}/eyecare-ip/cover.jpg`,
         alt: "儿童护眼 IP 与文创设计项目名称图片",
         placeholder: "PROJECT NAME PLACEHOLDER",
       },
       moodboard: {
         label: "MOODBOARD",
-        src: `${projectImageBase}/eyecare-ip/moodboard/moodboard.png`,
+        src: `${projectImageBase}/eyecare-ip/moodboard.jpg`,
         alt: "儿童护眼 IP 与文创设计灵感板图片",
         placeholder: "MOODBOARD PLACEHOLDER",
       },
       design: {
         label: "IP & VISUAL DESIGN",
-        src: `${projectImageBase}/eyecare-ip/ip-design/ip-design.png`,
+        src: `${projectImageBase}/eyecare-ip/process-01.jpg`,
         alt: "儿童护眼 IP 与视觉设计图片",
         placeholder: "IP & VISUAL DESIGN PLACEHOLDER",
       },
       application: {
         label: "PRODUCT APPLICATION",
-        src: `${projectImageBase}/eyecare-ip/application/application.png`,
+        src: `${projectImageBase}/eyecare-ip/final-01.jpg`,
         alt: "儿童护眼 IP 与文创设计产品应用图片",
         placeholder: "PRODUCT APPLICATION PLACEHOLDER",
       },
     },
-    coverImage: `${projectImageBase}/eyecare-ip/cover/cover.png`,
+    coverImage: `${projectImageBase}/eyecare-ip/cover.jpg`,
     detailImages: [
       {
-        src: `${projectImageBase}/eyecare-ip/moodboard/moodboard.png`,
+        src: `${projectImageBase}/eyecare-ip/moodboard.jpg`,
         alt: "儿童护眼 IP 灵感板",
         captionZh: "灵感板",
         captionEn: "Moodboard",
         role: "moodboard",
       },
       {
-        src: `${projectImageBase}/eyecare-ip/ip-design/ip-design.png`,
+        src: `${projectImageBase}/eyecare-ip/process-01.jpg`,
         alt: "儿童护眼 IP 设计过程一",
         captionZh: "设计过程 01",
         captionEn: "Process 01",
         role: "process",
       },
       {
-        src: `${projectImageBase}/eyecare-ip/ip-design/process-02.png`,
+        src: `${projectImageBase}/eyecare-ip/process-02.jpg`,
         alt: "儿童护眼 IP 设计过程二",
         captionZh: "设计过程 02",
         captionEn: "Process 02",
         role: "process",
       },
       {
-        src: `${projectImageBase}/eyecare-ip/application/application.png`,
+        src: `${projectImageBase}/eyecare-ip/final-01.jpg`,
         alt: "儿童护眼 IP 关键视觉一",
         captionZh: "关键视觉 01",
         captionEn: "Final 01",
         role: "final",
       },
       {
-        src: `${projectImageBase}/eyecare-ip/application/final-02.png`,
+        src: `${projectImageBase}/eyecare-ip/final-02.jpg`,
         alt: "儿童护眼 IP 应用展示二",
         captionZh: "应用展示 02",
         captionEn: "Final 02",
@@ -465,67 +467,67 @@ export const projects: Project[] = [
     imageSlots: {
       cover: {
         label: "COVER",
-        src: `${projectImageBase}/branding/cover/cover.png`,
+        src: `${projectImageBase}/branding/cover.jpg`,
         alt: "品牌视觉识别设计封面图",
         placeholder: "COVER PLACEHOLDER",
       },
       projectName: {
         label: "PROJECT NAME",
-        src: `${projectImageBase}/branding/project-name/project-name.png`,
+        src: `${projectImageBase}/branding/cover.jpg`,
         alt: "品牌视觉识别设计项目名称图片",
         placeholder: "PROJECT NAME PLACEHOLDER",
       },
       moodboard: {
         label: "MOODBOARD",
-        src: `${projectImageBase}/branding/moodboard/moodboard.png`,
+        src: `${projectImageBase}/branding/moodboard.jpg`,
         alt: "品牌视觉识别设计灵感板图片",
         placeholder: "MOODBOARD PLACEHOLDER",
       },
       design: {
         label: "VISUAL DESIGN",
-        src: `${projectImageBase}/branding/visual-design/visual-design.png`,
+        src: `${projectImageBase}/branding/process-01.jpg`,
         alt: "品牌视觉设计图片",
         placeholder: "VISUAL DESIGN PLACEHOLDER",
       },
       application: {
         label: "BRAND APPLICATION",
-        src: `${projectImageBase}/branding/application/application.png`,
+        src: `${projectImageBase}/branding/final-01.jpg`,
         alt: "品牌视觉识别应用图片",
         placeholder: "BRAND APPLICATION PLACEHOLDER",
       },
     },
-    coverImage: `${projectImageBase}/branding/cover/cover.png`,
+    coverImage: `${projectImageBase}/branding/cover.jpg`,
     detailImages: [
       {
-        src: `${projectImageBase}/branding/moodboard/moodboard.png`,
+        src: `${projectImageBase}/branding/moodboard.jpg`,
         alt: "品牌视觉识别灵感板",
         captionZh: "灵感板",
         captionEn: "Moodboard",
         role: "moodboard",
       },
       {
-        src: `${projectImageBase}/branding/visual-design/visual-design.png`,
+        src: `${projectImageBase}/branding/process-01.jpg`,
         alt: "品牌视觉识别设计过程一",
         captionZh: "设计过程 01",
         captionEn: "Process 01",
         role: "process",
       },
       {
-        src: `${projectImageBase}/branding/visual-design/process-02.png`,
+        src: `${projectImageBase}/branding/process-02.jpg`,
         alt: "品牌视觉识别设计过程二",
         captionZh: "设计过程 02",
         captionEn: "Process 02",
         role: "process",
       },
       {
-        src: `${projectImageBase}/branding/application/application.png`,
+        src: `${projectImageBase}/branding/final-01.jpg`,
         alt: "品牌视觉识别关键视觉一",
         captionZh: "关键视觉 01",
         captionEn: "Final 01",
         role: "final",
       },
       {
-        src: `${projectImageBase}/branding/application/final-02.png`,
+        src: `${projectImageBase}/branding/final-02.jpg`,
         alt: "品牌视觉识别应用展示二",
         captionZh: "应用展示 02",
         captionEn: "Final 02",

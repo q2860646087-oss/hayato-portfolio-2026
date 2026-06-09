@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/assetPath";
+
 export type NavItem = {
   href: string;
   labelZh: string;
@@ -19,21 +21,22 @@ export const siteConfig = {
   introEn: "A curated archive of children's products, visual identity, illustration, and cultural creative design.",
   logo: {
     text: "PORTFOLIO",
-    image: "/logo.svg",
+    image: assetPath("/logo.svg"),
   },
-  favicon: "/favicon.png?v=20260609",
+  favicon: assetPath("/favicon.png?v=20260609"),
+  faviconSvg: assetPath("/favicon.svg?v=20260609"),
   hero: {
-    mainImage: "/assets/hero/hero-main.png",
+    mainImage: assetPath("/assets/hero/hero-main.png"),
     alt: "Chen Ziang Hayato visual design portfolio hero image",
     textLayers: {
-      topLeft: "/assets/hero/text-top-left.png",
-      topRight: "/assets/hero/text-top-right.png",
-      bottomLeft: "/assets/hero/text-bottom-left.png",
-      bottomRight: "/assets/hero/text-bottom-right.png",
+      topLeft: assetPath("/assets/hero/text-top-left.png"),
+      topRight: assetPath("/assets/hero/text-top-right.png"),
+      bottomLeft: assetPath("/assets/hero/text-bottom-left.png"),
+      bottomRight: assetPath("/assets/hero/text-bottom-right.png"),
     },
     marquee: {
-      top: "/assets/marquee/top-marquee.png",
-      bottom: "/assets/marquee/bottom-marquee.png",
+      top: assetPath("/assets/marquee/top-marquee.png"),
+      bottom: assetPath("/assets/marquee/bottom-marquee.png"),
     },
   },
   contact: {
@@ -75,14 +78,14 @@ export const siteConfig = {
         {
           id: "hero-character-left",
           label: "Character",
-          src: "/assets/characters/hero-character-left.svg",
+          src: assetPath("/assets/characters/hero-character-left.svg"),
           placeholder: "CHARACTER PLACEHOLDER",
           position: "left",
         },
         {
           id: "hero-character-right",
           label: "Sticker",
-          src: "/assets/characters/hero-character-right.svg",
+          src: assetPath("/assets/characters/hero-character-right.svg"),
           placeholder: "STICKER PLACEHOLDER",
           position: "right",
         },
@@ -171,7 +174,7 @@ export const siteConfig = {
     bioEn:
       "Visual designer who loves telling stories with graphics and colors. Focus on children's products, nature and culture, combining creativity with social value.",
     portrait: {
-      src: "/assets/about/profile.png",
+      src: assetPath("/profile/portrait.jpg"),
       alt: "陈子昂个人照片",
       placeholderZh: "照片占位",
       placeholderEn: "Your Photo",
@@ -190,10 +193,10 @@ export const siteConfig = {
       },
     ],
     softwareSkills: [
-      { name: "Illustrator", icon: "Ai", src: "/assets/icons/illustrator.svg" },
-      { name: "Photoshop", icon: "Ps", src: "/assets/icons/photoshop.svg" },
-      { name: "Procreate", icon: "Pr", src: "/assets/icons/procreate.svg" },
-      { name: "Figma", icon: "Fg", src: "/assets/icons/figma.svg" },
+      { name: "Illustrator", icon: "Ai", src: assetPath("/assets/icons/illustrator.svg") },
+      { name: "Photoshop", icon: "Ps", src: assetPath("/assets/icons/photoshop.svg") },
+      { name: "Procreate", icon: "Pr", src: assetPath("/assets/icons/procreate.svg") },
+      { name: "Figma", icon: "Fg", src: assetPath("/assets/icons/figma.svg") },
     ],
     experience: [
       { period: "2023 - 至今", titleZh: "自由设计师", titleEn: "Freelance Designer" },

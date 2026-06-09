@@ -10,6 +10,9 @@ const githubPagesConfig: NextConfig = {
   trailingSlash: true,
   basePath: "/hayato-portfolio-2026",
   assetPrefix: "/hayato-portfolio-2026/",
+  env: {
+    NEXT_PUBLIC_ASSET_BASE_PATH: "/hayato-portfolio-2026",
+  },
 };
 
 const nextConfig: NextConfig = {
