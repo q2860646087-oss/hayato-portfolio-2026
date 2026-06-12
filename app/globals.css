@@ -94,16 +94,20 @@ h3,
 
 .hero-marquee {
   position: absolute;
-  left: 0;
-  z-index: 20;
+  left: 50%;
+  z-index: 40;
+  display: block;
   width: 100vw;
-  height: 80px;
+  min-width: 100vw;
+  height: clamp(56px, 5.4vw, 88px);
   overflow: hidden;
   pointer-events: none;
   user-select: none;
-  background-position: center;
+  transform: translateX(-50%);
+  background-position: 0 center;
   background-repeat: repeat-x;
   background-size: auto 100%;
+  will-change: background-position;
 }
 
 .hero-marquee-top {
@@ -112,6 +116,34 @@ h3,
 
 .hero-marquee-bottom {
   bottom: clamp(0.25rem, 1.2vh, 0.9rem);
+}
+
+.hero-marquee-left {
+  animation: heroRibbonMoveRight 22s linear infinite;
+}
+
+.hero-marquee-right {
+  animation: heroRibbonMoveLeft 22s linear infinite;
+}
+
+@keyframes heroRibbonMoveRight {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: 1440px;
+  }
+}
+
+@keyframes heroRibbonMoveLeft {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -1440px;
+  }
 }
 
 .hero-png-stage {
@@ -1078,9 +1110,7 @@ h3,
   }
 
   .hero-marquee {
-    z-index: 10;
     width: 100vw;
-    height: 48px;
   }
 
   .hero-marquee-top {
