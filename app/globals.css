@@ -84,18 +84,19 @@ h3,
 
 .hero-png-section {
   position: relative;
+  isolation: isolate;
   width: 100%;
   max-width: none;
   min-height: 100vh;
   padding-top: clamp(5.25rem, 9vh, 6.5rem);
   padding-bottom: clamp(2rem, 5vh, 4rem);
-  overflow-x: clip;
+  overflow: hidden;
 }
 
 .hero-marquee {
   position: absolute;
-  left: 50%;
-  z-index: 40;
+  left: 0;
+  z-index: 1;
   display: block;
   width: 100vw;
   min-width: 100vw;
@@ -103,11 +104,6 @@ h3,
   overflow: hidden;
   pointer-events: none;
   user-select: none;
-  transform: translateX(-50%);
-  background-position: 0 center;
-  background-repeat: repeat-x;
-  background-size: auto 100%;
-  will-change: background-position;
 }
 
 .hero-marquee-top {
@@ -118,31 +114,50 @@ h3,
   bottom: clamp(0.25rem, 1.2vh, 0.9rem);
 }
 
-.hero-marquee-left {
-  animation: heroRibbonMoveRight 22s linear infinite;
+.hero-marquee-track {
+  display: flex;
+  width: 200vw;
+  min-width: 200vw;
+  height: 100%;
+  will-change: transform;
 }
 
-.hero-marquee-right {
-  animation: heroRibbonMoveLeft 22s linear infinite;
+.hero-marquee-segment {
+  display: block;
+  flex: 0 0 100vw;
+  width: 100vw;
+  min-width: 100vw;
+  height: 100%;
+  background-position: 0 center;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
 }
 
-@keyframes heroRibbonMoveRight {
+.hero-marquee-left .hero-marquee-track {
+  animation: heroRibbonTrackLeft 24s linear infinite;
+}
+
+.hero-marquee-right .hero-marquee-track {
+  animation: heroRibbonTrackRight 24s linear infinite;
+}
+
+@keyframes heroRibbonTrackLeft {
   from {
-    background-position-x: 0;
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    background-position-x: 1440px;
+    transform: translate3d(-100vw, 0, 0);
   }
 }
 
-@keyframes heroRibbonMoveLeft {
+@keyframes heroRibbonTrackRight {
   from {
-    background-position-x: 0;
+    transform: translate3d(-100vw, 0, 0);
   }
 
   to {
-    background-position-x: -1440px;
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -152,7 +167,7 @@ h3,
   width: min(98vw, 1680px);
   height: min(78vh, 820px);
   min-height: 420px;
-  z-index: 30;
+  z-index: 5;
   place-items: center;
   margin-inline: auto;
   overflow: visible;
@@ -182,7 +197,7 @@ h3,
   position: relative;
   grid-area: 1 / 1;
   place-self: center;
-  z-index: 30;
+  z-index: 5;
   width: 100%;
   height: 100%;
   background: transparent;
@@ -206,6 +221,7 @@ h3,
 .hero-mobile-text-layer {
   position: absolute;
   display: block;
+  z-index: 8;
   height: auto;
   background-repeat: no-repeat;
   background-position: center;
@@ -1083,7 +1099,7 @@ h3,
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index: 20;
+    z-index: 5;
     width: 200vw;
     max-width: none;
     height: auto;
@@ -1098,7 +1114,7 @@ h3,
   }
 
   .hero-png-frame {
-    z-index: 20;
+    z-index: 5;
     width: 200vw;
     height: auto;
   }
@@ -1135,7 +1151,7 @@ h3,
   }
 
   .hero-mobile-text-layer {
-    z-index: 25;
+    z-index: 8;
     aspect-ratio: 3 / 1;
   }
 
