@@ -18,7 +18,6 @@ export function StyledHero() {
       <HeroMarquee src={hero.marquee.top} direction="left" className="hero-marquee-top" />
       <HeroMarquee
         src={hero.marquee.bottom}
-        fallbackSrc={hero.marquee.top}
         direction="right"
         className="hero-marquee-bottom"
       />
