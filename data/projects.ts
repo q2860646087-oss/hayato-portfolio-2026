@@ -98,34 +98,34 @@ export const projects: Project[] = [
     keywords: ["儿童友好", "图案系统", "面料延展"],
     imageSlots: {
       cover: {
-        label: "COVER",
+        label: "PROJECT VISUAL",
         src: `${projectImageBase}/children-fashion/cover.jpg`,
         alt: "儿童服装图案设计封面图",
-        placeholder: "COVER PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       projectName: {
         label: "PROJECT NAME",
         src: `${projectImageBase}/children-fashion/cover.jpg`,
         alt: "儿童服装图案设计项目名称图片",
-        placeholder: "PROJECT NAME PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       moodboard: {
         label: "MOODBOARD",
         src: `${projectImageBase}/children-fashion/moodboard.jpg`,
         alt: "儿童服装图案设计灵感板图片",
-        placeholder: "MOODBOARD PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       design: {
         label: "PATTERN DESIGN",
         src: `${projectImageBase}/children-fashion/process-01.jpg`,
         alt: "儿童服装图案设计图片",
-        placeholder: "PATTERN DESIGN PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       application: {
         label: "PRODUCT APPLICATION",
         src: `${projectImageBase}/children-fashion/final-01.jpg`,
         alt: "儿童服装图案设计产品应用图片",
-        placeholder: "PRODUCT APPLICATION PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
     },
     coverImage: `${projectImageBase}/children-fashion/cover.jpg`,
@@ -194,7 +194,7 @@ export const projects: Project[] = [
         descriptionZh: "儿童服装图案设计，以图案系统为核心展开产品视觉应用。",
         descriptionEn: "Children's apparel pattern design centered on a flexible visual system.",
         imageSlot: "projectName",
-        placeholderEn: "Cover",
+        placeholderEn: "Project Visual",
       },
       {
         titleZh: "灵感板",
@@ -202,7 +202,7 @@ export const projects: Project[] = [
         descriptionZh: "品牌调研、竞品参考、色彩趋势、材质参考、图案方向与儿童审美趋势的视觉整理。",
         descriptionEn: "Brand research, competitor references, color trends, material cues, pattern directions, and children's visual preferences.",
         imageSlot: "moodboard",
-        placeholderEn: "Moodboard",
+        placeholderEn: "Research Notes",
       },
       {
         titleZh: "图案设计",
@@ -210,7 +210,7 @@ export const projects: Project[] = [
         descriptionZh: "角色设计、图形元素、花型设计、重复纹样、定位图案与配色探索。",
         descriptionEn: "Character design, graphic elements, floral systems, repeat patterns, placement graphics, and color exploration.",
         imageSlot: "design",
-        placeholderEn: "Pattern Design",
+        placeholderEn: "Pattern System",
       },
       {
         titleZh: "产品应用",
@@ -224,7 +224,7 @@ export const projects: Project[] = [
     background: {
       titleZh: "设计背景",
       titleEn: "Background",
-      items: ["项目背景占位：这里说明项目来源、使用场景、品牌或客户需求。"],
+      items: ["项目围绕儿童服饰图案的系列化应用展开，重点观察日常穿着、面料延展与包装物料中的统一识别需求。"],
     },
     brief: {
       titleZh: "项目简述",
@@ -259,7 +259,7 @@ export const projects: Project[] = [
     conclusion: {
       titleZh: "项目总结",
       titleEn: "Summary",
-      items: ["总结占位：这里记录项目收获、最终结果和后续可优化方向。"],
+      items: ["本项目完成了从图案语言、重复纹样到产品应用的基础整理，为后续服装与包装系列延展提供视觉依据。"],
     },
   },
   {
@@ -282,34 +282,34 @@ export const projects: Project[] = [
     keywords: ["护眼科普", "角色 IP", "文创延展"],
     imageSlots: {
       cover: {
-        label: "COVER",
+        label: "PROJECT VISUAL",
         src: `${projectImageBase}/eyecare-ip/cover.jpg`,
         alt: "儿童护眼 IP 与文创设计封面图",
-        placeholder: "COVER PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       projectName: {
         label: "PROJECT NAME",
         src: `${projectImageBase}/eyecare-ip/cover.jpg`,
         alt: "儿童护眼 IP 与文创设计项目名称图片",
-        placeholder: "PROJECT NAME PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       moodboard: {
         label: "MOODBOARD",
         src: `${projectImageBase}/eyecare-ip/moodboard.jpg`,
         alt: "儿童护眼 IP 与文创设计灵感板图片",
-        placeholder: "MOODBOARD PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       design: {
         label: "IP & VISUAL DESIGN",
         src: `${projectImageBase}/eyecare-ip/process-01.jpg`,
         alt: "儿童护眼 IP 与视觉设计图片",
-        placeholder: "IP & VISUAL DESIGN PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       application: {
         label: "PRODUCT APPLICATION",
         src: `${projectImageBase}/eyecare-ip/final-01.jpg`,
         alt: "儿童护眼 IP 与文创设计产品应用图片",
-        placeholder: "PRODUCT APPLICATION PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
     },
     coverImage: `${projectImageBase}/eyecare-ip/cover.jpg`,
@@ -378,7 +378,7 @@ export const projects: Project[] = [
         descriptionZh: "儿童护眼 IP 与文创设计，以角色和产品应用连接科普内容。",
         descriptionEn: "Children eye-care IP and cultural creative design connecting education with product applications.",
         imageSlot: "projectName",
-        placeholderEn: "Cover",
+        placeholderEn: "Project Visual",
       },
       {
         titleZh: "灵感板",
@@ -386,7 +386,7 @@ export const projects: Project[] = [
         descriptionZh: "医院背景、儿童护眼知识、儿童插画风格、色彩参考、IP 参考与文创产品参考。",
         descriptionEn: "Hospital context, eye-care knowledge, children's illustration styles, color references, IP references, and product cues.",
         imageSlot: "moodboard",
-        placeholderEn: "Moodboard",
+        placeholderEn: "Research Notes",
       },
       {
         titleZh: "IP 与视觉设计",
@@ -394,7 +394,7 @@ export const projects: Project[] = [
         descriptionZh: "IP 形象设计、角色表情、动作延展、辅助图形、页面视觉与色彩系统。",
         descriptionEn: "IP character design, expressions, motion extensions, supporting graphics, page visuals, and color system.",
         imageSlot: "design",
-        placeholderEn: "Visual Design",
+        placeholderEn: "Visual System",
       },
       {
         titleZh: "产品应用",
@@ -408,7 +408,7 @@ export const projects: Project[] = [
     background: {
       titleZh: "设计背景",
       titleEn: "Background",
-      items: ["项目背景占位：这里说明眼健康科普、儿童沟通方式和使用渠道。"],
+      items: ["项目以儿童护眼科普传播为核心，面向医院活动、校园宣教与亲子互动场景，降低健康信息的距离感。"],
     },
     brief: {
       titleZh: "项目简述",
@@ -443,7 +443,7 @@ export const projects: Project[] = [
     conclusion: {
       titleZh: "项目总结",
       titleEn: "Summary",
-      items: ["总结占位：这里记录 IP 系统的传播价值和后续扩展方向。"],
+      items: ["本项目将护眼知识转化为角色 IP、图文物料与文创载体，增强儿童参与感与传播记忆点。"],
     },
   },
   {
@@ -466,34 +466,34 @@ export const projects: Project[] = [
     keywords: ["品牌识别", "基础规范", "应用系统"],
     imageSlots: {
       cover: {
-        label: "COVER",
+        label: "PROJECT VISUAL",
         src: `${projectImageBase}/branding/cover.jpg`,
         alt: "品牌视觉识别设计封面图",
-        placeholder: "COVER PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       projectName: {
         label: "PROJECT NAME",
         src: `${projectImageBase}/branding/cover.jpg`,
         alt: "品牌视觉识别设计项目名称图片",
-        placeholder: "PROJECT NAME PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       moodboard: {
         label: "MOODBOARD",
         src: `${projectImageBase}/branding/moodboard.jpg`,
         alt: "品牌视觉识别设计灵感板图片",
-        placeholder: "MOODBOARD PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       design: {
         label: "VISUAL DESIGN",
         src: `${projectImageBase}/branding/process-01.jpg`,
         alt: "品牌视觉设计图片",
-        placeholder: "VISUAL DESIGN PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
       application: {
         label: "BRAND APPLICATION",
         src: `${projectImageBase}/branding/final-01.jpg`,
         alt: "品牌视觉识别应用图片",
-        placeholder: "BRAND APPLICATION PLACEHOLDER",
+        placeholder: "作品内容整理中",
       },
     },
     coverImage: `${projectImageBase}/branding/cover.jpg`,
@@ -562,7 +562,7 @@ export const projects: Project[] = [
         descriptionZh: "品牌视觉识别设计，以清晰的标志语言和应用系统建立品牌记忆。",
         descriptionEn: "Brand visual identity design built around logo language and a flexible application system.",
         imageSlot: "projectName",
-        placeholderEn: "Cover",
+        placeholderEn: "Project Visual",
       },
       {
         titleZh: "灵感板",
@@ -570,7 +570,7 @@ export const projects: Project[] = [
         descriptionZh: "品牌调研、竞品分析、视觉关键词、色彩参考、字体参考与应用场景参考。",
         descriptionEn: "Brand research, competitor analysis, visual keywords, color references, typography, and application scenarios.",
         imageSlot: "moodboard",
-        placeholderEn: "Moodboard",
+        placeholderEn: "Research Notes",
       },
       {
         titleZh: "视觉设计",
@@ -578,7 +578,7 @@ export const projects: Project[] = [
         descriptionZh: "Logo 设计、字体设计、辅助图形、色彩系统、版式规范与品牌延展。",
         descriptionEn: "Logo design, typography, supporting graphics, color system, layout rules, and brand extensions.",
         imageSlot: "design",
-        placeholderEn: "Visual Design",
+        placeholderEn: "Visual System",
       },
       {
         titleZh: "品牌应用",
@@ -592,7 +592,7 @@ export const projects: Project[] = [
     background: {
       titleZh: "设计背景",
       titleEn: "Background",
-      items: ["项目背景占位：这里说明品牌定位、受众、使用场景和设计问题。"],
+      items: ["项目围绕品牌基础识别搭建展开，梳理定位、受众、视觉调性与多场景应用中的一致性问题。"],
     },
     brief: {
       titleZh: "项目简述",
@@ -627,7 +627,7 @@ export const projects: Project[] = [
     conclusion: {
       titleZh: "项目总结",
       titleEn: "Summary",
-      items: ["总结占位：这里记录品牌系统最终解决了什么问题。"],
+      items: ["本项目完成标志、色彩、字体与应用方向的初步系统整理，让品牌在不同媒介中保持稳定表达。"],
     },
   },
 ];

@@ -77,7 +77,7 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
         lineHeight: 28,
         opacity: 0.76,
       }),
-      image("cover", project.imageSlots.cover.src, project.imageSlots.cover.alt, 820, 150, 520, 520, 4, {
+      image("cover", undefined, "项目图像整理中", 820, 150, 520, 520, 4, {
         rotate: 2,
         borderRadius: 0,
       }),
@@ -109,24 +109,24 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
       }),
       text("background-title", sectionTitle(project.background), 96, 1030, 430, 84, 5, sectionTitleStyle()),
       text("background-copy", sectionBody(project.background), 100, 1130, 560, 210, 5, paragraphStyle()),
-      image("moodboard", moodboard?.src, moodboard?.alt ?? project.imageSlots.moodboard.alt, 760, 980, 520, 390, 3, {
+      image("moodboard", undefined, "灵感板整理区", 760, 980, 520, 390, 3, {
         rotate: -2.2,
       }),
       text("moodboard-caption", "MOODBOARD", 760, 1392, 270, 36, 5, smallLabel()),
-      image("process-one", processOne?.src, processOne?.alt ?? project.imageSlots.design.alt, 96, 1430, 560, 420, 3, {
+      image("process-one", undefined, "设计过程整理区", 96, 1430, 560, 420, 3, {
         rotate: 1.6,
       }),
       text("process-title", sectionTitle(project.process), 760, 1504, 430, 84, 5, sectionTitleStyle()),
       text("process-copy", sectionBody(project.process), 764, 1608, 520, 230, 5, paragraphStyle()),
       text("goals-title", sectionTitle(project.goals), 116, 1932, 370, 74, 5, sectionTitleStyle(42)),
       text("goals-copy", sectionBody(project.goals), 116, 2026, 520, 92, 5, paragraphStyle(26)),
-      image("process-two", processTwo?.src, processTwo?.alt ?? project.imageSlots.design.alt, 760, 1870, 520, 390, 4, {
+      image("process-two", undefined, "视觉系统展示区", 760, 1870, 520, 390, 4, {
         rotate: -1.8,
       }),
-      image("final-one", finalOne?.src, finalOne?.alt ?? project.imageSlots.application.alt, 96, 2292, 560, 420, 3, {
+      image("final-one", undefined, "产品应用展示区", 96, 2292, 560, 420, 3, {
         rotate: -1,
       }),
-      image("final-two", finalTwo?.src, finalTwo?.alt ?? project.imageSlots.application.alt, 760, 2380, 520, 390, 4, {
+      image("final-two", undefined, "最终视觉展示区", 760, 2380, 520, 390, 4, {
         rotate: 1.4,
       }),
       text("application-title", sectionTitle(project.applications), 96, 2790, 410, 82, 5, sectionTitleStyle(42)),

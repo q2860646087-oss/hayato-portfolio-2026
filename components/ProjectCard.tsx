@@ -15,7 +15,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     <article className="grid gap-6 py-8 md:grid-cols-[0.72fr_1fr] md:gap-8 md:py-10">
       <Link href={`/projects/${project.slug}`} aria-label={project.title.zh}>
         <ImageBlock
-          src={project.imageSlots.cover.src}
           alt={project.imageSlots.cover.alt}
           captionZh={project.order}
           captionEn={project.category.en}

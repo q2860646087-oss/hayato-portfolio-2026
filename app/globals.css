@@ -90,7 +90,7 @@ h3,
   min-height: 100vh;
   padding-top: clamp(5.25rem, 9vh, 6.5rem);
   padding-bottom: clamp(2rem, 5vh, 4rem);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-marquee {
@@ -164,9 +164,9 @@ h3,
 .hero-png-stage {
   position: relative;
   display: grid;
-  width: min(98vw, 1680px);
-  height: min(78vh, 820px);
-  min-height: 420px;
+  width: min(78.4vw, 1344px);
+  height: min(72vh, 756px);
+  min-height: 540px;
   z-index: 5;
   place-items: center;
   margin-inline: auto;
@@ -197,7 +197,7 @@ h3,
   position: relative;
   grid-area: 1 / 1;
   place-self: center;
-  z-index: 5;
+  z-index: 10;
   width: 100%;
   height: 100%;
   background: transparent;
@@ -212,6 +212,56 @@ h3,
   background: var(--color-background);
   box-shadow: inset 0 0 0 2px var(--color-highlight);
   color: var(--color-primary);
+}
+
+.hero-corner-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-corner-text-card {
+  position: absolute;
+  display: grid;
+  width: max-content;
+  max-width: min(24vw, 300px);
+  background: var(--color-highlight);
+  color: var(--color-primary);
+  padding: 0.06em 0.12em 0.1em;
+  font-family: "Helvetica Now Display XLight", "Helvetica Now Display", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(1rem, 1.25vw, 1.45rem);
+  font-weight: 200;
+  line-height: 1.06;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero-corner-text-card span {
+  display: block;
+}
+
+.hero-corner-text-top-left {
+  top: clamp(12rem, 22vh, 15rem);
+  left: clamp(1.5rem, 4.9vw, 4.6rem);
+}
+
+.hero-corner-text-top-right {
+  top: clamp(12rem, 22vh, 15rem);
+  right: clamp(1.5rem, 3.9vw, 4rem);
+  text-align: right;
+}
+
+.hero-corner-text-bottom-left {
+  bottom: clamp(10rem, 19vh, 14rem);
+  left: clamp(1.5rem, 4.9vw, 4.6rem);
+}
+
+.hero-corner-text-bottom-right {
+  right: clamp(1.5rem, 3.9vw, 4rem);
+  bottom: clamp(10rem, 19vh, 14rem);
+  text-align: right;
 }
 
 .hero-mobile-text-layers {
@@ -1092,7 +1142,7 @@ h3,
     height: 100svh;
     padding-top: 0;
     padding-bottom: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .hero-png-stage {
@@ -1114,7 +1164,7 @@ h3,
   }
 
   .hero-png-frame {
-    z-index: 5;
+    z-index: 10;
     width: 200vw;
     height: auto;
   }
@@ -1144,6 +1194,33 @@ h3,
       46px 46px,
       76px 76px,
       112px 112px;
+  }
+
+  .hero-corner-text-card {
+    max-width: 42vw;
+    padding: 0.06em 0.12em 0.12em;
+    font-size: clamp(0.72rem, 3.4vw, 1.05rem);
+    line-height: 1.08;
+  }
+
+  .hero-corner-text-top-left {
+    top: 23%;
+    left: 6%;
+  }
+
+  .hero-corner-text-top-right {
+    top: 23%;
+    right: 6%;
+  }
+
+  .hero-corner-text-bottom-left {
+    bottom: 19%;
+    left: 6%;
+  }
+
+  .hero-corner-text-bottom-right {
+    right: 6%;
+    bottom: 19%;
   }
 
   .hero-mobile-text-layers {
@@ -1413,5 +1490,67 @@ h3,
   .reveal.hero-png-stage,
   .reveal.hero-png-stage.is-visible {
     transform: translate(-50%, -50%);
+  }
+}
+.hero-png-frame {
+  position: relative;
+}
+
+.hero-png-base {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-png-image {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-png-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.hero-png-layer-02 {
+  z-index: 2;
+}
+
+.hero-png-layer-01 {
+  z-index: 3;
+}
+.hero-png-layer-02 {
+  z-index: 2;
+  transform-origin: 50% 68%;
+  animation: heroBoxCreatureWiggle 2.1s ease-in-out infinite;
+}
+
+@keyframes heroBoxCreatureWiggle {
+  0%, 58%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  8% {
+    transform: translate3d(-2px, -1px, 0) rotate(-2deg);
+  }
+
+  14% {
+    transform: translate3d(3px, 1px, 0) rotate(2.4deg);
+  }
+
+  20% {
+    transform: translate3d(-2px, 0, 0) rotate(-1.6deg);
+  }
+
+  26% {
+    transform: translate3d(2px, -1px, 0) rotate(1.2deg);
+  }
+
+  34% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }

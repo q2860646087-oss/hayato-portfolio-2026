@@ -199,13 +199,14 @@ function ProfilePhoto() {
   return (
     <div
       className="profile-photo grid min-h-[520px] content-between overflow-hidden rounded-[var(--radius)] p-8"
-      style={{
-        backgroundImage: `url(${portrait.src})`,
-      }}
       role="img"
       aria-label={portrait.alt}
     >
       <span className="archive-label corner-label font-en text-xs uppercase tracking-[0.16em]">{about.photoTitleEn}</span>
+      <div className="grid place-items-center text-center">
+        <p className="font-en text-6xl font-black tracking-[0.08em] text-primary">HAYATO</p>
+        <p className="mt-3 text-xl font-semibold text-primary">设计师个人标识区域</p>
+      </div>
       <div className="photo-caption">
         <p className="font-en text-xs uppercase tracking-[0.2em] text-muted">{portrait.placeholderEn}</p>
         <p className="mt-2 text-2xl font-semibold text-primary">{portrait.placeholderZh}</p>
@@ -348,7 +349,7 @@ function ProjectWorkChapterBlock({
           <p className="mx-auto mt-7 max-w-3xl text-lg leading-8">{chapter.descriptionZh}</p>
           <p className="mx-auto mt-3 max-w-3xl font-en text-sm leading-7">{chapter.descriptionEn}</p>
         </header>
-        <WorkSquareImage project={project} chapter={chapter} priority={priority} />
+        <WorkSquareImage project={project} chapter={chapter} />
       </section>
     </Reveal>
   );
@@ -416,35 +417,20 @@ function WorkMetaItem({ labelZh, labelEn, value }: { labelZh: string; labelEn: s
 function WorkSquareImage({
   project,
   chapter,
-  priority = false,
 }: {
   project: Project;
   chapter: ProjectWorkChapter;
-  priority?: boolean;
 }) {
   const image = getChapterImage(project, chapter);
 
-  if (!image) {
-    return (
-      <div className="work-square-image work-square-placeholder mt-10">
-        <div>
-          <p className="font-en text-xs uppercase tracking-[0.2em]">{chapter.placeholderEn}</p>
-          <p className="mt-3 text-2xl font-semibold">{chapter.titleZh}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <ImageBlock
-      src={image.src}
-      alt={image.alt}
-      className="work-square-image mt-10"
-      priority={priority}
-      placeholderText={image.placeholder}
-      variant="square"
-      aspectClassName="aspect-square"
-    />
+    <div className="work-square-image work-square-placeholder mt-10" role="img" aria-label={image?.alt ?? chapter.titleZh}>
+      <div>
+        <p className="font-en text-xs uppercase tracking-[0.2em]">{chapter.placeholderEn}</p>
+        <p className="mt-3 text-2xl font-semibold">{chapter.titleZh}</p>
+        <p className="mt-3 text-base font-semibold">项目图像整理中</p>
+      </div>
+    </div>
   );
 }
 

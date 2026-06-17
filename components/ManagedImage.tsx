@@ -30,7 +30,7 @@ export function ManagedImage({
   const [hasImage, setHasImage] = useState(Boolean(src));
   const shapeClass = shape === "rounded" ? "rounded-[var(--radius)]" : "";
   const fitClass = fit === "contain" ? "object-contain" : "object-cover";
-  const placeholderText = placeholder ?? label ?? "IMAGE PLACEHOLDER";
+  const placeholderText = placeholder ?? label ?? "作品内容整理中";
 
   useEffect(() => {
     setHasImage(Boolean(src));
