@@ -1523,34 +1523,3 @@ h3,
 .hero-png-layer-01 {
   z-index: 3;
 }
-.hero-png-layer-02 {
-  z-index: 2;
-  transform-origin: 50% 68%;
-  animation: heroBoxCreatureWiggle 2.1s ease-in-out infinite;
-}
-
-@keyframes heroBoxCreatureWiggle {
-  0%, 58%, 100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-
-  8% {
-    transform: translate3d(-2px, -1px, 0) rotate(-2deg);
-  }
-
-  14% {
-    transform: translate3d(3px, 1px, 0) rotate(2.4deg);
-  }
-
-  20% {
-    transform: translate3d(-2px, 0, 0) rotate(-1.6deg);
-  }
-
-  26% {
-    transform: translate3d(2px, -1px, 0) rotate(1.2deg);
-  }
-
-  34% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-}
