@@ -3,8 +3,17 @@ import { Reveal } from "@/components/Reveal";
 import { HeroMarquee } from "@/components/HeroMarquee";
 import { siteConfig } from "@/config/site";
 
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/hayato-portfolio-2026" : "";
+
+const withBasePath = (path: string) => {
+  if (!path) return path;
+  if (path.startsWith("http")) return path;
+  return `${BASE_PATH}${path.startsWith("/") ? path : `/${path}`}`;
+};
+
 export function StyledHero() {
   const hero = siteConfig.hero;
+
   const heroCornerText = [
     { key: "top-left", className: "hero-corner-text-top-left", lines: ["VISUAL DESIGNER", "& ILLUSTRATOR"] },
     { key: "top-right", className: "hero-corner-text-top-right", lines: ["SELECTED WORKS", "2022-2026"] },
@@ -15,6 +24,7 @@ export function StyledHero() {
       lines: ["GRAPHIC DESIGN", "ILLUSTRATION", "VISUAL IDENTITY"],
     },
   ] as const;
+
   const heroTextLayers = [
     { key: "top-left", src: hero.textLayers.topLeft, className: "hero-mobile-text-top-left" },
     { key: "top-right", src: hero.textLayers.topRight, className: "hero-mobile-text-top-right" },
@@ -25,12 +35,10 @@ export function StyledHero() {
   return (
     <section id="cover" className="page-shell styled-hero hero-png-section">
       <div className="hero-atmosphere-layer" aria-hidden="true" />
-      <HeroMarquee src={hero.marquee.top} direction="left" className="hero-marquee-top" />
-      <HeroMarquee
-        src={hero.marquee.bottom}
-        direction="right"
-        className="hero-marquee-bottom"
-      />
+
+      <HeroMarquee src={withBasePath(hero.marquee.top)} direction="left" className="hero-marquee-top" />
+      <HeroMarquee src={withBasePath(hero.marquee.bottom)} direction="right" className="hero-marquee-bottom" />
+
       <div className="hero-corner-text-layer" aria-hidden="true">
         {heroCornerText.map((item) => (
           <div key={item.key} className={`hero-corner-text-card ${item.className}`}>
@@ -40,43 +48,46 @@ export function StyledHero() {
           </div>
         ))}
       </div>
+
       <div className="hero-mobile-text-layers" aria-hidden="true">
         {heroTextLayers.map((layer) => (
           <span
             key={layer.key}
             className={`hero-mobile-text-layer ${layer.className}`}
-            style={{ backgroundImage: `url("${layer.src}")` }}
+            style={{ backgroundImage: `url("${withBasePath(layer.src)}")` }}
           />
         ))}
       </div>
-     <Reveal className="hero-png-stage">
-  <div className="hero-png-frame">
-    <ManagedImage
-      src={hero.mainImage}
-      alt={hero.alt}
-      placeholder="主视觉加载中"
-      fit="contain"
-      priority
-      className="hero-png-base"
-      imageClassName="hero-png-image"
-      placeholderClassName="hero-png-placeholder"
-    />
 
-    <img
-      className="hero-png-layer hero-png-layer-02"
-      src="/assets/hero/hero-deco-02.png"
-      alt=""
-      aria-hidden="true"
-    />
+      <Reveal className="hero-png-stage">
+        <div className="hero-png-frame">
+          <ManagedImage
+            src={withBasePath(hero.mainImage)}
+            alt={hero.alt}
+            placeholder="主视觉加载中"
+            fit="contain"
+            priority
+            className="hero-png-base"
+            imageClassName="hero-png-image"
+            placeholderClassName="hero-png-placeholder"
+          />
 
-    <img
-      className="hero-png-layer hero-png-layer-01"
-      src="/assets/hero/hero-deco-01.png"
-      alt=""
-      aria-hidden="true"
-    />
-    </div>
-</Reveal>
-</section>
-);
+          <a
+            className="hero-png-layer hero-png-layer-02 hero-box-link"
+            href="#work"
+            aria-label="跳转到作品页"
+          >
+            <img src={withBasePath("/assets/hero/hero-deco-02.png")} alt="" aria-hidden="true" />
+          </a>
+
+          <img
+            className="hero-png-layer hero-png-layer-01"
+            src={withBasePath("/assets/hero/hero-deco-01.png")}
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+      </Reveal>
+    </section>
+  );
 }
