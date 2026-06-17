@@ -2,17 +2,12 @@ import { ManagedImage } from "@/components/ManagedImage";
 import { Reveal } from "@/components/Reveal";
 import { HeroMarquee } from "@/components/HeroMarquee";
 import { siteConfig } from "@/config/site";
-
-const BASE_PATH = process.env.NODE_ENV === "production" ? "/hayato-portfolio-2026" : "";
-
-const withBasePath = (path: string) => {
-  if (!path) return path;
-  if (path.startsWith("http")) return path;
-  return `${BASE_PATH}${path.startsWith("/") ? path : `/${path}`}`;
-};
+import { assetPath } from "@/lib/assetPath";
 
 export function StyledHero() {
   const hero = siteConfig.hero;
+  const heroDeco01 = assetPath("/assets/hero/hero-deco-01.png");
+  const heroDeco02 = assetPath("/assets/hero/hero-deco-02.png");
 
   const heroCornerText = [
     { key: "top-left", className: "hero-corner-text-top-left", lines: ["VISUAL DESIGNER", "& ILLUSTRATOR"] },
@@ -36,8 +31,8 @@ export function StyledHero() {
     <section id="cover" className="page-shell styled-hero hero-png-section">
       <div className="hero-atmosphere-layer" aria-hidden="true" />
 
-      <HeroMarquee src={withBasePath(hero.marquee.top)} direction="left" className="hero-marquee-top" />
-      <HeroMarquee src={withBasePath(hero.marquee.bottom)} direction="right" className="hero-marquee-bottom" />
+      <HeroMarquee src={hero.marquee.top} direction="left" className="hero-marquee-top" />
+      <HeroMarquee src={hero.marquee.bottom} direction="right" className="hero-marquee-bottom" />
 
       <div className="hero-corner-text-layer" aria-hidden="true">
         {heroCornerText.map((item) => (
@@ -54,7 +49,7 @@ export function StyledHero() {
           <span
             key={layer.key}
             className={`hero-mobile-text-layer ${layer.className}`}
-            style={{ backgroundImage: `url("${withBasePath(layer.src)}")` }}
+            style={{ backgroundImage: `url("${layer.src}")` }}
           />
         ))}
       </div>
@@ -62,7 +57,7 @@ export function StyledHero() {
       <Reveal className="hero-png-stage">
         <div className="hero-png-frame">
           <ManagedImage
-            src={withBasePath("/assets/hero/hero-main.png")}
+            src={hero.mainImage}
             alt={hero.alt}
             placeholder="主视觉加载中"
             fit="contain"
@@ -77,12 +72,12 @@ export function StyledHero() {
             href="#work"
             aria-label="跳转到作品页"
           >
-            <img src={withBasePath("/assets/hero/hero-deco-02.png")} alt="" aria-hidden="true" />
+            <img src={heroDeco02} alt="" aria-hidden="true" />
           </a>
 
           <img
             className="hero-png-layer hero-png-layer-01"
-            src={withBasePath("/assets/hero/hero-deco-01.png")}
+            src={heroDeco01}
             alt=""
             aria-hidden="true"
           />
