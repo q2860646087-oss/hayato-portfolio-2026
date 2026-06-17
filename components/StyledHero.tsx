@@ -62,7 +62,7 @@ export function StyledHero() {
       <Reveal className="hero-png-stage">
         <div className="hero-png-frame">
           <ManagedImage
-            src={withBasePath(hero.mainImage)}
+            src={withBasePath("/assets/hero/hero-main.png")}
             alt={hero.alt}
             placeholder="主视觉加载中"
             fit="contain"
