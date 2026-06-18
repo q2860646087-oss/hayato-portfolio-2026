@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ImageBlock } from "@/components/ImageBlock";
-import { ManagedImage } from "@/components/ManagedImage";
 import { Reveal } from "@/components/Reveal";
 import { StyledHero } from "@/components/StyledHero";
 import { siteConfig } from "@/config/site";
@@ -36,41 +35,38 @@ function AboutSection() {
         </div>
       </Reveal>
 
-      <div className="grid gap-12">
-        <div className="grid gap-10 xl:grid-cols-[0.34fr_0.66fr] xl:items-stretch">
-          <Reveal>
+      <div className="about-spread-stack">
+        <Reveal className="about-spread about-spread-profile">
+          <div className="about-image-column">
             <ProfilePhoto />
-          </Reveal>
-          <div className="grid gap-10">
-            <Reveal delay={60}>
-              <ProfileIntro />
-            </Reveal>
-            <Reveal delay={100}>
-              <DirectionGrid />
-            </Reveal>
           </div>
-        </div>
+          <div className="about-profile-column">
+            <ProfileIntro />
+            <DirectionGrid />
+          </div>
+        </Reveal>
 
-        <div className="about-record-grid grid gap-10 lg:grid-cols-[0.34fr_0.33fr_0.33fr]">
-          <Reveal delay={120}>
+        <Reveal className="about-spread about-spread-details" delay={120}>
+          <div className="about-details-side">
             <ProfileRecordGroup titleZh={about.educationTitleZh} titleEn={about.educationTitleEn} items={siteConfig.about.education} />
-          </Reveal>
-          <Reveal className="experience-record-align" delay={150}>
-            <ProfileRecordGroup titleZh={about.experienceTitleZh} titleEn={about.experienceTitleEn} items={siteConfig.about.experience} />
-          </Reveal>
-          <Reveal delay={180}>
-            <ProfileRecordGroup titleZh={about.awardsTitleZh} titleEn={about.awardsTitleEn} items={siteConfig.about.awards} />
-          </Reveal>
-        </div>
+            <SkillListGroup
+              titleZh={about.designSkillsTitleZh}
+              titleEn={about.designSkillsTitleEn}
+              items={siteConfig.about.designSkills}
+            />
+            <SkillListGroup titleZh={about.toolsTitleZh} titleEn={about.toolsTitleEn} items={siteConfig.about.tools} />
+            <SkillListGroup
+              titleZh={about.aigcToolsTitleZh}
+              titleEn={about.aigcToolsTitleEn}
+              items={siteConfig.about.aigcTools}
+            />
+          </div>
 
-        <div className="about-bottom-grid grid gap-10 lg:grid-cols-[0.34fr_0.66fr]">
-          <Reveal delay={210}>
-            <AboutContact />
-          </Reveal>
-          <Reveal delay={240}>
-            <SoftwareGrid />
-          </Reveal>
-        </div>
+          <div className="about-details-main">
+            <WorkExperienceGroup />
+            <ProjectExperienceGroup />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -205,7 +201,7 @@ function ProfilePhoto() {
       <span className="archive-label corner-label font-en text-xs uppercase tracking-[0.16em]">{about.photoTitleEn}</span>
       <div className="grid place-items-center text-center">
         <p className="font-en text-6xl font-black tracking-[0.08em] text-primary">HAYATO</p>
-        <p className="mt-3 text-xl font-semibold text-primary">设计师个人标识区域</p>
+        <p className="mt-3 text-xl font-semibold text-primary">{portrait.cardLabelZh}</p>
       </div>
       <div className="photo-caption">
         <p className="font-en text-xs uppercase tracking-[0.2em] text-muted">{portrait.placeholderEn}</p>
@@ -279,50 +275,59 @@ function ProfileRecordGroup({
   );
 }
 
-function SoftwareGrid() {
+function WorkExperienceGroup() {
   const about = siteConfig.sections.about;
 
   return (
-    <section className="tools-panel">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.skillsTitleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{about.skillsTitleZh}</h3>
-      <div className="software-icon-grid">
-        {siteConfig.about.softwareSkills.map((skill) => (
-          <div key={skill.name} className="tool-chip">
-            <span className="tool-icon font-en text-sm font-bold uppercase">
-              <ManagedImage
-                src={skill.src}
-                alt={`${skill.name} icon`}
-                placeholder={skill.icon}
-                fit="contain"
-                imageClassName="p-5"
-              />
-            </span>
-            <span className="font-en text-xs uppercase tracking-[0.12em]">{skill.name}</span>
-          </div>
+    <section className="profile-record about-index-section about-work-index">
+      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.workExperienceTitleEn}</p>
+      <h3 className="mb-5 text-2xl text-primary">{about.workExperienceTitleZh}</h3>
+      <div className="about-work-list">
+        {siteConfig.about.workExperience.map((item) => (
+          <article key={`${item.period}-${item.organizationZh}`} className="profile-entry about-work-row">
+            <p className="archive-label about-period-label font-en text-[0.65rem] uppercase tracking-[0.12em]">{item.period}</p>
+            <div className="about-work-company">
+              <h4 className="text-lg leading-7 text-primary">{item.organizationZh}</h4>
+              <p className="mt-1 font-en text-xs uppercase leading-5 tracking-[0.12em] text-muted">{item.roleEn}</p>
+            </div>
+            <p className="about-work-role text-base font-semibold leading-6 text-primary">{item.roleZh}</p>
+          </article>
         ))}
       </div>
     </section>
   );
 }
 
-function AboutContact() {
+function ProjectExperienceGroup() {
   const about = siteConfig.sections.about;
 
   return (
-    <section className="about-contact">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.contactTitleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{about.contactTitleZh}</h3>
-      <div className="contact-method-list">
-        {siteConfig.about.contactMethods.map((item) => (
-          <article key={item.value} className="contact-method">
-            <span className="linear-icon font-en text-xs font-bold uppercase">{item.icon}</span>
-            <div>
-              <p className="text-base font-semibold text-primary">{item.labelZh}</p>
-              <p className="font-en text-[0.65rem] uppercase tracking-[0.12em] text-muted">{item.labelEn}</p>
-              <p className="mt-1 text-sm leading-5">{item.value}</p>
-            </div>
+    <section className="profile-record about-index-section about-project-index">
+      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.projectExperienceTitleEn}</p>
+      <h3 className="mb-5 text-2xl text-primary">{about.projectExperienceTitleZh}</h3>
+      <div className="about-project-grid">
+        {siteConfig.about.projectExperience.map((item) => (
+          <article key={item.index} className="profile-entry about-project-card">
+            <p className="archive-label about-project-number font-en text-[0.65rem] uppercase tracking-[0.12em]">{item.index}</p>
+            <h4 className="mt-5 text-lg leading-7 text-primary">{item.titleZh}</h4>
+            <p className="mt-1 font-en text-xs uppercase leading-5 tracking-[0.12em] text-muted">{item.titleEn}</p>
           </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SkillListGroup({ titleZh, titleEn, items }: { titleZh: string; titleEn: string; items: string[] }) {
+  return (
+    <section className="profile-record">
+      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{titleEn}</p>
+      <h3 className="mb-5 text-2xl text-primary">{titleZh}</h3>
+      <div className="flex flex-wrap gap-3">
+        {items.map((item) => (
+          <span key={item} className="tag-pill text-sm text-primary">
+            {item}
+          </span>
         ))}
       </div>
     </section>
