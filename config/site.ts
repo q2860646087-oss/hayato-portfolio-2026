@@ -107,8 +107,6 @@ export const siteConfig = {
       educationTitleEn: "Education",
       workExperienceTitleZh: "工作经历",
       workExperienceTitleEn: "Work Experience",
-      projectExperienceTitleZh: "项目经历",
-      projectExperienceTitleEn: "Project Experience",
       designSkillsTitleZh: "设计技能",
       designSkillsTitleEn: "Design Skills",
       toolsTitleZh: "工具能力",
@@ -215,23 +213,6 @@ export const siteConfig = {
         organizationZh: "杭州智能向量文化科技有限公司",
         roleZh: "品牌设计实习生",
         roleEn: "Brand Design Intern",
-      },
-    ],
-    projectExperience: [
-      {
-        index: "01",
-        titleZh: "儿童服装图案视觉系统设计",
-        titleEn: "Children's Apparel Pattern Visual System",
-      },
-      {
-        index: "02",
-        titleZh: "儿童护眼 IP 视觉系统设计",
-        titleEn: "Children's Eyecare IP Visual System",
-      },
-      {
-        index: "03",
-        titleZh: "品牌视觉识别系统设计实践",
-        titleEn: "Brand Identity Design Practice",
       },
     ],
     designSkills: ["品牌视觉设计", "版式设计", "图形设计", "图案系统设计", "IP 视觉延展", "包装与物料延展"],

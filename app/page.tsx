@@ -28,14 +28,18 @@ function AboutSection() {
 
   return (
     <section id="about" className="page-shell section-space about-profile">
-      <Reveal className="mb-12 grid gap-6 md:grid-cols-[0.55fr_0.45fr] md:items-end">
+      <Reveal className="about-section-heading grid gap-6 md:grid-cols-[0.55fr_0.45fr] md:items-end">
         <div>
           <p className="mb-4 font-en text-xs uppercase tracking-[0.18em] text-muted">{about.titleEn}</p>
           <h2 className="text-4xl leading-tight tracking-[0.04em] text-primary md:text-7xl">{about.titleZh}</h2>
         </div>
       </Reveal>
 
-      <div className="about-spread-stack">
+      <div
+        className="about-spread-stack"
+        tabIndex={0}
+        aria-label="About profile spreads"
+      >
         <Reveal className="about-spread about-spread-profile">
           <div className="about-image-column">
             <ProfilePhoto />
@@ -47,25 +51,34 @@ function AboutSection() {
         </Reveal>
 
         <Reveal className="about-spread about-spread-details" delay={120}>
-          <div className="about-details-side">
-            <ProfileRecordGroup titleZh={about.educationTitleZh} titleEn={about.educationTitleEn} items={siteConfig.about.education} />
-            <SkillListGroup
-              titleZh={about.designSkillsTitleZh}
-              titleEn={about.designSkillsTitleEn}
-              items={siteConfig.about.designSkills}
-            />
-            <SkillListGroup titleZh={about.toolsTitleZh} titleEn={about.toolsTitleEn} items={siteConfig.about.tools} />
-            <SkillListGroup
-              titleZh={about.aigcToolsTitleZh}
-              titleEn={about.aigcToolsTitleEn}
-              items={siteConfig.about.aigcTools}
-            />
+          <div className="about-details-main">
+            <ToolAbilityChart />
+            <div className="about-skill-strip-grid">
+              <SkillStripGroup
+                titleZh={about.designSkillsTitleZh}
+                titleEn={about.designSkillsTitleEn}
+                items={siteConfig.about.designSkills}
+              />
+              <SkillStripGroup
+                titleZh={about.aigcToolsTitleZh}
+                titleEn={about.aigcToolsTitleEn}
+                items={siteConfig.about.aigcTools}
+              />
+            </div>
+            <WorkExperienceGroup />
           </div>
 
-          <div className="about-details-main">
-            <WorkExperienceGroup />
-            <ProjectExperienceGroup />
-          </div>
+          <aside className="about-details-note">
+            <ProfileRecordGroup titleZh={about.educationTitleZh} titleEn={about.educationTitleEn} items={siteConfig.about.education} />
+            <div className="about-study-note">
+              <p className="font-en text-xs uppercase tracking-[0.18em] text-muted">{about.toolsTitleEn}</p>
+              <h3 className="mt-3 text-2xl leading-tight text-primary">{about.toolsTitleZh}</h3>
+              <p className="mt-5 font-en text-sm uppercase leading-7 tracking-[0.12em] text-primary">
+                {siteConfig.about.tools.join(" / ")}
+              </p>
+            </div>
+            <p className="about-side-mantra">持续学习 / 保持输出</p>
+          </aside>
         </Reveal>
       </div>
     </section>
@@ -298,34 +311,45 @@ function WorkExperienceGroup() {
   );
 }
 
-function ProjectExperienceGroup() {
+function ToolAbilityChart() {
   const about = siteConfig.sections.about;
+  const chartItems = [
+    { label: "Figma", note: "Interface", levelClass: "is-tall" },
+    { label: "Illustrator", note: "Vector", levelClass: "is-peak" },
+    { label: "Photoshop", note: "Image", levelClass: "is-high" },
+    { label: "AIGC", note: "Assist", levelClass: "is-mid" },
+  ];
 
   return (
-    <section className="profile-record about-index-section about-project-index">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.projectExperienceTitleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{about.projectExperienceTitleZh}</h3>
-      <div className="about-project-grid">
-        {siteConfig.about.projectExperience.map((item) => (
-          <article key={item.index} className="profile-entry about-project-card">
-            <p className="archive-label about-project-number font-en text-[0.65rem] uppercase tracking-[0.12em]">{item.index}</p>
-            <h4 className="mt-5 text-lg leading-7 text-primary">{item.titleZh}</h4>
-            <p className="mt-1 font-en text-xs uppercase leading-5 tracking-[0.12em] text-muted">{item.titleEn}</p>
-          </article>
-        ))}
+    <section className="profile-record about-chart-section">
+      <div className="about-chart-heading">
+        <p className="font-en text-xs uppercase tracking-[0.16em] text-muted">{about.toolsTitleEn}</p>
+        <h3 className="mt-3 text-2xl text-primary">{about.toolsTitleZh}</h3>
+      </div>
+      <div className="about-tool-chart" aria-label="工具能力视觉索引">
+        <p className="about-chart-axis text-sm text-primary">能力感知</p>
+        <div className="about-tool-bars">
+          {chartItems.map((item) => (
+            <article key={item.label} className="about-tool-bar">
+              <span className={`about-tool-bar-fill ${item.levelClass}`} aria-hidden="true" />
+              <h4 className="font-en text-sm font-semibold text-primary">{item.label}</h4>
+              <p className="font-en text-[0.62rem] uppercase tracking-[0.12em] text-muted">{item.note}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function SkillListGroup({ titleZh, titleEn, items }: { titleZh: string; titleEn: string; items: string[] }) {
+function SkillStripGroup({ titleZh, titleEn, items }: { titleZh: string; titleEn: string; items: string[] }) {
   return (
-    <section className="profile-record">
+    <section className="profile-record about-skill-strip">
       <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{titleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{titleZh}</h3>
-      <div className="flex flex-wrap gap-3">
+      <h3 className="text-2xl text-primary">{titleZh}</h3>
+      <div className="mt-4 flex flex-wrap gap-2">
         {items.map((item) => (
-          <span key={item} className="tag-pill text-sm text-primary">
+          <span key={item} className="tag-pill text-xs text-primary">
             {item}
           </span>
         ))}
