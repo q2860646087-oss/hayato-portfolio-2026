@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ImageBlock } from "@/components/ImageBlock";
 import { Reveal } from "@/components/Reveal";
 import { StyledHero } from "@/components/StyledHero";
@@ -27,58 +28,50 @@ function AboutSection() {
   const about = siteConfig.sections.about;
 
   return (
-    <section id="about" className="page-shell section-space about-profile">
-      <Reveal className="about-section-heading grid gap-6 md:grid-cols-[0.55fr_0.45fr] md:items-end">
-        <div>
-          <p className="mb-4 font-en text-xs uppercase tracking-[0.18em] text-muted">{about.titleEn}</p>
-          <h2 className="text-4xl leading-tight tracking-[0.04em] text-primary md:text-7xl">{about.titleZh}</h2>
-        </div>
-      </Reveal>
+    <section id="about" className="about-board-section">
+      <div className="page-shell about-board-shell">
+        <Reveal className="about-board-screen about-profile-screen">
+          <div className="about-profile-info">
+            <AboutModule label="PROFILE" className="about-profile-module">
+              <p className="about-module-kicker font-en">ABOUT PROFILE</p>
+              <h2 className="about-profile-name text-primary">{siteConfig.authorName}</h2>
+              <p className="about-profile-en font-en">{siteConfig.authorNameEn}</p>
+              <p className="about-profile-line">{siteConfig.about.profileLine}</p>
+              <p className="about-profile-bio">{siteConfig.about.bioZh}</p>
+              <div className="about-keyword-row">
+                {siteConfig.about.designDirections.slice(0, 3).map((item) => (
+                  <span key={item.titleZh} className="about-soft-highlight">
+                    {item.titleZh}
+                  </span>
+                ))}
+              </div>
+            </AboutModule>
 
-      <div
-        className="about-spread-stack"
-        tabIndex={0}
-        aria-label="About profile spreads"
-      >
-        <Reveal className="about-spread about-spread-profile">
-          <div className="about-image-column">
-            <ProfilePhoto />
+            <div className="about-profile-grid">
+              <ContactModule />
+              <EducationModule />
+              <DirectionModule />
+            </div>
           </div>
-          <div className="about-profile-column">
-            <ProfileIntro />
-            <DirectionGrid />
+
+          <div className="about-visual-zone" aria-label={siteConfig.about.portrait.alt}>
+            <AboutVisual />
           </div>
         </Reveal>
 
-        <Reveal className="about-spread about-spread-details" delay={120}>
-          <div className="about-details-main">
-            <ToolAbilityChart />
-            <div className="about-skill-strip-grid">
-              <SkillStripGroup
-                titleZh={about.designSkillsTitleZh}
-                titleEn={about.designSkillsTitleEn}
-                items={siteConfig.about.designSkills}
-              />
-              <SkillStripGroup
-                titleZh={about.aigcToolsTitleZh}
-                titleEn={about.aigcToolsTitleEn}
-                items={siteConfig.about.aigcTools}
-              />
-            </div>
+        <Reveal className="about-board-screen about-index-screen" delay={120}>
+          <div className="about-index-top">
             <WorkExperienceGroup />
+            <ProjectExperienceGroup />
+            <ObjectiveModule />
           </div>
 
-          <aside className="about-details-note">
-            <ProfileRecordGroup titleZh={about.educationTitleZh} titleEn={about.educationTitleEn} items={siteConfig.about.education} />
-            <div className="about-study-note">
-              <p className="font-en text-xs uppercase tracking-[0.18em] text-muted">{about.toolsTitleEn}</p>
-              <h3 className="mt-3 text-2xl leading-tight text-primary">{about.toolsTitleZh}</h3>
-              <p className="mt-5 font-en text-sm uppercase leading-7 tracking-[0.12em] text-primary">
-                {siteConfig.about.tools.join(" / ")}
-              </p>
-            </div>
-            <p className="about-side-mantra">持续学习 / 保持输出</p>
-          </aside>
+          <div className="about-index-bottom">
+            <TagCloudModule label={about.designSkillsTitleEn} titleZh={about.designSkillsTitleZh} items={siteConfig.about.designSkills} />
+            <ToolIconModule label={about.toolsTitleEn} titleZh={about.toolsTitleZh} items={siteConfig.about.tools} />
+            <TagCloudModule label={about.aigcToolsTitleEn} titleZh={about.aigcToolsTitleZh} items={siteConfig.about.aigcTools} />
+            <TagCloudModule label={about.softSkillsTitleEn} titleZh={about.softSkillsTitleZh} items={siteConfig.about.softSkills} />
+          </div>
         </Reveal>
       </div>
     </section>
@@ -201,90 +194,76 @@ function ContactSection() {
   );
 }
 
-function ProfilePhoto() {
+function AboutVisual() {
   const portrait = siteConfig.about.portrait;
-  const about = siteConfig.sections.about;
 
   return (
-    <div
-      className="profile-photo grid min-h-[520px] content-between overflow-hidden rounded-[var(--radius)] p-8"
-      role="img"
-      aria-label={portrait.alt}
-    >
-      <span className="archive-label corner-label font-en text-xs uppercase tracking-[0.16em]">{about.photoTitleEn}</span>
-      <div className="grid place-items-center text-center">
-        <p className="font-en text-6xl font-black tracking-[0.08em] text-primary">HAYATO</p>
-        <p className="mt-3 text-xl font-semibold text-primary">{portrait.cardLabelZh}</p>
-      </div>
-      <div className="photo-caption">
-        <p className="font-en text-xs uppercase tracking-[0.2em] text-muted">{portrait.placeholderEn}</p>
-        <p className="mt-2 text-2xl font-semibold text-primary">{portrait.placeholderZh}</p>
-      </div>
+    <div className="about-visual about-visual-photo">
+      <img className="about-visual-photo-image" src={portrait.src} alt={portrait.alt} loading="lazy" />
     </div>
   );
 }
 
-function ProfileIntro() {
-  return (
-    <section className="profile-intro">
-      <p className="mb-4 font-en text-xs uppercase tracking-[0.18em] text-muted">
-        {siteConfig.sections.about.eyebrowEn}
-      </p>
-      <h3 className="text-5xl leading-tight tracking-[0.03em] text-primary md:text-7xl">
-        {siteConfig.authorName}
-      </h3>
-      <p className="mt-3 font-en text-lg uppercase tracking-[0.24em] text-muted">{siteConfig.authorNameEn}</p>
-      <p className="mt-8 max-w-4xl text-xl leading-9 md:text-2xl md:leading-10">{siteConfig.about.bioZh}</p>
-      <p className="mt-5 max-w-4xl font-en text-sm leading-7 text-muted">{siteConfig.about.bioEn}</p>
-    </section>
-  );
-}
-
-function DirectionGrid() {
-  const about = siteConfig.sections.about;
-
-  return (
-    <section className="direction-panel">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.directionTitleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{about.directionTitleZh}</h3>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {siteConfig.about.designDirections.map((item) => (
-          <article key={item.titleZh} className="direction-item">
-            <span className="linear-icon font-en text-xs font-bold uppercase">{item.icon}</span>
-            <h4 className="mt-4 text-base leading-6 text-primary">{item.titleZh}</h4>
-            <p className="mt-2 font-en text-[0.68rem] uppercase leading-4 tracking-[0.12em] text-muted">
-              {item.titleEn}
-            </p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ProfileRecordGroup({
-  titleZh,
-  titleEn,
-  items,
+function AboutModule({
+  label,
+  className = "",
+  children,
 }: {
-  titleZh: string;
-  titleEn: string;
-  items: Array<{ period: string; titleZh: string; titleEn: string }>;
+  label: string;
+  className?: string;
+  children: ReactNode;
 }) {
   return (
-    <section className="profile-record">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{titleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{titleZh}</h3>
-      <div className="grid gap-5">
-        {items.map((item) => (
-          <article key={`${item.period}-${item.titleZh}`} className="profile-entry">
-            <p className="archive-label font-en text-[0.65rem] uppercase tracking-[0.12em]">{item.period}</p>
-            <h4 className="mt-3 text-lg leading-7 text-primary">{item.titleZh}</h4>
-            <p className="mt-1 font-en text-xs uppercase leading-5 tracking-[0.12em] text-muted">{item.titleEn}</p>
-          </article>
+    <section className={`about-info-module ${className}`}>
+      <p className="about-module-label font-en">{label}</p>
+      {children}
+    </section>
+  );
+}
+
+function ContactModule() {
+  return (
+    <AboutModule label={siteConfig.sections.about.contactTitleEn}>
+      <h3 className="about-module-title">{siteConfig.sections.about.contactTitleZh}</h3>
+      <div className="about-line-list">
+        {siteConfig.about.profileContact.map((item) => (
+          <p key={item.label} className="about-info-line">
+            <span className="about-line-label font-en">{item.label}</span>
+            <span>{item.value}</span>
+          </p>
         ))}
       </div>
-    </section>
+    </AboutModule>
+  );
+}
+
+function EducationModule() {
+  const education = siteConfig.about.education[0];
+
+  return (
+    <AboutModule label={siteConfig.sections.about.educationTitleEn}>
+      <h3 className="about-module-title">{siteConfig.sections.about.educationTitleZh}</h3>
+      <div className="about-line-list">
+        <p className="about-strong-line">{education.titleZh}</p>
+        <p>{education.titleEn}</p>
+        <p className="about-highlight-line font-en">{education.period}</p>
+      </div>
+    </AboutModule>
+  );
+}
+
+function DirectionModule() {
+  return (
+    <AboutModule label={siteConfig.sections.about.directionTitleEn} className="about-direction-module">
+      <h3 className="about-module-title">{siteConfig.sections.about.directionTitleZh}</h3>
+      <div className="about-mini-tags">
+        {siteConfig.about.designDirections.map((item) => (
+          <span key={item.titleZh} className="about-mini-tag">
+            {item.titleZh}
+          </span>
+        ))}
+      </div>
+    </AboutModule>
   );
 }
 
@@ -292,69 +271,92 @@ function WorkExperienceGroup() {
   const about = siteConfig.sections.about;
 
   return (
-    <section className="profile-record about-index-section about-work-index">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{about.workExperienceTitleEn}</p>
-      <h3 className="mb-5 text-2xl text-primary">{about.workExperienceTitleZh}</h3>
-      <div className="about-work-list">
+    <AboutModule label={about.workExperienceTitleEn} className="about-index-module">
+      <h3 className="about-module-title">{about.workExperienceTitleZh}</h3>
+      <div className="about-index-list">
         {siteConfig.about.workExperience.map((item) => (
-          <article key={`${item.period}-${item.organizationZh}`} className="profile-entry about-work-row">
-            <p className="archive-label about-period-label font-en text-[0.65rem] uppercase tracking-[0.12em]">{item.period}</p>
-            <div className="about-work-company">
-              <h4 className="text-lg leading-7 text-primary">{item.organizationZh}</h4>
-              <p className="mt-1 font-en text-xs uppercase leading-5 tracking-[0.12em] text-muted">{item.roleEn}</p>
-            </div>
-            <p className="about-work-role text-base font-semibold leading-6 text-primary">{item.roleZh}</p>
+          <article key={`${item.period}-${item.organizationZh}`} className="about-experience-item">
+            <p className="about-highlight-line font-en">{item.period}</p>
+            <h4>{item.organizationZh}</h4>
+            <p>{item.roleZh}</p>
           </article>
         ))}
       </div>
-    </section>
+    </AboutModule>
   );
 }
 
-function ToolAbilityChart() {
+function ProjectExperienceGroup() {
   const about = siteConfig.sections.about;
-  const chartItems = [
-    { label: "Figma", note: "Interface", levelClass: "is-tall" },
-    { label: "Illustrator", note: "Vector", levelClass: "is-peak" },
-    { label: "Photoshop", note: "Image", levelClass: "is-high" },
-    { label: "AIGC", note: "Assist", levelClass: "is-mid" },
-  ];
 
   return (
-    <section className="profile-record about-chart-section">
-      <div className="about-chart-heading">
-        <p className="font-en text-xs uppercase tracking-[0.16em] text-muted">{about.toolsTitleEn}</p>
-        <h3 className="mt-3 text-2xl text-primary">{about.toolsTitleZh}</h3>
+    <AboutModule label={about.projectExperienceTitleEn} className="about-index-module">
+      <h3 className="about-module-title">{about.projectExperienceTitleZh}</h3>
+      <div className="about-index-list">
+        {siteConfig.about.projectExperience.map((item) => (
+          <article key={item.index} className="about-project-item">
+            <p className="about-project-index font-en">{item.index}</p>
+            <h4>{item.titleZh}</h4>
+            <p className="font-en">{item.titleEn}</p>
+          </article>
+        ))}
       </div>
-      <div className="about-tool-chart" aria-label="工具能力视觉索引">
-        <p className="about-chart-axis text-sm text-primary">能力感知</p>
-        <div className="about-tool-bars">
-          {chartItems.map((item) => (
-            <article key={item.label} className="about-tool-bar">
-              <span className={`about-tool-bar-fill ${item.levelClass}`} aria-hidden="true" />
-              <h4 className="font-en text-sm font-semibold text-primary">{item.label}</h4>
-              <p className="font-en text-[0.62rem] uppercase tracking-[0.12em] text-muted">{item.note}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+    </AboutModule>
   );
 }
 
-function SkillStripGroup({ titleZh, titleEn, items }: { titleZh: string; titleEn: string; items: string[] }) {
+function ObjectiveModule() {
+  const about = siteConfig.sections.about;
+
   return (
-    <section className="profile-record about-skill-strip">
-      <p className="mb-3 font-en text-xs uppercase tracking-[0.16em] text-muted">{titleEn}</p>
-      <h3 className="text-2xl text-primary">{titleZh}</h3>
-      <div className="mt-4 flex flex-wrap gap-2">
+    <AboutModule label={about.objectiveTitleEn} className="about-objective-module about-index-module">
+      <h3 className="about-module-title">{about.objectiveTitleZh}</h3>
+      <p className="about-objective-text">{siteConfig.about.objective}</p>
+      <div className="about-keyword-row">
+        <span className="about-soft-highlight">品牌视觉</span>
+        <span className="about-soft-highlight">图案系统</span>
+        <span className="about-soft-highlight">儿童消费场景</span>
+      </div>
+    </AboutModule>
+  );
+}
+
+function TagCloudModule({ label, titleZh, items }: { label: string; titleZh: string; items: string[] }) {
+  return (
+    <AboutModule label={label} className="about-tag-module">
+      <h3 className="about-module-title">{titleZh}</h3>
+      <div className="about-mini-tags">
         {items.map((item) => (
-          <span key={item} className="tag-pill text-xs text-primary">
+          <span key={item} className="about-mini-tag">
             {item}
           </span>
         ))}
       </div>
-    </section>
+    </AboutModule>
+  );
+}
+
+function ToolIconModule({
+  label,
+  titleZh,
+  items,
+}: {
+  label: string;
+  titleZh: string;
+  items: Array<{ name: string; icon: string }>;
+}) {
+  return (
+    <AboutModule label={label} className="about-tag-module about-tool-icon-module">
+      <h3 className="about-module-title">{titleZh}</h3>
+      <div className="about-tool-icon-grid">
+        {items.map((item) => (
+          <article key={item.name} className="about-tool-icon-item">
+            <img src={item.icon} alt={`${item.name} icon`} loading="lazy" />
+            <span className="font-en">{item.name}</span>
+          </article>
+        ))}
+      </div>
+    </AboutModule>
   );
 }
 
