@@ -37,7 +37,7 @@ export const themeConfig = {
   shadow: "none",
   fonts: {
     chineseHeading:
-      '"ZCOOL KuaiLe", "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif',
+      'var(--font-maoken-assorted-sans), "猫啃什锦黑", "Maoken Assorted Sans", "ZCOOL KuaiLe", "Noto Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif',
     chinese:
       '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Heiti SC", sans-serif',
     english: '"Inter", "Arial", sans-serif',
@@ -48,7 +48,7 @@ export const themeConfig = {
       medium: "500",
       semibold: "600",
       bold: "700",
-      heading: "800",
+      heading: "400",
     },
   },
 };

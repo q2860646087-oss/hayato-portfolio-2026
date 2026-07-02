@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { HeroMarquee } from "@/components/HeroMarquee";
 import { ImageBlock } from "@/components/ImageBlock";
 import { Reveal } from "@/components/Reveal";
 import { StyledHero } from "@/components/StyledHero";
@@ -12,16 +13,60 @@ import {
   type ProjectSection,
   type ProjectWorkChapter,
 } from "@/data/projects";
+import { assetPath } from "@/lib/assetPath";
+
+const workVisualAssets = {
+  designWorksTitle: assetPath("/assets/work/design-works-title.png"),
+  letterZooTitle: assetPath("/assets/work/letter-zoo/letter-zoo-title.png"),
+  letterZooBubble: assetPath("/assets/work/letter-zoo/bubble-wrap.png"),
+  letterZooAnimals: [
+    {
+      key: "a",
+      src: assetPath("/assets/work/letter-zoo/animal-a.png"),
+      alt: "A letter animal",
+      className: "letter-zoo-animal-a letter-zoo-animal-hop",
+    },
+    {
+      key: "b",
+      src: assetPath("/assets/work/letter-zoo/bear-letter.png"),
+      alt: "B bear letter",
+      className: "letter-zoo-animal-b letter-zoo-animal-wave",
+    },
+    {
+      key: "c",
+      src: assetPath("/assets/work/letter-zoo/animal-c.png"),
+      alt: "C cat letter",
+      className: "letter-zoo-animal-c letter-zoo-animal-hop",
+    },
+    {
+      key: "z",
+      src: assetPath("/assets/work/letter-zoo/animal-z.png"),
+      alt: "Z zebra letter",
+      className: "letter-zoo-animal-z letter-zoo-animal-wobble",
+    },
+    {
+      key: "o",
+      src: assetPath("/assets/work/letter-zoo/animal-o.svg"),
+      alt: "O owl letter",
+      className: "letter-zoo-animal-o letter-zoo-animal-float",
+    },
+  ],
+};
 
 export default function HomePage() {
   return (
     <main className="portfolio-page">
       <StyledHero />
       <AboutSection />
+      <AboutWorkRibbon />
       <ProjectsSection />
       <ContactSection />
     </main>
   );
+}
+
+function AboutWorkRibbon() {
+  return <HeroMarquee src={siteConfig.hero.marquee.top} direction="left" className="section-divider-marquee" />;
 }
 
 function AboutSection() {
@@ -84,9 +129,10 @@ function ProjectsSection() {
   return (
     <section id="work" className="work-section section-space">
       <div className="page-shell">
-        <Reveal className="work-heading mx-auto mb-20 max-w-4xl text-center">
+        <Reveal className="work-heading mx-auto mb-20 max-w-6xl text-center">
           <p className="mb-5 font-en text-xs uppercase tracking-[0.22em]">{work.titleEn}</p>
-          <h2 className="text-5xl leading-tight tracking-[0.06em] md:text-8xl">{work.titleZh}</h2>
+          <h2 className="sr-only">{work.titleZh}</h2>
+          <img className="work-section-title-image" src={workVisualAssets.designWorksTitle} alt={work.titleZh} loading="lazy" />
           <p className="mx-auto mt-8 max-w-3xl text-lg leading-8">{work.introZh}</p>
           <p className="mx-auto mt-3 max-w-3xl font-en text-sm leading-7">{work.introEn}</p>
         </Reveal>
@@ -108,11 +154,14 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
   return (
     <article className="work-project page-shell">
       <Reveal delay={index * 70}>
-        <header className="work-project-cover mx-auto max-w-5xl text-center">
-          <span className="work-project-number corner-label font-en text-xs uppercase tracking-[0.16em]">{project.order}</span>
-          <h1 className="work-project-title mt-9 text-5xl leading-[1.18] tracking-[0.05em] md:text-8xl">
-            {project.title.zh}
-          </h1>
+        <header className={`work-project-cover mx-auto max-w-5xl text-center ${index === 0 ? "is-letter-zoo-project" : ""}`}>
+          {index === 0 ? (
+            <LetterZooProjectTitle title={project.title.zh} />
+          ) : (
+            <h1 className="work-project-title mt-9 text-5xl leading-[1.18] tracking-[0.05em] md:text-8xl">
+              {project.title.zh}
+            </h1>
+          )}
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
           <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
           <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
@@ -156,6 +205,21 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
         </Reveal>
       </div>
     </article>
+  );
+}
+
+function LetterZooProjectTitle({ title }: { title: string }) {
+  return (
+    <div className="letter-zoo-title-card mt-9" aria-label={title}>
+      <h1 className="sr-only">{title}</h1>
+      <img className="letter-zoo-bubble" src={workVisualAssets.letterZooBubble} alt="" aria-hidden="true" loading="lazy" />
+      <img className="letter-zoo-title-image" src={workVisualAssets.letterZooTitle} alt="字母动物园" loading="lazy" />
+      <div className="letter-zoo-animal-layer" aria-hidden="true">
+        {workVisualAssets.letterZooAnimals.map((animal) => (
+          <img key={animal.key} className={`letter-zoo-animal ${animal.className}`} src={animal.src} alt={animal.alt} loading="lazy" />
+        ))}
+      </div>
+    </div>
   );
 }
 

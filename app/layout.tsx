@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { siteConfig } from "@/config/site";
 import { createThemeCss } from "@/config/theme";
+
+const maokenAssortedSans = localFont({
+  src: "./fonts/maoken-assorted-sans-lite.otf",
+  weight: "400",
+  variable: "--font-maoken-assorted-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" className={maokenAssortedSans.variable}>
       <head>
         <link rel="icon" href={siteConfig.favicon} type="image/png" />
         <link rel="shortcut icon" href={siteConfig.favicon} />

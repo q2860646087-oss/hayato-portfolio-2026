@@ -159,6 +159,17 @@ h3,
   animation: heroRibbonTrackRight 24s linear infinite;
 }
 
+.hero-marquee.section-divider-marquee {
+  position: relative;
+  left: 50%;
+  z-index: 2;
+  width: 100vw;
+  min-width: 100vw;
+  height: clamp(58px, 5vw, 82px);
+  margin-block: clamp(0.5rem, 1.6vw, 1.5rem);
+  transform: translateX(-50%);
+}
+
 @keyframes heroRibbonTrackLeft {
   from {
     transform: translate3d(0, 0, 0);
@@ -1257,6 +1268,24 @@ h3,
   line-height: 1.15;
 }
 
+.about-module-title,
+.about-profile-name,
+.about-profile-line,
+.about-soft-highlight,
+.about-mini-tag,
+.about-strong-line,
+.about-experience-item h4,
+.about-project-item h4,
+.about-visual-caption-zh,
+.hero-title-zh,
+.work-project-title,
+.work-h2-title,
+.work-h3-title {
+  font-family: var(--font-heading);
+  font-synthesis: none;
+  font-weight: var(--font-weight-heading);
+}
+
 .project-text-block {
   max-width: 920px;
 }
@@ -1264,6 +1293,14 @@ h3,
 .work-section {
   color: var(--color-work-blue);
   background: transparent;
+}
+
+.work-section-title-image {
+  display: block;
+  width: min(100%, 1040px);
+  height: auto;
+  margin-inline: auto;
+  filter: drop-shadow(0.12em 0.16em 0 color-mix(in srgb, var(--color-work-yellow) 16%, transparent));
 }
 
 .work-section .text-primary,
@@ -1275,7 +1312,6 @@ h3,
   color: var(--color-work-blue);
 }
 
-.work-section .work-project-number,
 .work-section .archive-label,
 .work-section .tag-pill,
 .work-meta-chip,
@@ -1290,6 +1326,168 @@ h3,
 
 .work-project-title {
   color: var(--color-work-blue);
+}
+
+.is-letter-zoo-project {
+  max-width: min(100%, 1160px);
+}
+
+.letter-zoo-title-card {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1080px);
+  aspect-ratio: 2 / 1;
+  margin-inline: auto;
+  overflow: visible;
+  background: color-mix(in srgb, white 94%, var(--color-work-background));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--color-work-blue) 8%, transparent),
+    0 22px 55px color-mix(in srgb, var(--color-work-blue) 6%, transparent);
+}
+
+.letter-zoo-bubble {
+  position: absolute;
+  inset: -7% -5% -9%;
+  z-index: 5;
+  width: 110%;
+  height: 116%;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.52;
+  pointer-events: none;
+  user-select: none;
+}
+
+.letter-zoo-title-image {
+  position: absolute;
+  inset: 11% 8% 11%;
+  z-index: 3;
+  width: 84%;
+  height: 78%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.letter-zoo-animal-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.letter-zoo-animal {
+  position: absolute;
+  width: clamp(20px, 2.45vw, 38px);
+  height: auto;
+  opacity: 0.82;
+  transform: rotate(var(--animal-rotate, 0deg));
+  transform-origin: 50% 82%;
+  filter: drop-shadow(0 0.34rem 0 color-mix(in srgb, var(--color-work-blue) 8%, transparent));
+  will-change: transform;
+}
+
+.letter-zoo-animal-a {
+  --animal-rotate: -13deg;
+  top: 49%;
+  left: 16.5%;
+  width: clamp(18px, 2.1vw, 32px);
+}
+
+.letter-zoo-animal-b {
+  --animal-rotate: -8deg;
+  top: 43%;
+  left: 27.5%;
+  width: clamp(25px, 2.8vw, 43px);
+}
+
+.letter-zoo-animal-c {
+  --animal-rotate: 8deg;
+  top: 41.5%;
+  left: 42%;
+  width: clamp(24px, 2.65vw, 40px);
+}
+
+.letter-zoo-animal-z {
+  --animal-rotate: 9deg;
+  top: 45%;
+  right: 32.5%;
+  width: clamp(25px, 2.75vw, 42px);
+}
+
+.letter-zoo-animal-o {
+  --animal-rotate: 4deg;
+  top: 46%;
+  right: 22.5%;
+  width: clamp(25px, 2.75vw, 42px);
+}
+
+.letter-zoo-animal-hop {
+  animation: letterZooHop 2.35s ease-in-out infinite;
+}
+
+.letter-zoo-animal-wave {
+  animation: letterZooWave 2.8s ease-in-out infinite;
+}
+
+.letter-zoo-animal-wobble {
+  animation: letterZooWobble 2.55s ease-in-out infinite;
+}
+
+.letter-zoo-animal-float {
+  animation: letterZooFloat 3.1s ease-in-out infinite;
+}
+
+@keyframes letterZooHop {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--animal-rotate, 0deg));
+  }
+
+  46% {
+    transform: translate3d(0, -12%, 0) rotate(calc(var(--animal-rotate, 0deg) + 3deg));
+  }
+}
+
+@keyframes letterZooWave {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--animal-rotate, 0deg));
+  }
+
+  42% {
+    transform: translate3d(0, -4%, 0) rotate(calc(var(--animal-rotate, 0deg) - 7deg));
+  }
+
+  70% {
+    transform: translate3d(0, 1%, 0) rotate(calc(var(--animal-rotate, 0deg) + 5deg));
+  }
+}
+
+@keyframes letterZooWobble {
+  0%,
+  100% {
+    transform: rotate(var(--animal-rotate, 0deg));
+  }
+
+  38% {
+    transform: rotate(calc(var(--animal-rotate, 0deg) + 5deg));
+  }
+
+  68% {
+    transform: rotate(calc(var(--animal-rotate, 0deg) - 4deg));
+  }
+}
+
+@keyframes letterZooFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--animal-rotate, 0deg));
+  }
+
+  50% {
+    transform: translate3d(0, -8%, 0) rotate(calc(var(--animal-rotate, 0deg) + 2deg));
+  }
 }
 
 .work-h2-block {
@@ -1892,6 +2090,62 @@ h3,
     justify-content: flex-start;
   }
 
+  .work-section-title-image {
+    width: min(100%, 560px);
+  }
+
+  .letter-zoo-title-card {
+    aspect-ratio: 2 / 1;
+  }
+
+  .letter-zoo-bubble {
+    inset: -8% -8% -10%;
+    width: 116%;
+    height: 118%;
+    opacity: 0.48;
+  }
+
+  .letter-zoo-title-image {
+    inset: 12% 5% 12%;
+    width: 90%;
+    height: 76%;
+  }
+
+  .letter-zoo-animal {
+    width: clamp(18px, 5vw, 28px);
+    opacity: 0.8;
+  }
+
+  .letter-zoo-animal-a {
+    top: 50%;
+    left: 14%;
+    width: clamp(16px, 4.6vw, 25px);
+  }
+
+  .letter-zoo-animal-b {
+    top: 43.5%;
+    left: 27%;
+    width: clamp(21px, 5.3vw, 30px);
+  }
+
+  .letter-zoo-animal-c {
+    top: 42%;
+    left: 42%;
+    width: clamp(20px, 5.2vw, 29px);
+  }
+
+  .letter-zoo-animal-z {
+    top: 45.5%;
+    right: 31%;
+    width: clamp(21px, 5.3vw, 30px);
+  }
+
+  .letter-zoo-animal-o {
+    top: 46.5%;
+    right: 20%;
+    width: clamp(21px, 5.3vw, 30px);
+  }
+
   .software-icon-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem 1rem;
@@ -1983,6 +2237,11 @@ h3,
   .reveal.hero-png-stage,
   .reveal.hero-png-stage.is-visible {
     transform: translate(-50%, -50%);
+  }
+
+  .letter-zoo-animal {
+    animation: none;
+    transform: rotate(var(--animal-rotate, 0deg));
   }
 }
 .hero-png-frame {
@@ -2082,4 +2341,53 @@ h3,
   34% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+}
+/* Letter Zoo title transparent background override */
+.letter-zoo-title-card {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.letter-zoo-title-card::before,
+.letter-zoo-title-card::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.letter-zoo-bubble {
+  background: transparent !important;
+}
+/* Letter Zoo transparent background + full opacity override */
+.letter-zoo-title-card {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.letter-zoo-title-card::before,
+.letter-zoo-title-card::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.letter-zoo-bubble,
+.letter-zoo-bubble img,
+.letter-zoo-title-card .letter-zoo-bubble,
+.letter-zoo-title-card img {
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+/* Move Letter Zoo bubble wrap slightly to the right */
+.letter-zoo-bubble {
+  transform: translateX(16px) !important;
+}
+transform: translateX(24px) !important;
+/* Move Letter Zoo bubble wrap image slightly to the right */
+.letter-zoo-bubble,
+.letter-zoo-bubble img {
+  transform: translateX(16px) !important;
+}
+/* Hide Letter Zoo animals */
+.letter-zoo-title-card .letter-zoo-animal {
+  display: none !important;
 }
