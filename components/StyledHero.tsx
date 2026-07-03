@@ -6,8 +6,8 @@ import { assetPath } from "@/lib/assetPath";
 
 export function StyledHero() {
   const hero = siteConfig.hero;
-  const heroDeco01 = assetPath("/assets/hero/hero-deco-01.png");
-  const heroDeco02 = assetPath("/assets/hero/hero-deco-02.png");
+  const heroDeco01 = assetPath("/assets/hero/hero-deco-01.webp");
+  const heroDeco02 = assetPath("/assets/hero/hero-deco-02.webp");
 
   const heroCornerText = [
     { key: "top-left", className: "hero-corner-text-top-left", lines: ["VISUAL DESIGNER", "& ILLUSTRATOR"] },

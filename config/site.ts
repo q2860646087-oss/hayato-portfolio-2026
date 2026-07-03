@@ -26,7 +26,7 @@ export const siteConfig = {
   favicon: assetPath("/favicon.png?v=20260609"),
   faviconSvg: assetPath("/favicon.svg?v=20260609"),
   hero: {
-    mainImage: assetPath("/assets/hero/hero-main.png"),
+    mainImage: assetPath("/assets/hero/hero-main.webp"),
     alt: "Chen Ziang Hayato visual design portfolio hero image",
     textLayers: {
       topLeft: assetPath("/assets/hero/text-top-left.png"),
@@ -35,8 +35,8 @@ export const siteConfig = {
       bottomRight: assetPath("/assets/hero/text-bottom-right.png"),
     },
     marquee: {
-      top: assetPath("/assets/marquee/top-marquee.png"),
-      bottom: assetPath("/assets/marquee/bottom-marquee.png"),
+      top: assetPath("/assets/marquee/top-marquee.webp"),
+      bottom: assetPath("/assets/marquee/bottom-marquee.webp"),
     },
   },
   contact: {
