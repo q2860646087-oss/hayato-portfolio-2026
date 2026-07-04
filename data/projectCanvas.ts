@@ -8,7 +8,8 @@ import type {
 } from "@/types/freeCanvas";
 
 const canvasWidth = 1440;
-const canvasHeight = 3200;
+const baseCanvasHeight = 3200;
+const bottomPadding = 350;
 const blue = "var(--color-work-blue)";
 const yellow = "var(--color-work-yellow)";
 const paper = "var(--color-work-background)";
@@ -21,10 +22,7 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
   const finalOne = getImageByRole(project.detailImages, "final", 0);
   const finalTwo = getImageByRole(project.detailImages, "final", 1);
 
-  return {
-    canvasWidth,
-    canvasHeight,
-    elements: [
+  const elements = [
       box("paper", 0, 0, 1440, 3200, 0, {
         background: paper,
       }),
@@ -142,7 +140,16 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
         opacity: 0.7,
         uppercase: true,
       }),
-    ],
+    ];
+
+  // 自动计算画布高度：取固定高度与内容底部+padding 的较大值
+  const maxBottom = Math.max(...elements.map((el) => el.y + el.h));
+  const autoHeight = maxBottom + bottomPadding;
+
+  return {
+    canvasWidth,
+    canvasHeight: Math.max(baseCanvasHeight, autoHeight),
+    elements,
   };
 }
 
