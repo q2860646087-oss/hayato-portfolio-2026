@@ -4,6 +4,7 @@ import { ImageBlock } from "@/components/ImageBlock";
 import { Reveal } from "@/components/Reveal";
 import { StyledHero } from "@/components/StyledHero";
 import { BlurText } from "@/components/BlurText";
+import ProjectNavigator from "@/components/ProjectNavigator";
 import { siteConfig } from "@/config/site";
 import {
   projects,
@@ -56,11 +57,14 @@ const workVisualAssets = {
 export default function HomePage() {
   return (
     <main className="portfolio-page">
-      <StyledHero />
+      <section id="hero">
+        <StyledHero />
+      </section>
       <AboutSection />
       <AboutWorkRibbon />
       <ProjectsSection />
       <ContactSection />
+      <ProjectNavigator />
     </main>
   );
 }
@@ -154,7 +158,7 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
   const [coverChapter, ...chapters] = project.workChapters;
 
   return (
-    <article className="work-project page-shell">
+    <article id={`project-${project.slug}`} className="work-project page-shell">
       <Reveal delay={index * 70}>
         <header className={`work-project-cover mx-auto max-w-5xl text-center ${index === 0 ? "is-letter-zoo-project" : ""}`}>
           {index === 0 ? (

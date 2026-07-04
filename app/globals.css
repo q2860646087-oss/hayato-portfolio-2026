@@ -1001,9 +1001,6 @@ h3,
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr) minmax(0, 1.12fr);
   gap: clamp(1.4rem, 2.6vw, 3.2rem);
   padding-top: clamp(1.2rem, 2vw, 2rem);
-  background:
-    linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-primary) 16%, transparent), transparent)
-    top / 100% 1px no-repeat;
 }
 
 .about-line-list {
@@ -1196,10 +1193,6 @@ h3,
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(1.2rem, 2.3vw, 2.4rem);
-  padding-top: clamp(1.4rem, 2.5vw, 2.4rem);
-  background:
-    linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-primary) 16%, transparent), transparent)
-    top / 100% 1px no-repeat;
 }
 
 .about-index-list {
@@ -1212,10 +1205,6 @@ h3,
   display: grid;
   min-width: 0;
   gap: 0.36rem;
-  padding-top: clamp(0.65rem, 1vw, 0.9rem);
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--color-primary) 18%, transparent), transparent)
-    top left / 100% 1px no-repeat;
 }
 
 .about-experience-item h4,
@@ -2480,4 +2469,155 @@ transform: translateX(24px) !important;
       0 0 12px color-mix(in srgb, var(--color-primary) 12%, transparent);
     transition-duration: 0.9s;
   }
+}
+
+/* ============================================================
+   Project Navigator — 右侧悬浮毛玻璃定位条
+   ============================================================ */
+
+.project-rail {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) translateX(24px);
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease;
+}
+
+.project-rail.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.project-rail__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 52px;
+  height: 44px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-background) 78%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 10px 28px color-mix(in srgb, var(--color-primary) 6%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-text) 6%, transparent);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition:
+    width 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 300ms ease,
+    color 300ms ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.project-rail__item:hover,
+.project-rail__item:focus-visible {
+  width: 260px;
+  height: 56px;
+  padding-right: 16px;
+  transform: translateX(-8px);
+  background: color-mix(in srgb, var(--color-background) 88%, transparent);
+  color: var(--color-primary);
+  box-shadow:
+    0 14px 36px color-mix(in srgb, var(--color-primary) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+
+.project-rail__index {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  transition: color 300ms ease;
+}
+
+.project-rail__item:hover .project-rail__index,
+.project-rail__item:focus-visible .project-rail__index {
+  color: var(--color-primary);
+}
+
+.project-rail__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin-right: 8px;
+  opacity: 0;
+  transform: translateX(10px);
+  max-width: 0;
+  overflow: hidden;
+  transition:
+    opacity 300ms ease 60ms,
+    transform 300ms ease 60ms,
+    max-width 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-rail__item:hover .project-rail__content,
+.project-rail__item:focus-visible .project-rail__content {
+  opacity: 1;
+  transform: translateX(0);
+  max-width: 180px;
+}
+
+.project-rail__title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-primary);
+  text-align: right;
+}
+
+.project-rail__subtitle {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  text-align: right;
+  font-family: var(--font-body);
+}
+
+.project-rail__dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-highlight);
+  transition: transform 300ms ease, opacity 300ms ease;
+}
+
+.project-rail__item:hover .project-rail__dot,
+.project-rail__item:focus-visible .project-rail__dot {
+  transform: scale(1.4);
+}
+
+/* 移动端隐藏 */
+@media (max-width: 768px) {
+  .project-rail {
+    display: none;
+  }
+}
+
+/* 项目锚点滚动定位 */
+[id^="project-"] {
+  scroll-margin-top: 120px;
 }
