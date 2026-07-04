@@ -22,7 +22,7 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
   const finalOne = getImageByRole(project.detailImages, "final", 0);
   const finalTwo = getImageByRole(project.detailImages, "final", 1);
 
-  const elements = [
+  const baseElements: FreeCanvasElement[] = [
       box("paper", 0, 0, 1440, 3200, 0, {
         background: paper,
       }),
@@ -141,6 +141,8 @@ export function createProjectCanvas(project: Project): FreeCanvasPage {
         uppercase: true,
       }),
     ];
+
+  const elements = baseElements;
 
   // 自动计算画布高度：取固定高度与内容底部+padding 的较大值
   const maxBottom = Math.max(...elements.map((el) => el.y + el.h));

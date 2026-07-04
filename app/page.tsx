@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { HeroMarquee } from "@/components/HeroMarquee";
 import { ImageBlock } from "@/components/ImageBlock";
@@ -205,14 +204,6 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
           />
         ))}
 
-        <Reveal delay={index * 70 + 250}>
-          <div className="flex justify-center">
-            <Link href={`/projects/${project.slug}`} className="work-detail-link px-7 py-4 text-sm font-semibold">
-              {work.detailButtonZh}
-              <span className="ml-2 font-en text-xs uppercase tracking-[0.12em]">{work.detailButtonEn}</span>
-            </Link>
-          </div>
-        </Reveal>
       </div>
     </article>
   );
