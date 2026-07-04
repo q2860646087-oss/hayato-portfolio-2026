@@ -4,6 +4,7 @@ import { HeroMarquee } from "@/components/HeroMarquee";
 import { ImageBlock } from "@/components/ImageBlock";
 import { Reveal } from "@/components/Reveal";
 import { StyledHero } from "@/components/StyledHero";
+import { BlurText } from "@/components/BlurText";
 import { siteConfig } from "@/config/site";
 import {
   projects,
@@ -79,7 +80,9 @@ function AboutSection() {
           <div className="about-profile-info">
             <AboutModule label="PROFILE" className="about-profile-module">
               <p className="about-module-kicker font-en">ABOUT PROFILE</p>
-              <h2 className="about-profile-name text-primary">{siteConfig.authorName}</h2>
+              <h2 className="about-profile-name text-primary ink-reveal">
+                {siteConfig.authorName}
+              </h2>
               <p className="about-profile-en font-en">{siteConfig.authorNameEn}</p>
               <p className="about-profile-line">{siteConfig.about.profileLine}</p>
               <p className="about-profile-bio">{siteConfig.about.bioZh}</p>
@@ -159,7 +162,14 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
             <LetterZooProjectTitle title={project.title.zh} />
           ) : (
             <h1 className="work-project-title mt-9 text-5xl leading-[1.18] tracking-[0.05em] md:text-8xl">
-              {project.title.zh}
+              <BlurText
+                text={project.title.zh}
+                delay={65}
+                animateBy="letters"
+                direction={index % 2 === 0 ? "top" : "bottom"}
+                stepDuration={0.2}
+                className="inline-block"
+              />
             </h1>
           )}
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
@@ -230,7 +240,16 @@ function ContactSection() {
     <section id="contact" className="page-shell section-space">
       <Reveal>
         <p className="mb-4 font-en text-xs uppercase tracking-[0.18em] text-muted">{contact.titleEn}</p>
-        <h2 className="text-4xl leading-tight tracking-[0.04em] text-primary md:text-7xl">{contact.titleZh}</h2>
+        <h2 className="text-4xl leading-tight tracking-[0.04em] text-primary md:text-7xl">
+          <BlurText
+            text={contact.titleZh}
+            delay={80}
+            animateBy="letters"
+            direction="top"
+            stepDuration={0.2}
+            className="inline-block"
+          />
+        </h2>
         <p className="mt-7 max-w-4xl text-xl leading-9">{contact.introZh}</p>
         <p className="mt-4 max-w-4xl font-en text-sm leading-7 text-muted">{contact.introEn}</p>
 
@@ -440,7 +459,7 @@ function ProjectWorkChapterBlock({
       <section className="work-h2-block">
         <header className="work-h2-heading mx-auto max-w-4xl text-center">
           <p className="mb-4 font-en text-xs uppercase tracking-[0.22em]">{chapter.titleEn}</p>
-          <h2 className="work-h2-title text-4xl leading-tight tracking-[0.05em] md:text-6xl">{chapter.titleZh}</h2>
+          <h2 className="work-h2-title ink-reveal text-4xl leading-tight tracking-[0.05em] md:text-6xl">{chapter.titleZh}</h2>
           <p className="mx-auto mt-7 max-w-3xl text-lg leading-8">{chapter.descriptionZh}</p>
           <p className="mx-auto mt-3 max-w-3xl font-en text-sm leading-7">{chapter.descriptionEn}</p>
         </header>

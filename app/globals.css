@@ -70,6 +70,8 @@ h3,
 }
 
 .nav-shell {
+  position: relative;
+  overflow: hidden;
   width: min(90vw, 1280px);
   min-height: 56px;
   max-height: 72px;
@@ -77,6 +79,36 @@ h3,
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--color-background) 82%, transparent);
   box-shadow: 0 18px 42px color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+/* 导航栏装饰层：纸张颗粒 + 细网格 + 暖黄色高光 */
+.nav-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.06;
+  background:
+    radial-gradient(circle, var(--color-highlight) 0 1.5px, transparent 2px),
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 12px 12px, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+  mix-blend-mode: multiply;
+}
+
+/* 暖黄色半透明高光 */
+.nav-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.04;
+  background: radial-gradient(ellipse at 20% 50%, var(--color-highlight) 0%, transparent 60%);
+  mix-blend-mode: screen;
 }
 
 .nav-logo-box {
@@ -2390,4 +2422,62 @@ transform: translateX(24px) !important;
 /* Hide Letter Zoo animals */
 .letter-zoo-title-card .letter-zoo-animal {
   display: none !important;
+}
+
+/* ============================================================
+   Ink Reveal — 文字水墨晕染显现效果
+   文字从模糊到清晰，带有墨迹扩散的质感
+   ============================================================ */
+
+.ink-reveal {
+  position: relative;
+  display: inline-block;
+  /* 初始状态：模糊 + 半透明 + 墨迹扩散阴影 */
+  filter: blur(6px);
+  opacity: 0.3;
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--color-primary) 25%, transparent),
+    0 0 16px color-mix(in srgb, var(--color-primary) 15%, transparent);
+  transition:
+    filter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    text-shadow 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: filter, opacity, text-shadow;
+}
+
+.ink-reveal.is-visible {
+  /* 最终状态：清晰 + 完全不透明 + 正常文字阴影 */
+  filter: blur(0);
+  opacity: 1;
+  text-shadow: none;
+}
+
+/* 当父容器 Reveal 变为可见时，触发动画 */
+.reveal.is-visible .ink-reveal {
+  filter: blur(0);
+  opacity: 1;
+  text-shadow: none;
+}
+
+/* 针对 .work-h2-title 的专用样式 */
+.work-h2-title.ink-reveal {
+  font-size: clamp(2rem, 2.5vw, 2.8rem);
+  letter-spacing: 0.05em;
+}
+
+/* 针对 .work-project-title 的专用样式 */
+.work-project-title.ink-reveal {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  letter-spacing: 0.05em;
+}
+
+/* 针对移动端 */
+@media (max-width: 768px) {
+  .ink-reveal {
+    filter: blur(4px);
+    text-shadow:
+      0 0 6px color-mix(in srgb, var(--color-primary) 20%, transparent),
+      0 0 12px color-mix(in srgb, var(--color-primary) 12%, transparent);
+    transition-duration: 0.9s;
+  }
 }

@@ -189,14 +189,6 @@ export const projects: Project[] = [
     ],
     workChapters: [
       {
-        titleZh: "项目名称",
-        titleEn: "Project Name",
-        descriptionZh: "儿童服装图案设计，以图案系统为核心展开产品视觉应用。",
-        descriptionEn: "Children's apparel pattern design centered on a flexible visual system.",
-        imageSlot: "projectName",
-        placeholderEn: "Project Visual",
-      },
-      {
         titleZh: "灵感板",
         titleEn: "Moodboard",
         descriptionZh: "品牌调研、竞品参考、色彩趋势、材质参考、图案方向与儿童审美趋势的视觉整理。",
@@ -373,14 +365,6 @@ export const projects: Project[] = [
     ],
     workChapters: [
       {
-        titleZh: "项目名称",
-        titleEn: "Project Name",
-        descriptionZh: "儿童护眼 IP 与文创设计，以角色和产品应用连接科普内容。",
-        descriptionEn: "Children eye-care IP and cultural creative design connecting education with product applications.",
-        imageSlot: "projectName",
-        placeholderEn: "Project Visual",
-      },
-      {
         titleZh: "灵感板",
         titleEn: "Moodboard",
         descriptionZh: "医院背景、儿童护眼知识、儿童插画风格、色彩参考、IP 参考与文创产品参考。",
@@ -556,14 +540,6 @@ export const projects: Project[] = [
       },
     ],
     workChapters: [
-      {
-        titleZh: "项目名称",
-        titleEn: "Project Name",
-        descriptionZh: "品牌视觉识别设计，以清晰的标志语言和应用系统建立品牌记忆。",
-        descriptionEn: "Brand visual identity design built around logo language and a flexible application system.",
-        imageSlot: "projectName",
-        placeholderEn: "Project Visual",
-      },
       {
         titleZh: "灵感板",
         titleEn: "Moodboard",
