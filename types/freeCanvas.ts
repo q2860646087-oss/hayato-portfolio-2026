@@ -39,7 +39,11 @@ export type FreeCanvasBoxElement = FreeCanvasBaseElement & {
   borderRadius?: number;
 };
 
-export type FreeCanvasElement = FreeCanvasTextElement | FreeCanvasImageElement | FreeCanvasBoxElement;
+export type FreeCanvasCustom3DElement = FreeCanvasBaseElement & {
+  type: "custom-3d-packaging";
+};
+
+export type FreeCanvasElement = FreeCanvasTextElement | FreeCanvasImageElement | FreeCanvasBoxElement | FreeCanvasCustom3DElement;
 
 export type FreeCanvasPage = {
   canvasWidth: number;

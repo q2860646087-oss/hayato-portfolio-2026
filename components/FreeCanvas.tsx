@@ -3,8 +3,10 @@
 import type { CSSProperties } from "react";
 import { useLayoutEffect, useRef, useState } from "react";
 import { ManagedImage } from "@/components/ManagedImage";
+import { InteractiveLidBoxWrapper } from "@/components/three/InteractiveLidBoxWhiteModel";
 import type {
   FreeCanvasBoxElement,
+  FreeCanvasCustom3DElement,
   FreeCanvasElement,
   FreeCanvasImageElement,
   FreeCanvasPage,
@@ -76,6 +78,10 @@ function FreeCanvasElementView({ element }: { element: FreeCanvasElement }) {
     return <FreeCanvasBox element={element} style={style} />;
   }
 
+  if (element.type === "custom-3d-packaging") {
+    return <FreeCanvasCustom3D element={element} style={style} />;
+  }
+
   return <FreeCanvasText element={element} style={style} />;
 }
 
@@ -134,6 +140,14 @@ function FreeCanvasBox({ element, style }: { element: FreeCanvasBoxElement; styl
         borderWidth: element.borderWidth,
       }}
     />
+  );
+}
+
+function FreeCanvasCustom3D({ element, style }: { element: FreeCanvasCustom3DElement; style: CSSProperties }) {
+  return (
+    <div className="free-canvas-element" style={style}>
+      <InteractiveLidBoxWrapper />
+    </div>
   );
 }
 
