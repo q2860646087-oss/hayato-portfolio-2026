@@ -1374,6 +1374,7 @@ h3,
   height: 116%;
   object-fit: contain;
   object-position: center;
+  transform: translateX(62px);
   opacity: 0.52;
   pointer-events: none;
   user-select: none;
@@ -2398,16 +2399,8 @@ h3,
   mix-blend-mode: normal !important;
   filter: none !important;
 }
-/* Move Letter Zoo bubble wrap slightly to the right */
-.letter-zoo-bubble {
-  transform: translateX(16px) !important;
-}
-transform: translateX(24px) !important;
-/* Move Letter Zoo bubble wrap image slightly to the right */
-.letter-zoo-bubble,
-.letter-zoo-bubble img {
-  transform: translateX(16px) !important;
-}
+/* Letter Zoo transparent background + full opacity override */
+
 /* Hide Letter Zoo animals */
 .letter-zoo-title-card .letter-zoo-animal {
   display: none !important;

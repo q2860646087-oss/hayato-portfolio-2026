@@ -10,10 +10,14 @@
     "validate:content": "node scripts/validate-projects.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@types/three": "^0.185.0",
     "motion": "^12.42.2",
     "next": "^15.3.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "^22.15.32",

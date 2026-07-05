@@ -15,6 +15,10 @@ import {
   type ProjectWorkChapter,
 } from "@/data/projects";
 import { assetPath } from "@/lib/assetPath";
+import { Box3DWorkPreview } from "@/components/Box3DWorkPreview";
+
+// ── 临时开关：是否在首页 Work 第一个项目中嵌入 3D 白模预览 ──
+const ENABLE_BOX3D_WORK_PREVIEW = true;
 
 const workVisualAssets = {
   designWorksTitle: assetPath("/assets/work/design-works-title.png"),
@@ -182,6 +186,11 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
       </Reveal>
 
       <div className="mt-16 grid gap-20 md:mt-24 md:gap-28">
+        {/* 3D 白模预览 — 仅第一个项目 */}
+        {index === 0 && ENABLE_BOX3D_WORK_PREVIEW && (
+          <Box3DWorkPreview />
+        )}
+
         {coverChapter ? (
           <ProjectWorkChapterBlock
             project={project}
