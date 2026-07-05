@@ -37,7 +37,7 @@ const IDLE_RETURN_SPEED = 0.06;
 
 // ── 实验：盒盖顶面贴图测试 ──────────────────────────────
 const ENABLE_LID_TOP_TEXTURE_TEST = true;
-const LID_TOP_TEXTURE_SRC = "/images/abczoo/box/faces/天盖顶面（外）.webp";
+const LID_TOP_TEXTURE_SRC = "/images/abczoo/box/faces/lid-top-outside.webp";
 const BOX3D_OPEN_EVENT = "box3d:open-change";
 const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
 
@@ -131,11 +131,12 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
       LID_TOP_TEXTURE_SRC,
       (tex) => {
         tex.colorSpace = THREE.SRGBColorSpace;
+        console.info("Lid top texture loaded:", LID_TOP_TEXTURE_SRC);
         setLidTopTexture(tex);
       },
       undefined,
-      () => {
-        // 加载失败 → texture=null，不渲染贴图 plane
+      (err) => {
+        console.warn("Lid top texture failed:", LID_TOP_TEXTURE_SRC, err);
         setLidTopTexture(null);
       }
     );
@@ -368,21 +369,42 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
         />
 
         {/* ── 实验：盒盖顶面贴图 overlay ── */}
-        {ENABLE_LID_TOP_TEXTURE_TEST && lidTopTexture && (
-          <mesh
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
-          >
-            <planeGeometry args={[LW - 0.04, LD - 0.04]} />
-            <meshBasicMaterial
-              map={lidTopTexture}
-              transparent
-              side={THREE.DoubleSide}
-              toneMapped={false}
-              polygonOffset
-              polygonOffsetFactor={-1}
-            />
-          </mesh>
+        {ENABLE_LID_TOP_TEXTURE_TEST && (
+          <>
+            {/* 贴图 plane（图片加载成功后才显示） */}
+            {lidTopTexture && (
+              <mesh
+                rotation={[-Math.PI / 2, 0, 0]}
+                position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
+              >
+                <planeGeometry args={[LW - 0.04, LD - 0.04]} />
+                <meshBasicMaterial
+                  map={lidTopTexture}
+                  transparent
+                  side={THREE.DoubleSide}
+                  toneMapped={false}
+                  polygonOffset
+                  polygonOffsetFactor={-1}
+                />
+              </mesh>
+            )}
+
+            {/* 黄色 fallback plane（图片未加载时显示，用于调试位置） */}
+            {!lidTopTexture && (
+              <mesh
+                rotation={[-Math.PI / 2, 0, 0]}
+                position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
+              >
+                <planeGeometry args={[LW - 0.04, LD - 0.04]} />
+                <meshBasicMaterial
+                  color="#ffcc00"
+                  transparent
+                  opacity={0.6}
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+            )}
+          </>
         )}
 
         <Panel
