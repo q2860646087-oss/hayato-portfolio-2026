@@ -360,6 +360,22 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
         <shadowMaterial transparent opacity={0.15} />
       </mesh>
 
+      {/* ===== 盒内静态卡片堆叠（5 张，始终平放） ===== */}
+      {Array.from({ length: 5 }, (_, i) => (
+        <mesh
+          key={`inner-card-${i}`}
+          position={[0, 0.0625 + i * 0.09, 0]}
+          rotation={[0, 0, 0]}
+        >
+          <boxGeometry args={[2.25, 0.08, 3.6]} />
+          <meshStandardMaterial
+            color={new THREE.Color(i % 2 === 0 ? "#FFF7E8" : "#EFE3D0")}
+            roughness={0.9}
+            metalness={0.0}
+          />
+        </mesh>
+      ))}
+
       {/* ===== 点击热区（同时捕获拖拽和点击） ===== */}
       <mesh
         geometry={new THREE.BoxGeometry(5, 5, 5)}
