@@ -35,7 +35,9 @@ const DRAG_THRESHOLD = 4;
 const IDLE_RESET_DELAY = 8000;
 const IDLE_RETURN_SPEED = 0.06;
 
-// ── 事件通信常量 ────────────────────────────────────────
+// ── 实验：盒盖顶面贴图测试 ──────────────────────────────
+const ENABLE_LID_TOP_TEXTURE_TEST = true;
+const LID_TOP_TEXTURE_SRC = "/images/abczoo/box/faces/天盖顶面（外）.webp";
 const BOX3D_OPEN_EVENT = "box3d:open-change";
 const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
 
@@ -117,6 +119,27 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
 
   // ── 当前旋转角度（独立跟踪，用于归位插值） ────────────
   const currentRotation = useRef({ x: DEFAULT_ROTATION_X, y: DEFAULT_ROTATION_Y });
+
+  // ── 实验：盒盖顶面贴图 ────────────────────────────────
+  const [lidTopTexture, setLidTopTexture] = useState<THREE.Texture | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!ENABLE_LID_TOP_TEXTURE_TEST) return;
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      LID_TOP_TEXTURE_SRC,
+      (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        setLidTopTexture(tex);
+      },
+      undefined,
+      () => {
+        // 加载失败 → texture=null，不渲染贴图 plane
+        setLidTopTexture(null);
+      }
+    );
+  }, []);
 
   // ── 重置 idle 计时器 ──────────────────────────────────
   const resetIdleTimer = useCallback(() => {
@@ -259,12 +282,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     metalness: 0.0,
   });
 
-  const innerMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color("#D9CBB5"),
-    roughness: 0.9,
-    metalness: 0.0,
-  });
-
   // ═══════════════════════════════════════════════════════
   // 下盒：5 块面板
   // ═══════════════════════════════════════════════════════
@@ -350,6 +367,24 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
           mat={lidMat}
         />
 
+        {/* ── 实验：盒盖顶面贴图 overlay ── */}
+        {ENABLE_LID_TOP_TEXTURE_TEST && lidTopTexture && (
+          <mesh
+            rotation={[-Math.PI / 2, 0, 0]}
+            position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
+          >
+            <planeGeometry args={[LW - 0.04, LD - 0.04]} />
+            <meshBasicMaterial
+              map={lidTopTexture}
+              transparent
+              side={THREE.DoubleSide}
+              toneMapped={false}
+              polygonOffset
+              polygonOffsetFactor={-1}
+            />
+          </mesh>
+        )}
+
         <Panel
           w={LW}
           h={lidSideH}
@@ -396,22 +431,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
         <planeGeometry args={[10, 10]} />
         <shadowMaterial transparent opacity={0.15} />
       </mesh>
-
-      {/* ===== 盒内静态卡片堆叠（5 张，始终平放） ===== */}
-      {Array.from({ length: 5 }, (_, i) => (
-        <mesh
-          key={`inner-card-${i}`}
-          position={[0, 0.0625 + i * 0.09, 0]}
-          rotation={[0, 0, 0]}
-        >
-          <boxGeometry args={[2.25, 0.08, 3.6]} />
-          <meshStandardMaterial
-            color={new THREE.Color(i % 2 === 0 ? "#FFF7E8" : "#EFE3D0")}
-            roughness={0.9}
-            metalness={0.0}
-          />
-        </mesh>
-      ))}
 
       {/* ===== 点击热区（同时捕获拖拽和点击） ===== */}
       <mesh
