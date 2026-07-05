@@ -72,7 +72,7 @@ h3,
 .nav-shell {
   position: relative;
   overflow: hidden;
-  width: min(90vw, 1280px);
+  width: min(90vw, 1440px);
   min-height: 56px;
   max-height: 72px;
   padding: 0.5rem 1rem;
@@ -225,8 +225,8 @@ h3,
 .hero-png-stage {
   position: relative;
   display: grid;
-  width: min(78.4vw, 1344px);
-  height: min(72vh, 756px);
+  width: min(82vw, 1600px);
+  height: min(72vh, 820px);
   min-height: 540px;
   z-index: 5;
   place-items: center;
@@ -419,7 +419,7 @@ h3,
   grid-row: 2;
   align-self: center;
   justify-self: center;
-  max-width: min(100%, 1280px);
+  max-width: min(100%, 1440px);
   text-align: center;
 }
 
@@ -573,7 +573,7 @@ h3,
   background: var(--color-highlight);
   color: var(--color-primary);
   padding: 0.65rem 1rem;
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -915,7 +915,7 @@ h3,
   background: var(--color-primary);
   color: var(--color-background);
   padding: 0.44rem 0.9rem;
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -985,14 +985,14 @@ h3,
 }
 
 .about-highlight-line {
-  font-size: 0.78rem;
+  font-size: clamp(0.72rem, 0.55vw, 1rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
 }
 
 .about-mini-tag {
   background: color-mix(in srgb, var(--color-highlight) 54%, var(--color-background));
-  font-size: 0.92rem;
+  font-size: clamp(0.88rem, 0.68vw, 1.08rem);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -1007,7 +1007,7 @@ h3,
   display: grid;
   gap: 0.5rem;
   color: var(--color-primary);
-  font-size: clamp(0.95rem, 1.08vw, 1.08rem);
+  font-size: clamp(0.92rem, 1.08vw, 1.2rem);
   line-height: 1.45;
 }
 
@@ -1024,13 +1024,13 @@ h3,
 }
 
 .about-line-label {
-  font-size: 0.68rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   font-weight: var(--font-weight-bold);
 }
 
 .about-strong-line {
   color: var(--color-primary);
-  font-size: 1.08rem;
+  font-size: clamp(1rem, 1.1vw, 1.2rem);
   font-weight: var(--font-weight-bold);
 }
 
@@ -1119,7 +1119,7 @@ h3,
 .about-visual-caption {
   max-width: 19rem;
   color: color-mix(in srgb, var(--color-primary) 56%, transparent);
-  font-size: 0.68rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   letter-spacing: 0.18em;
   line-height: 1.6;
 }
@@ -1228,14 +1228,14 @@ h3,
   background: var(--color-highlight);
   padding: 0.35rem 0.62rem;
   color: var(--color-primary);
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
 }
 
 .about-project-item .font-en {
   color: color-mix(in srgb, var(--color-primary) 56%, transparent);
-  font-size: 0.7rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   letter-spacing: 0.12em;
   line-height: 1.55;
   text-transform: uppercase;
@@ -1284,7 +1284,7 @@ h3,
 .about-tool-icon-item span {
   min-width: 0;
   overflow-wrap: anywhere;
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
   letter-spacing: 0.08em;
   line-height: 1.15;
 }
@@ -1318,7 +1318,7 @@ h3,
 
 .work-section-title-image {
   display: block;
-  width: min(100%, 1040px);
+  width: min(100%, 1200px);
   height: auto;
   margin-inline: auto;
   filter: drop-shadow(0.12em 0.16em 0 color-mix(in srgb, var(--color-work-yellow) 16%, transparent));
@@ -1350,13 +1350,13 @@ h3,
 }
 
 .is-letter-zoo-project {
-  max-width: min(100%, 1160px);
+  max-width: min(100%, 1360px);
 }
 
 .letter-zoo-title-card {
   position: relative;
   isolation: isolate;
-  width: min(100%, 1080px);
+  width: min(100%, 1280px);
   aspect-ratio: 2 / 1;
   margin-inline: auto;
   overflow: visible;

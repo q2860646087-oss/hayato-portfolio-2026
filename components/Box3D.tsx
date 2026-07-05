@@ -1,7 +1,7 @@
 "use client";
 
 import * as THREE from "three";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 
 /**
@@ -34,6 +34,17 @@ const DRAG_THRESHOLD = 4;
 // Idle reset
 const IDLE_RESET_DELAY = 8000;
 const IDLE_RETURN_SPEED = 0.06;
+
+// ── 事件通信常量 ────────────────────────────────────────
+const BOX3D_OPEN_EVENT = "box3d:open-change";
+const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
+
+function emitBoxOpenChange(open: boolean) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent(BOX3D_OPEN_EVENT, { detail: { open } })
+  );
+}
 
 // 默认展示角度（页面刚加载时盒子平放的角度）
 const DEFAULT_ROTATION_X = 0;
@@ -101,6 +112,9 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   // ── 归位状态 ──────────────────────────────────────────
   const isReturningToDefault = useRef(false);
 
+  // ── 跑马灯 hover 保护 ─────────────────────────────────
+  const marqueeHovering = useRef(false);
+
   // ── 当前旋转角度（独立跟踪，用于归位插值） ────────────
   const currentRotation = useRef({ x: DEFAULT_ROTATION_X, y: DEFAULT_ROTATION_Y });
 
@@ -112,8 +126,11 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     // 清除归位标志（用户有新操作，不再归位）
     isReturningToDefault.current = false;
     idleResetTimer.current = setTimeout(() => {
+      // 跑马灯上仍有鼠标 → 不自动复位，等鼠标离开后再计
+      if (marqueeHovering.current) return;
       // 3 秒无操作：闭盒 + 启动归位
       setIsOpen(false);
+      emitBoxOpenChange(false);
       isReturningToDefault.current = true;
     }, IDLE_RESET_DELAY);
   }, []);
@@ -165,11 +182,31 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     setAnimProgress((prev) => prev + (target - prev) * EASE_FACTOR);
   });
 
+  // ── 监听跑马灯 hover 事件 ─────────────────────────────
+  useEffect(() => {
+    function onMarqueeInteraction(e: Event) {
+      const detail = (e as CustomEvent).detail;
+      if (detail.active) {
+        marqueeHovering.current = true;
+      } else {
+        marqueeHovering.current = false;
+        resetIdleTimer();
+      }
+    }
+    window.addEventListener(BOX3D_MARQUEE_INTERACT_EVENT, onMarqueeInteraction);
+    return () =>
+      window.removeEventListener(BOX3D_MARQUEE_INTERACT_EVENT, onMarqueeInteraction);
+  }, [resetIdleTimer]);
+
   // ── 点击处理（开盖/关盖） ─────────────────────────────
   const handleClick = useCallback(() => {
     const elapsed = Date.now() - pointerDownTime.current;
     if (elapsed >= PRESS_CLICK_MAX_DURATION || hasDragged.current) return;
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => {
+      const next = !prev;
+      if (next) emitBoxOpenChange(true);
+      return next;
+    });
     resetIdleTimer();
   }, [resetIdleTimer]);
 

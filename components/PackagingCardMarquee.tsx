@@ -2,18 +2,23 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 
-// ── 卡片数据（占位，后续替换真实图片） ──────────────────
-const CARDS_DATA = Array.from({ length: 10 }, (_, i) => ({
-  id: i + 1,
-  frontLabel: `CARD 0${i + 1}`,
-  frontSub: "Apparel Mockup",
-  backLabel: `CARD 0${i + 1}`,
-  backSub: "Model Wearing",
-}));
+// ── 卡片数据：真实衣服样机图片 ──────────────────
+const CARDS_DATA = [
+  { id: 1, frontSrc: "/images/abczoo/跑马灯卡/正面 (1).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (1).webp" },
+  { id: 2, frontSrc: "/images/abczoo/跑马灯卡/正面 (2).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (2).webp" },
+  { id: 3, frontSrc: "/images/abczoo/跑马灯卡/正面 (3).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (3).webp" },
+  { id: 4, frontSrc: "/images/abczoo/跑马灯卡/正面 (4).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (4).webp" },
+  { id: 5, frontSrc: "/images/abczoo/跑马灯卡/正面 (5).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (5).webp" },
+  { id: 6, frontSrc: "/images/abczoo/跑马灯卡/正面 (6).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (6).webp" },
+  { id: 7, frontSrc: "/images/abczoo/跑马灯卡/正面 (7).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (7).webp" },
+  { id: 8, frontSrc: "/images/abczoo/跑马灯卡/正面 (8).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (8).webp" },
+  { id: 9, frontSrc: "/images/abczoo/跑马灯卡/正面 (9).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (9).webp" },
+  { id: 10, frontSrc: "/images/abczoo/跑马灯卡/正面 (10).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (10).webp" },
+];
 
 const CARD_WIDTH = 170;
 const MARQUEE_GAP = 20;
-const MARQUEE_SPEED = 40; // 秒/完整循环
+const MARQUEE_SPEED = 10; // 秒/完整循环（进一步放慢）
 const DOUBLE_COUNT = CARDS_DATA.length * 2;
 
 function Card({
@@ -31,7 +36,7 @@ function Card({
     <div
       style={{
         width: CARD_WIDTH,
-        aspectRatio: "450 / 720",
+        aspectRatio: "558 / 697",
         perspective: "800px",
         cursor: "pointer",
         ...style,
@@ -55,47 +60,20 @@ function Card({
             inset: 0,
             backfaceVisibility: "hidden",
             borderRadius: 12,
+            overflow: "hidden",
             background: "#FFFFFF",
-            border: "1px solid rgba(21, 59, 111, 0.12)",
-            boxShadow: "0 4px 20px rgba(21, 59, 111, 0.08)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 20,
-            boxSizing: "border-box",
           }}
         >
-          <div
+          <img
+            src={data.frontSrc}
+            alt=""
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              background: "#F6CF58",
-              marginBottom: 16,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
             }}
           />
-          <div
-            style={{
-              fontSize: 18,
-              fontWeight: 700,
-              color: "#153B6F",
-              letterSpacing: "0.08em",
-              marginBottom: 6,
-            }}
-          >
-            {data.frontLabel}
-          </div>
-          <div
-            style={{
-              fontSize: 12,
-              color: "#153B6F",
-              opacity: 0.5,
-              letterSpacing: "0.06em",
-            }}
-          >
-            {data.frontSub}
-          </div>
         </div>
 
         {/* 背面 */}
@@ -105,60 +83,81 @@ function Card({
             inset: 0,
             backfaceVisibility: "hidden",
             borderRadius: 12,
+            overflow: "hidden",
             background: "#FFF9F1",
-            border: "1px solid rgba(21, 59, 111, 0.12)",
-            boxShadow: "0 4px 20px rgba(21, 59, 111, 0.08)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 20,
-            boxSizing: "border-box",
             transform: "rotateY(180deg)",
           }}
         >
-          <div
+          <img
+            src={data.backSrc}
+            alt=""
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              background: "#153B6F",
-              marginBottom: 16,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
             }}
           />
-          <div
-            style={{
-              fontSize: 18,
-              fontWeight: 700,
-              color: "#153B6F",
-              letterSpacing: "0.08em",
-              marginBottom: 6,
-            }}
-          >
-            {data.backLabel}
-          </div>
-          <div
-            style={{
-              fontSize: 12,
-              color: "#153B6F",
-              opacity: 0.5,
-              letterSpacing: "0.06em",
-            }}
-          >
-            {data.backSub}
-          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export function PackagingCardMarquee({ visible = false }: { visible?: boolean }) {
+// ── 事件名（与 Box3D.tsx 保持一致） ──────────────────
+const BOX3D_OPEN_EVENT = "box3d:open-change";
+const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
+
+export function PackagingCardMarquee() {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [isPaused, setIsPaused] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const marqueeRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number>(0);
   const offsetRef = useRef(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleBoxOpenChange = (event: Event) => {
+      const customEvent = event as CustomEvent<{ open: boolean }>;
+      setVisible(Boolean(customEvent.detail?.open));
+    };
+
+    window.addEventListener(BOX3D_OPEN_EVENT, handleBoxOpenChange);
+    return () => {
+      window.removeEventListener(BOX3D_OPEN_EVENT, handleBoxOpenChange);
+    };
+  }, []);
+
+  // ── 跑马灯自动定位：open=true 后两帧即滚动居中，不等展开动画 ──
+  useEffect(() => {
+    if (!visible) return;
+    const el = marqueeRef.current;
+    if (!el) return;
+
+    let cancelled = false;
+
+    const scheduleScroll = () => {
+      if (cancelled) return;
+      const rect = el.getBoundingClientRect();
+      const elCenter = rect.top + rect.height / 2;
+      const viewportH = window.innerHeight;
+      const targetScroll = window.scrollY + elCenter - viewportH / 2;
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    };
+
+    // 第 1 帧：flush layout
+    const raf1 = requestAnimationFrame(() => {
+      // 第 2 帧：读取新高度并滚动
+      requestAnimationFrame(scheduleScroll);
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf1);
+    };
+  }, [visible]);
 
   const toggleFlip = useCallback((id: number) => {
     setFlippedCards((prev) => {
@@ -189,6 +188,26 @@ export function PackagingCardMarquee({ visible = false }: { visible?: boolean })
         trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
       }
 
+      // ── 根据卡片在 viewport 中的位置更新 opacity ──
+      if (visible) {
+        const viewportRect = marqueeRef.current?.getBoundingClientRect();
+        if (viewportRect) {
+          const fadeWidth = Math.min(260, viewportRect.width * 0.22);
+          const refs = cardRefs.current;
+          for (let i = 0; i < refs.length; i++) {
+            const el = refs[i];
+            if (!el) continue;
+            const cardRect = el.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const leftDistance = cardCenterX - viewportRect.left;
+            const rightDistance = viewportRect.right - cardCenterX;
+            const edgeDistance = Math.min(leftDistance, rightDistance);
+            const opacity = Math.min(1, Math.max(0, edgeDistance / fadeWidth));
+            el.style.opacity = String(opacity);
+          }
+        }
+      }
+
       rafRef.current = requestAnimationFrame(animate);
     };
 
@@ -201,19 +220,33 @@ export function PackagingCardMarquee({ visible = false }: { visible?: boolean })
 
   return (
     <div
+      ref={marqueeRef}
       style={{
         width: "100%",
-        maxWidth: 1100,
-        margin: "16px auto 80px",
+        maxWidth: "100%",
+        margin: visible ? "8px auto 88px" : "0 auto",
+        maxHeight: visible ? 360 : 0,
         overflow: "hidden",
         position: "relative",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(16px)",
-        transition: "opacity 360ms ease, transform 360ms ease",
+        transform: visible ? "translateY(0) scale(1)" : "translateY(18px) scale(0.985)",
+        filter: visible ? "blur(0)" : "blur(2px)",
+        transition:
+          "opacity 420ms ease, " +
+          "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), " +
+          "max-height 620ms cubic-bezier(0.22, 1, 0.36, 1), " +
+          "margin 620ms cubic-bezier(0.22, 1, 0.36, 1), " +
+          "filter 420ms ease",
         pointerEvents: visible ? "auto" : "none",
       }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => {
+        setIsPaused(true);
+        window.dispatchEvent(new CustomEvent(BOX3D_MARQUEE_INTERACT_EVENT, { detail: { active: true } }));
+      }}
+      onMouseLeave={() => {
+        setIsPaused(false);
+        window.dispatchEvent(new CustomEvent(BOX3D_MARQUEE_INTERACT_EVENT, { detail: { active: false } }));
+      }}
     >
       <div
         ref={trackRef}
@@ -225,13 +258,20 @@ export function PackagingCardMarquee({ visible = false }: { visible?: boolean })
         }}
       >
         {doubledCards.map((card, i) => (
-          <Card
+          <div
             key={`${card.id}-${i}`}
-            data={card}
-            flipped={flippedCards.has(card.id)}
-            onFlip={() => toggleFlip(card.id)}
+            ref={(el) => {
+              cardRefs.current[i] = el;
+            }}
             style={{ flexShrink: 0 }}
-          />
+          >
+            <Card
+              data={card}
+              flipped={flippedCards.has(card.id)}
+              onFlip={() => toggleFlip(card.id)}
+              style={{ width: CARD_WIDTH }}
+            />
+          </div>
         ))}
       </div>
     </div>

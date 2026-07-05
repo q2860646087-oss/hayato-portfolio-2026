@@ -14,7 +14,7 @@ export function Box3DWorkPreview() {
   return (
     <div
       className="mx-auto w-full"
-      style={{ marginTop: 24, marginBottom: 24, maxWidth: 1000 }}
+      style={{ marginTop: 24, marginBottom: 24, width: "min(1200px, calc(100vw - 160px))", maxWidth: "1200px" }}
     >
       <div
         style={{
@@ -37,7 +37,7 @@ export function Box3DWorkPreview() {
           <Box3D variant="inline" />
         </Canvas>
       </div>
-      <PackagingCardMarquee visible={true} />
+      <PackagingCardMarquee />
     </div>
   );
 }
