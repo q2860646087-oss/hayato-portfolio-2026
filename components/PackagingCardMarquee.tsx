@@ -4,16 +4,16 @@ import { useState, useRef, useEffect, useCallback } from "react";
 
 // ── 卡片数据：真实衣服样机图片 ──────────────────
 const CARDS_DATA = [
-  { id: 1, frontSrc: "/images/abczoo/跑马灯卡/正面 (1).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (1).webp" },
-  { id: 2, frontSrc: "/images/abczoo/跑马灯卡/正面 (2).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (2).webp" },
-  { id: 3, frontSrc: "/images/abczoo/跑马灯卡/正面 (3).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (3).webp" },
-  { id: 4, frontSrc: "/images/abczoo/跑马灯卡/正面 (4).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (4).webp" },
-  { id: 5, frontSrc: "/images/abczoo/跑马灯卡/正面 (5).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (5).webp" },
-  { id: 6, frontSrc: "/images/abczoo/跑马灯卡/正面 (6).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (6).webp" },
-  { id: 7, frontSrc: "/images/abczoo/跑马灯卡/正面 (7).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (7).webp" },
-  { id: 8, frontSrc: "/images/abczoo/跑马灯卡/正面 (8).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (8).webp" },
-  { id: 9, frontSrc: "/images/abczoo/跑马灯卡/正面 (9).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (9).webp" },
-  { id: 10, frontSrc: "/images/abczoo/跑马灯卡/正面 (10).webp", backSrc: "/images/abczoo/跑马灯卡/背面 (10).webp" },
+  { id: 1, frontSrc: "/images/abczoo/marquee-cards/front-01.webp", backSrc: "/images/abczoo/marquee-cards/back-01.webp" },
+  { id: 2, frontSrc: "/images/abczoo/marquee-cards/front-02.webp", backSrc: "/images/abczoo/marquee-cards/back-02.webp" },
+  { id: 3, frontSrc: "/images/abczoo/marquee-cards/front-03.webp", backSrc: "/images/abczoo/marquee-cards/back-03.webp" },
+  { id: 4, frontSrc: "/images/abczoo/marquee-cards/front-04.webp", backSrc: "/images/abczoo/marquee-cards/back-04.webp" },
+  { id: 5, frontSrc: "/images/abczoo/marquee-cards/front-05.webp", backSrc: "/images/abczoo/marquee-cards/back-05.webp" },
+  { id: 6, frontSrc: "/images/abczoo/marquee-cards/front-06.webp", backSrc: "/images/abczoo/marquee-cards/back-06.webp" },
+  { id: 7, frontSrc: "/images/abczoo/marquee-cards/front-07.webp", backSrc: "/images/abczoo/marquee-cards/back-07.webp" },
+  { id: 8, frontSrc: "/images/abczoo/marquee-cards/front-08.webp", backSrc: "/images/abczoo/marquee-cards/back-08.webp" },
+  { id: 9, frontSrc: "/images/abczoo/marquee-cards/front-09.webp", backSrc: "/images/abczoo/marquee-cards/back-09.webp" },
+  { id: 10, frontSrc: "/images/abczoo/marquee-cards/front-10.webp", backSrc: "/images/abczoo/marquee-cards/back-10.webp" },
 ];
 
 const CARD_WIDTH = 170;

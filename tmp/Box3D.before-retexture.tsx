@@ -1,20 +1,16 @@
 "use client";
 
 import * as THREE from "three";
-import { useRef, useState, useCallback, useEffect, useMemo } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 
 /**
- * Box3D — 阶段 3（外部 10 面贴图）：天地盖礼盒白模 + 开盖动画 + 拖拽查看 + 外部贴图
+ * Box3D — 阶段 2（idle reset 修正）：天地盖礼盒白模 + 开盖动画 + 拖拽查看
  *
- * 本轮变更：
- *   - 新增 optional texture loader（10 张外部贴图）
- *   - 新增材质工具函数 createTextureMaterial
- *   - 模型本体颜色调整为 BASE_BOX_COLOR / LID_BOX_COLOR
- *   - 盒盖外部 5 面贴在 lidGroup 内
- *   - 下盒外部 5 面贴在下盒固定 group 内
- *   - 不添加内侧、厚度条、封口面
- *   - 保持中空结构
+ * 本轮修正：
+ *   - idle reset 不仅关闭盒盖，还要把角度平滑归位到默认展示角度
+ *   - 归位期间暂停自动旋转，归位完成后从默认角度继续旋转
+ *   - 明确区分当前角度和默认角度
  */
 
 // ── 常量 ────────────────────────────────────────────────
@@ -39,115 +35,11 @@ const DRAG_THRESHOLD = 4;
 const IDLE_RESET_DELAY = 8000;
 const IDLE_RETURN_SPEED = 0.06;
 
-// ── 贴图相关常量 ────────────────────────────────────────
+// ── 实验：盒盖顶面贴图测试 ──────────────────────────────
+const ENABLE_LID_TOP_TEXTURE_TEST = true;
+const LID_TOP_TEXTURE_SRC = "/images/abczoo/box/faces/lid-top-outside.webp";
 const BOX3D_OPEN_EVENT = "box3d:open-change";
 const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
-
-const SURFACE_OFFSET = 0.006;
-const SEAM_OVERLAP = 0.006;
-const VERTICAL_FACE_OVERLAP = 0.018;
-const BASE_VERTICAL_FACE_OVERLAP = 0.012;
-
-const BASE_BOX_COLOR = "#E7D8C7";
-const LID_BOX_COLOR = "#F6F1E8";
-
-const DEBUG_OUTER_FACE_COVERAGE = false;
-
-// 外部贴图路径映射
-const LID_OUTSIDE_TEXTURES = {
-  top: "/images/abczoo/box/faces/lid-top-outside.webp",
-  front: "/images/abczoo/box/faces/lid-front-outside.webp",
-  back: "/images/abczoo/box/faces/lid-back-outside.webp",
-  left: "/images/abczoo/box/faces/lid-left-outside.webp",
-  right: "/images/abczoo/box/faces/lid-right-outside.webp",
-};
-
-const BASE_OUTSIDE_TEXTURES = {
-  front: "/images/abczoo/box/faces/base-front-outside.webp",
-  back: "/images/abczoo/box/faces/base-back-outside.webp",
-  left: "/images/abczoo/box/faces/base-left-outside.webp",
-  right: "/images/abczoo/box/faces/base-right-outside.webp",
-  bottom: "/images/abczoo/box/faces/base-bottom-outside.webp",
-};
-
-// 镜像开关（本阶段暂不使用）
-const MIRROR_BASE_BACK_OUTSIDE = false;
-const MIRROR_BASE_LEFT_OUTSIDE = false;
-const MIRROR_BASE_RIGHT_OUTSIDE = false;
-
-// ── 工具函数：创建变换后的 texture ──────────────────────
-function createTransformedTexture(
-  texture: THREE.Texture,
-  options?: { mirrorX?: boolean; rotate90?: boolean }
-): THREE.Texture {
-  if (!options || (!options.mirrorX && !options.rotate90)) return texture;
-
-  const canvas = document.createElement("canvas");
-  const img = texture.image as HTMLImageElement | HTMLCanvasElement | null;
-  if (!img || !("width" in img) || !("height" in img)) return texture;
-  const w = img.width as number;
-  const h = img.height as number;
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return texture;
-
-  ctx.clearRect(0, 0, w, h);
-
-  if (options.rotate90) {
-    ctx.translate(w / 2, h / 2);
-    ctx.rotate(Math.PI / 2);
-    ctx.drawImage(img, -w / 2, -h / 2);
-  } else {
-    ctx.drawImage(img, 0, 0);
-  }
-
-  if (options.mirrorX) {
-    const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = w;
-    tempCanvas.height = h;
-    const tempCtx = tempCanvas.getContext("2d");
-    if (!tempCtx) return texture;
-    tempCtx.translate(w, 0);
-    tempCtx.scale(-1, 1);
-    tempCtx.drawImage(canvas, 0, 0);
-
-    canvas.width = w;
-    canvas.height = h;
-    ctx.clearRect(0, 0, w, h);
-    ctx.drawImage(tempCanvas, 0, 0);
-  }
-
-  const newTexture = new THREE.CanvasTexture(canvas);
-  newTexture.wrapS = THREE.ClampToEdgeWrapping;
-  newTexture.wrapT = THREE.ClampToEdgeWrapping;
-  newTexture.repeat.set(1, 1);
-  newTexture.offset.set(0, 0);
-  newTexture.center.set(0.5, 0.5);
-  newTexture.colorSpace = THREE.SRGBColorSpace;
-  newTexture.needsUpdate = true;
-  return newTexture;
-}
-
-// ── 工具函数：创建贴图材质 ──────────────────────────────
-function createTextureMaterial(
-  texture: THREE.Texture,
-  options?: { mirrorX?: boolean; rotate90?: boolean }
-): THREE.MeshBasicMaterial {
-  const transformed = createTransformedTexture(texture, options);
-  return new THREE.MeshBasicMaterial({
-    map: transformed,
-    transparent: false,
-    opacity: 1,
-    depthWrite: true,
-    depthTest: true,
-    polygonOffset: true,
-    polygonOffsetFactor: -2,
-    polygonOffsetUnits: -2,
-    side: THREE.DoubleSide,
-    toneMapped: false,
-  });
-}
 
 function emitBoxOpenChange(open: boolean) {
   if (typeof window === "undefined") return;
@@ -202,88 +94,6 @@ function Panel({
   );
 }
 
-// ── 辅助函数：贴图 plane ────────────────────────────────
-function TexturePlane({
-  args,
-  position,
-  rotation,
-  textureSrc,
-  mirrorX,
-  debugColor,
-}: {
-  args: [number, number];
-  position: [number, number, number];
-  rotation?: [number, number, number];
-  textureSrc: string;
-  mirrorX?: boolean;
-  debugColor?: string;
-}) {
-  const [texture, setTexture] = useState<THREE.Texture | null>(null);
-
-  useEffect(() => {
-    const loader = new THREE.TextureLoader();
-    loader.load(
-      textureSrc,
-      (tex) => {
-        tex.wrapS = THREE.ClampToEdgeWrapping;
-        tex.wrapT = THREE.ClampToEdgeWrapping;
-        tex.repeat.set(1, 1);
-        tex.offset.set(0, 0);
-        tex.center.set(0.5, 0.5);
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.needsUpdate = true;
-        console.info("Texture loaded:", textureSrc);
-        setTexture(tex);
-      },
-      undefined,
-      (err) => {
-        console.warn("Texture failed to load:", textureSrc, err);
-      }
-    );
-  }, [textureSrc]);
-
-  const transformedTexture = useMemo(() => {
-    if (!texture) return null;
-    return createTransformedTexture(texture, mirrorX ? { mirrorX: true } : undefined);
-  }, [texture, mirrorX]);
-
-  const mat = useMemo(() => {
-    if (debugColor) {
-      return new THREE.MeshBasicMaterial({
-        color: new THREE.Color(debugColor),
-        transparent: true,
-        opacity: 0.5,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-        depthTest: true,
-        polygonOffset: true,
-        polygonOffsetFactor: -1,
-        polygonOffsetUnits: -1,
-        toneMapped: false,
-      });
-    }
-
-    if (!transformedTexture) return null;
-
-    return createTextureMaterial(transformedTexture);
-  }, [debugColor, transformedTexture]);
-
-  useEffect(() => {
-    return () => {
-      mat?.dispose();
-    };
-  }, [mat]);
-
-  if (!mat) return null;
-
-  return (
-    <mesh position={position} rotation={rotation ?? [0, 0, 0]}>
-      <planeGeometry args={args} />
-      <primitive object={mat} attach="material" />
-    </mesh>
-  );
-}
-
 export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   // ── 状态 ──────────────────────────────────────────────
   const [isOpen, setIsOpen] = useState(false);
@@ -310,6 +120,28 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   // ── 当前旋转角度（独立跟踪，用于归位插值） ────────────
   const currentRotation = useRef({ x: DEFAULT_ROTATION_X, y: DEFAULT_ROTATION_Y });
 
+  // ── 实验：盒盖顶面贴图 ────────────────────────────────
+  const [lidTopTexture, setLidTopTexture] = useState<THREE.Texture | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!ENABLE_LID_TOP_TEXTURE_TEST) return;
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      LID_TOP_TEXTURE_SRC,
+      (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        console.info("Lid top texture loaded:", LID_TOP_TEXTURE_SRC);
+        setLidTopTexture(tex);
+      },
+      undefined,
+      (err) => {
+        console.warn("Lid top texture failed:", LID_TOP_TEXTURE_SRC, err);
+        setLidTopTexture(null);
+      }
+    );
+  }, []);
+
   // ── 重置 idle 计时器 ──────────────────────────────────
   const resetIdleTimer = useCallback(() => {
     if (idleResetTimer.current) {
@@ -320,7 +152,7 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     idleResetTimer.current = setTimeout(() => {
       // 跑马灯上仍有鼠标 → 不自动复位，等鼠标离开后再计
       if (marqueeHovering.current) return;
-      // 8 秒无操作：闭盒 + 启动归位
+      // 3 秒无操作：闭盒 + 启动归位
       setIsOpen(false);
       emitBoxOpenChange(false);
       isReturningToDefault.current = true;
@@ -371,11 +203,7 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   // ── 动画插值（开盖） ──────────────────────────────────
   useFrame(() => {
     const target = isOpen ? 1 : 0;
-    setAnimProgress((prev) => {
-      const diff = target - prev;
-      if (Math.abs(diff) < 0.001) return prev; // 趋近稳定，停止 setState
-      return prev + diff * EASE_FACTOR;
-    });
+    setAnimProgress((prev) => prev + (target - prev) * EASE_FACTOR);
   });
 
   // ── 监听跑马灯 hover 事件 ─────────────────────────────
@@ -444,13 +272,13 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
 
   // ── 材质 ──────────────────────────────────────────────
   const lidMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(LID_BOX_COLOR),
+    color: new THREE.Color("#FFF7E8"),
     roughness: 0.9,
     metalness: 0.0,
   });
 
   const boxMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(BASE_BOX_COLOR),
+    color: new THREE.Color("#EFE3D0"),
     roughness: 0.85,
     metalness: 0.0,
   });
@@ -473,7 +301,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     <group ref={groupRef} scale={MODEL_SCALE} position={[0, -0.3, 0]}>
       {/* ===== 下盒（固定不动） ===== */}
       <group>
-        {/* 下盒本体 5 面板 */}
         <Panel
           w={BW}
           h={floorH}
@@ -523,64 +350,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
           z={0}
           mat={boxMat}
         />
-
-        {/* ── 下盒外部 5 面贴图 ── */}
-        {/* 前面：法线 +Z，world z = BD/2 */}
-        <TexturePlane
-          args={[BW, BH + BASE_VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            0,
-            (BH + BASE_VERTICAL_FACE_OVERLAP * 2) / 2,
-            BD / 2 + SURFACE_OFFSET,
-          ]}
-          textureSrc={BASE_OUTSIDE_TEXTURES.front}
-        />
-
-        {/* 后面：法线 -Z，world z = -BD/2 */}
-        <TexturePlane
-          args={[BW, BH + BASE_VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            0,
-            (BH + BASE_VERTICAL_FACE_OVERLAP * 2) / 2,
-            -BD / 2 - SURFACE_OFFSET,
-          ]}
-          rotation={[0, Math.PI, 0]}
-          textureSrc={BASE_OUTSIDE_TEXTURES.back}
-        />
-
-        {/* 左面：法线 -X，world x = -BW/2 */}
-        <TexturePlane
-          args={[BD, BH + BASE_VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            -BW / 2 - SURFACE_OFFSET,
-            (BH + BASE_VERTICAL_FACE_OVERLAP * 2) / 2,
-            0,
-          ]}
-          rotation={[0, Math.PI / 2, 0]}
-          textureSrc={BASE_OUTSIDE_TEXTURES.right}
-          mirrorX
-        />
-
-        {/* 右面：法线 +X，world x = BW/2 */}
-        <TexturePlane
-          args={[BD, BH + BASE_VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            BW / 2 + SURFACE_OFFSET,
-            (BH + BASE_VERTICAL_FACE_OVERLAP * 2) / 2,
-            0,
-          ]}
-          rotation={[0, -Math.PI / 2, 0]}
-          textureSrc={BASE_OUTSIDE_TEXTURES.left}
-          mirrorX
-        />
-
-        {/* 底面：法线 -Y，world y = 0 */}
-        <TexturePlane
-          args={[BW, BD]}
-          position={[0, floorH + SURFACE_OFFSET, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          textureSrc={BASE_OUTSIDE_TEXTURES.bottom}
-        />
       </group>
 
       {/* ===== 上盖（随动画移动） ===== */}
@@ -589,7 +358,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
         position={[0, currentLidGroupY, 0]}
         rotation={[LID_OPEN_ROT_X * animProgress, 0, 0]}
       >
-        {/* 盒盖本体 5 面板 */}
         <Panel
           w={LW}
           h={lidTopH}
@@ -599,6 +367,45 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
           z={0}
           mat={lidMat}
         />
+
+        {/* ── 实验：盒盖顶面贴图 overlay ── */}
+        {ENABLE_LID_TOP_TEXTURE_TEST && (
+          <>
+            {/* 贴图 plane（图片加载成功后才显示） */}
+            {lidTopTexture && (
+              <mesh
+                rotation={[-Math.PI / 2, 0, 0]}
+                position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
+              >
+                <planeGeometry args={[LW - 0.04, LD - 0.04]} />
+                <meshBasicMaterial
+                  map={lidTopTexture}
+                  transparent
+                  side={THREE.DoubleSide}
+                  toneMapped={false}
+                  polygonOffset
+                  polygonOffsetFactor={-1}
+                />
+              </mesh>
+            )}
+
+            {/* 黄色 fallback plane（图片未加载时显示，用于调试位置） */}
+            {!lidTopTexture && (
+              <mesh
+                rotation={[-Math.PI / 2, 0, 0]}
+                position={[0, lidTopCenterY + lidTopH / 2 + 0.006, 0]}
+              >
+                <planeGeometry args={[LW - 0.04, LD - 0.04]} />
+                <meshBasicMaterial
+                  color="#ffcc00"
+                  transparent
+                  opacity={0.6}
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+            )}
+          </>
+        )}
 
         <Panel
           w={LW}
@@ -638,62 +445,6 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
           y={lidTopH / 2 + lidSideH / 2}
           z={0}
           mat={lidMat}
-        />
-
-        {/* ── 盒盖外部 5 面贴图（全部在 lidGroup 内） ── */}
-        {/* 顶面：法线 +Y，局部 y = lidTopCenterY */}
-        <TexturePlane
-          args={[LW, LD]}
-          position={[0, lidTopCenterY + lidTopH / 2 + SURFACE_OFFSET, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          textureSrc={LID_OUTSIDE_TEXTURES.top}
-        />
-
-        {/* 前面：法线 +Z，局部 z = LD/2 */}
-        <TexturePlane
-          args={[LW, lidSideH + VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            0,
-            lidTopH / 2 + lidSideH / 2,
-            LD / 2 + SURFACE_OFFSET,
-          ]}
-          textureSrc={LID_OUTSIDE_TEXTURES.front}
-        />
-
-        {/* 后面：法线 -Z，局部 z = -LD/2 */}
-        <TexturePlane
-          args={[LW, lidSideH + VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            0,
-            lidTopH / 2 + lidSideH / 2,
-            -LD / 2 - SURFACE_OFFSET,
-          ]}
-          rotation={[0, Math.PI, 0]}
-          textureSrc={LID_OUTSIDE_TEXTURES.back}
-        />
-
-        {/* 左面：法线 -X，局部 x = -LW/2 */}
-        <TexturePlane
-          args={[LD, lidSideH + VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            -LW / 2 - SURFACE_OFFSET,
-            lidTopH / 2 + lidSideH / 2,
-            0,
-          ]}
-          rotation={[0, Math.PI / 2, 0]}
-          textureSrc={LID_OUTSIDE_TEXTURES.left}
-        />
-
-        {/* 右面：法线 +X，局部 x = LW/2 */}
-        <TexturePlane
-          args={[LD, lidSideH + VERTICAL_FACE_OVERLAP * 2]}
-          position={[
-            LW / 2 + SURFACE_OFFSET,
-            lidTopH / 2 + lidSideH / 2,
-            0,
-          ]}
-          rotation={[0, -Math.PI / 2, 0]}
-          textureSrc={LID_OUTSIDE_TEXTURES.right}
         />
       </group>
 
