@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import gsap from "gsap";
 
 // ── 卡片数据：真实衣服样机图片 ──────────────────
 const CARDS_DATA = [
@@ -16,9 +17,11 @@ const CARDS_DATA = [
   { id: 10, frontSrc: "/images/abczoo/marquee-cards/front-10.webp", backSrc: "/images/abczoo/marquee-cards/back-10.webp" },
 ];
 
-const CARD_WIDTH = 170;
-const MARQUEE_GAP = 20;
-const MARQUEE_SPEED = 10; // 秒/完整循环（进一步放慢）
+// ── 尺寸：等比放大 10% ────────────────────────────
+const CARD_WIDTH = 187;   // 170 × 1.1
+const MARQUEE_GAP = 22;   // 20 × 1.1
+const MARQUEE_SPEED = 10; // 秒/完整循环
+
 const DOUBLE_COUNT = CARDS_DATA.length * 2;
 
 function Card({
@@ -114,8 +117,7 @@ export function PackagingCardMarquee() {
   const [visible, setVisible] = useState(false);
   const marqueeRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const rafRef = useRef<number>(0);
-  const offsetRef = useRef(0);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -130,21 +132,23 @@ export function PackagingCardMarquee() {
     };
   }, []);
 
-  // ── 跑马灯自动定位：open=true 后两帧即滚动居中，不等展开动画 ──
+  // ── 跑马灯自动定位：open=true 后滚动到跑马灯容器 ──
   useEffect(() => {
     if (!visible) return;
-    const el = marqueeRef.current;
-    if (!el) return;
 
     let cancelled = false;
 
     const scheduleScroll = () => {
       if (cancelled) return;
+      const el = marqueeRef.current;
+      if (!el) return;
+
       const rect = el.getBoundingClientRect();
-      const elCenter = rect.top + rect.height / 2;
       const viewportH = window.innerHeight;
-      const targetScroll = window.scrollY + elCenter - viewportH / 2;
-      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+      const MARQUEE_TOP_VIEWPORT_RATIO = 0.60;
+      const targetScroll = window.scrollY + rect.top - viewportH * MARQUEE_TOP_VIEWPORT_RATIO;
+
+      window.scrollTo({ top: Math.max(0, targetScroll), behavior: "smooth" });
     };
 
     // 第 1 帧：flush layout
@@ -168,52 +172,99 @@ export function PackagingCardMarquee() {
     });
   }, []);
 
+  // ── GSAP 跑马灯动画（替代 RAF） ──────────────────────
   useEffect(() => {
-    let lastTime = 0;
+    if (!visible) {
+      if (tweenRef.current) {
+        tweenRef.current.kill();
+        tweenRef.current = null;
+      }
+      return;
+    }
+
+    // 检查无障碍偏好
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      // 尊重用户偏好：不做动画
+      return;
+    }
+
+    const track = trackRef.current;
+    if (!track) return;
+
+    // 半宽 = 一组卡片的总宽度（用于无缝循环）
     const halfWidth = CARDS_DATA.length * (CARD_WIDTH + MARQUEE_GAP);
 
-    const animate = (time: number) => {
-      if (!lastTime) lastTime = time;
-      const dt = (time - lastTime) / 1000;
-      lastTime = time;
+    // 初始偏移
+    gsap.set(track, { x: 0 });
 
-      if (!isPaused && visible) {
-        offsetRef.current -= dt * MARQUEE_SPEED * 30;
-        if (offsetRef.current <= -halfWidth) {
-          offsetRef.current += halfWidth;
-        }
-      }
-
-      if (trackRef.current) {
-        trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
-      }
-
-      // ── 根据卡片在 viewport 中的位置更新 opacity ──
-      if (visible) {
-        const viewportRect = marqueeRef.current?.getBoundingClientRect();
-        if (viewportRect) {
-          const fadeWidth = Math.min(260, viewportRect.width * 0.22);
-          const refs = cardRefs.current;
-          for (let i = 0; i < refs.length; i++) {
-            const el = refs[i];
-            if (!el) continue;
-            const cardRect = el.getBoundingClientRect();
-            const cardCenterX = cardRect.left + cardRect.width / 2;
-            const leftDistance = cardCenterX - viewportRect.left;
-            const rightDistance = viewportRect.right - cardCenterX;
-            const edgeDistance = Math.min(leftDistance, rightDistance);
-            const opacity = Math.min(1, Math.max(0, edgeDistance / fadeWidth));
-            el.style.opacity = String(opacity);
+    // 创建循环 tweener
+    tweenRef.current = gsap.to(track, {
+      x: -halfWidth,
+      duration: MARQUEE_SPEED,
+      ease: "none",
+      repeat: -1,
+      paused: true,
+      // 到达一半时重置（无缝循环）
+      modifiers: {
+        x: (x: string) => {
+          const val = parseFloat(x);
+          if (val <= -halfWidth) {
+            return `${-halfWidth % halfWidth}px`;
           }
-        }
-      }
+          return x;
+        },
+      },
+    });
 
-      rafRef.current = requestAnimationFrame(animate);
+    tweenRef.current.pause();
+
+    return () => {
+      tweenRef.current?.kill();
+      tweenRef.current = null;
+    };
+  }, [visible]);
+
+  // ── 控制播放/暂停 ──────────────────────────────────
+  useEffect(() => {
+    if (!tweenRef.current) return;
+    if (isPaused) {
+      tweenRef.current.pause();
+    } else {
+      tweenRef.current.resume();
+    }
+  }, [isPaused]);
+
+  // ── 卡片 fade 效果（边缘淡出） ─────────────────────
+  useEffect(() => {
+    if (!visible) return;
+
+    let rafId: number;
+    const fadeEdges = () => {
+      const viewportRect = marqueeRef.current?.getBoundingClientRect();
+      if (!viewportRect) {
+        rafId = requestAnimationFrame(fadeEdges);
+        return;
+      }
+      const fadeWidth = Math.min(260, viewportRect.width * 0.22);
+      const refs = cardRefs.current;
+      for (let i = 0; i < refs.length; i++) {
+        const el = refs[i];
+        if (!el) continue;
+        const cardRect = el.getBoundingClientRect();
+        const cardCenterX = cardRect.left + cardRect.width / 2;
+        const leftDistance = cardCenterX - viewportRect.left;
+        const rightDistance = viewportRect.right - cardCenterX;
+        const edgeDistance = Math.min(leftDistance, rightDistance);
+        const opacity = Math.min(1, Math.max(0, edgeDistance / fadeWidth));
+        el.style.opacity = String(opacity);
+      }
+      rafId = requestAnimationFrame(fadeEdges);
     };
 
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [isPaused, visible]);
+    rafId = requestAnimationFrame(fadeEdges);
+    return () => cancelAnimationFrame(rafId);
+  }, [visible]);
 
   // 双倍卡片用于无缝循环
   const doubledCards = [...CARDS_DATA, ...CARDS_DATA];
@@ -222,7 +273,7 @@ export function PackagingCardMarquee() {
     <div
       ref={marqueeRef}
       style={{
-        width: "100%",
+        width: "min(94vw, 1400px)",
         maxWidth: "100%",
         margin: visible ? "8px auto 88px" : "0 auto",
         maxHeight: visible ? 360 : 0,

@@ -88,6 +88,21 @@ const LID_TEX = {
   rightThickness: "/images/abczoo/box/faces/lid-right-thickness.webp",
 };
 
+// ── 路径前缀（GitHub Pages basePath） ──────────────────
+const ASSET_BASE_PATH = typeof process !== "undefined" && process.env.NEXT_PUBLIC_ASSET_BASE_PATH
+  ? process.env.NEXT_PUBLIC_ASSET_BASE_PATH
+  : "";
+
+function withAssetBasePath(path: string) {
+  if (!path.startsWith("/")) return `${ASSET_BASE_PATH}/${path}`;
+  return `${ASSET_BASE_PATH}${path}`;
+}
+
+// ── Debug 开关 ─────────────────────────────────────────
+const DEBUG_TEXTURE_LOGS = false;
+const DEBUG_TEXTURE_MATERIALS = false;
+const DEBUG_DEEP_INSIDE_FACES = false;
+
 // ── 工具函数：创建带变换的 texture ──────────────────────
 function createTransformedTexture(
   texture: THREE.Texture,
@@ -146,27 +161,37 @@ function createTextureMaterial(
   options?: { mirrorX?: boolean; mirrorY?: boolean; rotate90?: boolean }
 ): THREE.MeshBasicMaterial {
   const transformed = createTransformedTexture(texture, options);
-  return new THREE.MeshBasicMaterial({
+  const mat = new THREE.MeshBasicMaterial({
     map: transformed,
     transparent: false,
     opacity: 1,
     depthWrite: true,
     depthTest: true,
     toneMapped: false,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
   });
+  mat.needsUpdate = true;
+
+  if (DEBUG_TEXTURE_MATERIALS) {
+    const img = (texture.image as HTMLImageElement | null);
+    console.warn("[Box3D debug material] tex=", texture.uuid, " img=", img ? `w=${img.width} h=${img.height}` : "null", " mat.map=", Boolean(mat.map), " side=", mat.side);
+  }
+
+  return mat;
 }
 
 // ── 工具函数：创建纯色材质 ──────────────────────────────
 function createSolidMaterial(color: string): THREE.MeshBasicMaterial {
-  return new THREE.MeshBasicMaterial({
+  const mat = new THREE.MeshBasicMaterial({
     color: new THREE.Color(color),
     transparent: false,
     depthWrite: true,
     depthTest: true,
     toneMapped: false,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
   });
+  mat.needsUpdate = true;
+  return mat;
 }
 
 function emitBoxOpenChange(open: boolean) {
@@ -384,16 +409,17 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     return new Promise<THREE.Texture | null>((resolve) => {
       try {
         const loader = new THREE.TextureLoader();
+        const resolvedSrc = withAssetBasePath(src);
         loader.load(
-          src,
+          resolvedSrc,
           (tex) => {
             tex.colorSpace = THREE.SRGBColorSpace;
-            console.info("Texture loaded:", src);
+            if (DEBUG_TEXTURE_LOGS) console.info("Texture loaded:", resolvedSrc);
             resolve(tex);
           },
           undefined,
           () => {
-            console.warn("Texture failed:", src);
+            console.warn("Texture failed:", resolvedSrc);
             resolve(null);
           }
         );
@@ -465,6 +491,120 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
     return mat || lidMatCache;
   }, [allTextures, lidMatCache, getMat]);
 
+  // ═══════════════════════════════════════════════════════
+  // 地盒 5 个 Panel material array（缓存避免每帧重建）
+  // ═══════════════════════════════════════════════════════
+
+  const baseBottomMats = useMemo(() => {
+    const mats = [
+      baseMatCache,              // index 0: +X right
+      baseMatCache,              // index 1: -X left
+      null as THREE.Material | null,  // index 2: +Y top (内底面)
+      texOrBase(BASE_TEX.bottomOutside),  // index 3: -Y bottom (外底面)
+      baseMatCache,              // index 4: +Z front
+      baseMatCache,              // index 5: -Z back
+    ] as THREE.Material[];
+    if (DEBUG_DEEP_INSIDE_FACES) {
+      mats[2] = new THREE.MeshBasicMaterial({ color: new THREE.Color('#00ff00'), side: THREE.DoubleSide });
+    } else {
+      mats[2] = texOrBase(BASE_TEX.bottomInside);
+    }
+    return mats;
+  }, [texOrBase, baseMatCache, BASE_TEX.bottomInside, BASE_TEX.bottomOutside]);
+
+  const baseFrontWallMats = useMemo(() => [
+    baseMatCache,  // +X right
+    baseMatCache,  // -X left
+    texOrBase(BASE_TEX.frontThickness), // +Y top (口沿厚度)
+    baseMatCache,  // -Y bottom
+    texOrBase(BASE_TEX.frontOutside),  // +Z front (外侧)
+    texOrBase(BASE_TEX.frontInside),   // -Z back (内侧)
+  ], [texOrBase, baseMatCache, BASE_TEX.frontThickness, BASE_TEX.frontOutside, BASE_TEX.frontInside]);
+
+  const baseBackWallMats = useMemo(() => [
+    baseMatCache,  // +X right
+    baseMatCache,  // -X left
+    texOrBase(BASE_TEX.backThickness), // +Y top
+    baseMatCache,  // -Y bottom
+    texOrBase(BASE_TEX.backInside),    // +Z front (内侧)
+    texOrBase(BASE_TEX.backOutside),   // -Z back (外侧)
+  ], [texOrBase, baseMatCache, BASE_TEX.backThickness, BASE_TEX.backInside, BASE_TEX.backOutside]);
+
+  const baseLeftWallMats = useMemo(() => [
+    texOrBase(BASE_TEX.leftInside),    // +X right (内侧)
+    texOrBase(BASE_TEX.leftOutside),   // -X left (外侧)
+    texOrBase(BASE_TEX.leftThickness), // +Y top
+    baseMatCache,  // -Y bottom
+    baseMatCache,  // +Z front
+    baseMatCache,  // -Z back
+  ], [texOrBase, baseMatCache, BASE_TEX.leftInside, BASE_TEX.leftOutside, BASE_TEX.leftThickness]);
+
+  const baseRightWallMats = useMemo(() => [
+    texOrBase(BASE_TEX.rightOutside),  // +X right (外侧)
+    texOrBase(BASE_TEX.rightInside),   // -X left (内侧)
+    texOrBase(BASE_TEX.rightThickness),// +Y top
+    baseMatCache,  // -Y bottom
+    baseMatCache,  // +Z front
+    baseMatCache,  // -Z back
+  ], [texOrBase, baseMatCache, BASE_TEX.rightOutside, BASE_TEX.rightInside, BASE_TEX.rightThickness]);
+
+  // ═══════════════════════════════════════════════════════
+  // 盒盖 5 个 Panel material array（缓存避免每帧重建）
+  // ═══════════════════════════════════════════════════════
+
+  const lidTopMats = useMemo(() => {
+    const mats = [
+      lidMatCache,               // index 0: +X right
+      lidMatCache,               // index 1: -X left
+      texOrLid(LID_TEX.topOutside),   // index 2: +Y top (外顶面)
+      null as THREE.Material | null,  // index 3: -Y bottom (内顶面)
+      lidMatCache,               // index 4: +Z front
+      lidMatCache,               // index 5: -Z back
+    ] as THREE.Material[];
+    if (DEBUG_DEEP_INSIDE_FACES) {
+      mats[3] = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ff0000'), side: THREE.DoubleSide });
+    } else {
+      mats[3] = texOrLid(LID_TEX.topInside);
+    }
+    return mats;
+  }, [texOrLid, lidMatCache, LID_TEX.topOutside, LID_TEX.topInside]);
+
+  const lidFrontSkirtMats = useMemo(() => [
+    lidMatCache,   // +X right
+    lidMatCache,   // -X left
+    lidMatCache,   // +Y top
+    texOrLid(LID_TEX.frontThickness),// -Y bottom (裙边底部)
+    texOrLid(LID_TEX.frontOutside),  // +Z front (外侧)
+    texOrLid(LID_TEX.frontInside),   // -Z back (内侧)
+  ], [texOrLid, lidMatCache, LID_TEX.frontThickness, LID_TEX.frontOutside, LID_TEX.frontInside]);
+
+  const lidBackSkirtMats = useMemo(() => [
+    lidMatCache,   // +X right
+    lidMatCache,   // -X left
+    lidMatCache,   // +Y top
+    texOrLid(LID_TEX.backThickness), // -Y bottom
+    texOrLid(LID_TEX.backInside),    // +Z front (内侧)
+    texOrLid(LID_TEX.backOutside),   // -Z back (外侧)
+  ], [texOrLid, lidMatCache, LID_TEX.backThickness, LID_TEX.backInside, LID_TEX.backOutside]);
+
+  const lidLeftSkirtMats = useMemo(() => [
+    texOrLid(LID_TEX.leftInside),    // +X right (内侧)
+    texOrLid(LID_TEX.leftOutside),   // -X left (外侧)
+    lidMatCache,   // +Y top
+    lidMatCache,   // -Y bottom
+    lidMatCache,   // +Z front
+    lidMatCache,   // -Z back
+  ], [texOrLid, lidMatCache, LID_TEX.leftInside, LID_TEX.leftOutside]);
+
+  const lidRightSkirtMats = useMemo(() => [
+    texOrLid(LID_TEX.rightOutside),  // +X right (外侧)
+    texOrLid(LID_TEX.rightInside),   // -X left (内侧)
+    lidMatCache,   // +Y top
+    lidMatCache,   // -Y bottom
+    lidMatCache,   // +Z front
+    lidMatCache,   // -Z back
+  ], [texOrLid, lidMatCache, LID_TEX.rightOutside, LID_TEX.rightInside]);
+
   // ── 等待贴图加载完成后再渲染盒子 ──────────────────────
   if (!texturesLoaded) {
     return (
@@ -488,112 +628,8 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   }
 
   // ═══════════════════════════════════════════════════════
-  // 地盒 5 个 Panel
+  // 渲染盒子（textures 已加载）
   // ═══════════════════════════════════════════════════════
-
-  // B1: 底板 [BW, floorH, BD]
-  const baseBottomMats = [
-    baseMatCache,  // +X right
-    baseMatCache,  // -X left
-    texOrBase(BASE_TEX.bottomInside),  // +Y top (内底面)
-    texOrBase(BASE_TEX.bottomOutside), // -Y bottom (外底面)
-    baseMatCache,  // +Z front
-    baseMatCache,  // -Z back
-  ];
-
-  // B2: 前壁 [BW, sideWallH, WT] 位于 z = BD/2 - WT/2
-  const baseFrontWallMats = [
-    baseMatCache,  // +X right
-    baseMatCache,  // -X left
-    texOrBase(BASE_TEX.frontThickness), // +Y top (口沿厚度)
-    baseMatCache,  // -Y bottom
-    texOrBase(BASE_TEX.frontOutside),  // +Z front (外侧)
-    texOrBase(BASE_TEX.frontInside),   // -Z back (内侧)
-  ];
-
-  // B3: 后壁 [BW, sideWallH, WT] 位于 z = -BD/2 + WT/2
-  const baseBackWallMats = [
-    baseMatCache,  // +X right
-    baseMatCache,  // -X left
-    texOrBase(BASE_TEX.backThickness), // +Y top
-    baseMatCache,  // -Y bottom
-    texOrBase(BASE_TEX.backInside),    // +Z front (内侧)
-    texOrBase(BASE_TEX.backOutside),   // -Z back (外侧)
-  ];
-
-  // B4: 左壁 [WT, sideWallH, BD] 位于 x = -BW/2 + WT/2
-  const baseLeftWallMats = [
-    texOrBase(BASE_TEX.leftInside),    // +X right (内侧)
-    texOrBase(BASE_TEX.leftOutside),   // -X left (外侧)
-    texOrBase(BASE_TEX.leftThickness), // +Y top
-    baseMatCache,  // -Y bottom
-    baseMatCache,  // +Z front
-    baseMatCache,  // -Z back
-  ];
-
-  // B5: 右壁 [WT, sideWallH, BD] 位于 x = BW/2 - WT/2
-  const baseRightWallMats = [
-    texOrBase(BASE_TEX.rightOutside),  // +X right (外侧)
-    texOrBase(BASE_TEX.rightInside),   // -X left (内侧)
-    texOrBase(BASE_TEX.rightThickness),// +Y top
-    baseMatCache,  // -Y bottom
-    baseMatCache,  // +Z front
-    baseMatCache,  // -Z back
-  ];
-
-  // ═══════════════════════════════════════════════════════
-  // 盒盖 5 个 Panel
-  // ═══════════════════════════════════════════════════════
-
-  // L1: 顶板 [LW, lidTopH, LD]
-  const lidTopMats = [
-    lidMatCache,   // +X right
-    lidMatCache,   // -X left
-    texOrLid(LID_TEX.topOutside),  // +Y top (外顶面)
-    texOrLid(LID_TEX.topInside),   // -Y bottom (内顶面)
-    lidMatCache,   // +Z front
-    lidMatCache,   // -Z back
-  ];
-
-  // L2: 前裙 [LW, lidSideH, WT] 位于 z = LD/2 - WT/2
-  const lidFrontSkirtMats = [
-    lidMatCache,   // +X right
-    lidMatCache,   // -X left
-    lidMatCache,   // +Y top
-    texOrLid(LID_TEX.frontThickness),// -Y bottom (裙边底部)
-    texOrLid(LID_TEX.frontOutside),  // +Z front (外侧)
-    texOrLid(LID_TEX.frontInside),   // -Z back (内侧)
-  ];
-
-  // L3: 后裙 [LW, lidSideH, WT] 位于 z = -LD/2 + WT/2
-  const lidBackSkirtMats = [
-    lidMatCache,   // +X right
-    lidMatCache,   // -X left
-    lidMatCache,   // +Y top
-    texOrLid(LID_TEX.backThickness), // -Y bottom
-    texOrLid(LID_TEX.backInside),    // +Z front (内侧)
-    texOrLid(LID_TEX.backOutside),   // -Z back (外侧)
-  ];
-
-  // L4: 左裙 [WT, lidSideH, LD] 位于 x = -LW/2 + WT/2
-  const lidLeftSkirtMats = [
-    texOrLid(LID_TEX.leftInside),    // +X right (内侧)
-    texOrLid(LID_TEX.leftOutside),   // -X left (外侧)
-    lidMatCache,   // +Y top
-    lidMatCache,   // -Y bottom
-    lidMatCache,   // +Z front
-    lidMatCache,   // -Z back
-  ];
-
-  // L5: 右裙 [WT, lidSideH, LD] 位于 x = LW/2 - WT/2
-  const lidRightSkirtMats = [
-    texOrLid(LID_TEX.rightOutside),  // +X right (外侧)
-    texOrLid(LID_TEX.rightInside),   // -X left (内侧)
-    lidMatCache,   // +Y top
-    lidMatCache,   // -Y bottom
-    lidMatCache,   // +Z front
-    lidMatCache,   // -Z back
-  ];
 
   return (
     <group ref={groupRef} scale={MODEL_SCALE} position={[0, -0.3, 0]}>
