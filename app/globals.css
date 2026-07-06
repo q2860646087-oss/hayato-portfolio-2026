@@ -2614,3 +2614,29 @@ h3,
 [id^="project-"] {
   scroll-margin-top: 120px;
 }
+
+/* ============================================================
+   ABC Zoo Title Visual — 项目主视觉图
+   ============================================================ */
+
+.abczoo-title-visual {
+  width: min(82.8vw, 1196px);
+  margin: 28px auto 34px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.abczoo-title-visual-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .abczoo-title-visual {
+    width: min(92vw, 600px);
+    margin: 20px auto 24px;
+  }
+}

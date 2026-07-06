@@ -33,7 +33,11 @@ const CARDS_DATA = [
 // ── 尺寸：等比放大 10% ────────────────────────────
 const CARD_WIDTH = 187;   // 170 × 1.1
 const MARQUEE_GAP = 22;   // 20 × 1.1
-const MARQUEE_SPEED = 10; // 秒/完整循环
+
+// ── 动效时长 ────────────────────────────────────────
+const MARQUEE_LOOP_DURATION = 46;      // 秒/完整循环（比 52 快约 12%）
+const MARQUEE_ENTER_DURATION = 1.1;    // 出现动画时长
+const MARQUEE_EXIT_DURATION = 0.9;     // 消失动画时长
 
 const DOUBLE_COUNT = CARDS_DATA.length * 2;
 
@@ -128,9 +132,11 @@ export function PackagingCardMarquee() {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [isPaused, setIsPaused] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const marqueeRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const appearTweenRef = useRef<gsap.core.Tween | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -167,7 +173,7 @@ export function PackagingCardMarquee() {
 
       const rect = el.getBoundingClientRect();
       const viewportH = window.innerHeight;
-      const MARQUEE_TOP_VIEWPORT_RATIO = 0.60;
+      const MARQUEE_TOP_VIEWPORT_RATIO = 0.64;
       const targetScroll = window.scrollY + rect.top - viewportH * MARQUEE_TOP_VIEWPORT_RATIO;
 
       window.scrollTo({ top: Math.max(0, targetScroll), behavior: "smooth" });
@@ -195,6 +201,7 @@ export function PackagingCardMarquee() {
   }, []);
 
   // ── GSAP 跑马灯动画（替代 RAF） ──────────────────────
+  // visible=true 后自动 play，不再等 hover 事件
   useEffect(() => {
     if (!visible) {
       if (tweenRef.current) {
@@ -207,7 +214,6 @@ export function PackagingCardMarquee() {
     // 检查无障碍偏好
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) {
-      // 尊重用户偏好：不做动画
       return;
     }
 
@@ -217,29 +223,36 @@ export function PackagingCardMarquee() {
     // 半宽 = 一组卡片的总宽度（用于无缝循环）
     const halfWidth = CARDS_DATA.length * (CARD_WIDTH + MARQUEE_GAP);
 
-    // 初始偏移
-    gsap.set(track, { x: 0 });
+    try {
+      // 销毁旧 tween
+      tweenRef.current?.kill();
 
-    // 创建循环 tweener
-    tweenRef.current = gsap.to(track, {
-      x: -halfWidth,
-      duration: MARQUEE_SPEED,
-      ease: "none",
-      repeat: -1,
-      paused: true,
-      // 到达一半时重置（无缝循环）
-      modifiers: {
-        x: (x: string) => {
-          const val = parseFloat(x);
-          if (val <= -halfWidth) {
-            return `${-halfWidth % halfWidth}px`;
-          }
-          return x;
+      // 初始位置设到 -halfWidth（一组卡片的末尾）
+      gsap.set(track, { x: -halfWidth });
+
+      // 创建循环 tweener：从 -halfWidth 到 0（向右移动）
+      tweenRef.current = gsap.to(track, {
+        x: 0,
+        duration: MARQUEE_LOOP_DURATION,
+        ease: "none",
+        repeat: -1,
+        // 到达一半时重置（无缝循环）
+        modifiers: {
+          x: (x: string) => {
+            const val = parseFloat(x);
+            if (val >= 0) {
+              return `${val % halfWidth}px`;
+            }
+            return x;
+          },
         },
-      },
-    });
+      });
 
-    tweenRef.current.pause();
+      // 立刻播放
+      tweenRef.current.play(0);
+    } catch (error) {
+      console.error("[marquee gsap animation init failed]", error);
+    }
 
     return () => {
       tweenRef.current?.kill();
@@ -256,6 +269,71 @@ export function PackagingCardMarquee() {
       tweenRef.current.resume();
     }
   }, [isPaused]);
+
+  // ── 容器进出场动画（GSAP） ─────────────────────────
+  useEffect(() => {
+    const el = marqueeRef.current;
+    if (!el) return;
+
+    if (visible && !shouldRender) {
+      // visible=true：先渲染，再播放入场
+      setShouldRender(true);
+      try {
+        appearTweenRef.current?.kill();
+        appearTweenRef.current = null;
+        // 先重置到出场终态（防止第二次 visible=true 时 gsap.from 读到错误的中间态）
+        gsap.set(el, {
+          opacity: 0,
+          y: 18,
+          scale: 0.985,
+          forceCSS: true,
+        });
+        appearTweenRef.current = gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: MARQUEE_ENTER_DURATION,
+          ease: "power3.out",
+          onComplete: () => {
+            appearTweenRef.current = null;
+          },
+          onInterrupt: () => {
+            appearTweenRef.current = null;
+          },
+        });
+      } catch (error) {
+        console.error("[marquee appear animation failed]", error);
+        setShouldRender(false);
+      }
+      return;
+    }
+
+    if (!visible && shouldRender) {
+      // visible=false：先播放出场动画，完成后隐藏
+      try {
+        appearTweenRef.current?.kill();
+        appearTweenRef.current = null;
+        appearTweenRef.current = gsap.to(el, {
+          opacity: 0,
+          y: 18,
+          scale: 0.985,
+          duration: MARQUEE_EXIT_DURATION,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setShouldRender(false);
+            appearTweenRef.current = null;
+          },
+          onInterrupt: () => {
+            appearTweenRef.current = null;
+          },
+        });
+      } catch (error) {
+        console.error("[marquee exit animation failed]", error);
+        setShouldRender(false);
+      }
+      return;
+    }
+  }, [visible, shouldRender]);
 
   // ── 卡片 fade 效果（边缘淡出） ─────────────────────
   useEffect(() => {
@@ -297,20 +375,11 @@ export function PackagingCardMarquee() {
       style={{
         width: "min(94vw, 1400px)",
         maxWidth: "100%",
-        margin: visible ? "8px auto 88px" : "0 auto",
-        maxHeight: visible ? 360 : 0,
+        margin: shouldRender ? "8px auto 88px" : "0 auto",
+        maxHeight: shouldRender ? 360 : 0,
         overflow: "hidden",
         position: "relative",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0) scale(1)" : "translateY(18px) scale(0.985)",
-        filter: visible ? "blur(0)" : "blur(2px)",
-        transition:
-          "opacity 420ms ease, " +
-          "transform 520ms cubic-bezier(0.22, 1, 0.36, 1), " +
-          "max-height 620ms cubic-bezier(0.22, 1, 0.36, 1), " +
-          "margin 620ms cubic-bezier(0.22, 1, 0.36, 1), " +
-          "filter 420ms ease",
-        pointerEvents: visible ? "auto" : "none",
+        pointerEvents: shouldRender ? "auto" : "none",
       }}
       onMouseEnter={() => {
         setIsPaused(true);
