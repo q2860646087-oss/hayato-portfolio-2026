@@ -3,6 +3,19 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 
+// ── 路径前缀（GitHub Pages basePath） ──────────────────
+const ASSET_BASE_PATH = typeof process !== "undefined" && process.env.NEXT_PUBLIC_ASSET_BASE_PATH
+  ? process.env.NEXT_PUBLIC_ASSET_BASE_PATH
+  : "";
+
+function withAssetBasePath(path: string) {
+  if (!path.startsWith("/")) return `${ASSET_BASE_PATH}/${path}`;
+  return `${ASSET_BASE_PATH}${path}`;
+}
+
+// ── 线上调试日志（验证 basePath 拼接是否正确） ──────────
+const DEBUG_MARQUEE_IMAGE_PATHS = true;
+
 // ── 卡片数据：真实衣服样机图片 ──────────────────
 const CARDS_DATA = [
   { id: 1, frontSrc: "/images/abczoo/marquee-cards/front-01.webp", backSrc: "/images/abczoo/marquee-cards/back-01.webp" },
@@ -68,7 +81,7 @@ function Card({
           }}
         >
           <img
-            src={data.frontSrc}
+            src={withAssetBasePath(data.frontSrc)}
             alt=""
             style={{
               width: "100%",
@@ -92,7 +105,7 @@ function Card({
           }}
         >
           <img
-            src={data.backSrc}
+            src={withAssetBasePath(data.backSrc)}
             alt=""
             style={{
               width: "100%",
@@ -131,6 +144,15 @@ export function PackagingCardMarquee() {
       window.removeEventListener(BOX3D_OPEN_EVENT, handleBoxOpenChange);
     };
   }, []);
+
+  // ── 线上调试：验证 basePath 拼接 ──
+  useEffect(() => {
+    if (!visible) return;
+    if (DEBUG_MARQUEE_IMAGE_PATHS) {
+      console.info("[marquee image]", withAssetBasePath(CARDS_DATA[0].frontSrc));
+      console.info("[marquee image]", withAssetBasePath(CARDS_DATA[0].backSrc));
+    }
+  }, [visible]);
 
   // ── 跑马灯自动定位：open=true 后滚动到跑马灯容器 ──
   useEffect(() => {
