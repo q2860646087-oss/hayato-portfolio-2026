@@ -10,9 +10,10 @@ export default function ProjectNavigator() {
     const hero = document.getElementById("hero");
     if (hero) {
       const rect = hero.getBoundingClientRect();
-      setVisible(rect.bottom < window.innerHeight * 0.35);
+      // 使用滞后区间避免在临界值附近反复 toggle
+      setVisible(rect.bottom < window.innerHeight * 0.30);
     } else {
-      setVisible(window.scrollY > window.innerHeight * 0.75);
+      setVisible(window.scrollY > window.innerHeight * 0.70);
     }
   }, []);
 

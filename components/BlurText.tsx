@@ -50,7 +50,7 @@ export function BlurText({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
     );
 
     observer.observe(node);

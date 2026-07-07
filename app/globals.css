@@ -2470,7 +2470,7 @@ h3,
 
 .project-rail {
   position: fixed;
-  right: 24px;
+  right: 32px;
   top: 50%;
   z-index: 40;
   display: flex;
