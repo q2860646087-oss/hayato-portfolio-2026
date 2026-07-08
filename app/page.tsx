@@ -114,20 +114,34 @@ function AboutSection() {
           </div>
         </Reveal>
 
-        <Reveal className="about-board-screen about-index-screen" delay={120}>
-          <div className="about-index-top">
-            <WorkExperienceGroup />
-            <ProjectExperienceGroup />
-            <ObjectiveModule />
-          </div>
+        <details className="about-more-panel">
+          <summary className="about-more-trigger">
+            <span className="about-more-trigger-copy">
+              <span className="about-more-main">展开更多 ABOUT</span>
+              <span className="about-more-hint font-en">VIEW MORE PROFILE</span>
+            </span>
+            <span className="about-more-icon" aria-hidden="true">+</span>
+          </summary>
 
-          <div className="about-index-bottom">
-            <TagCloudModule label={about.designSkillsTitleEn} titleZh={about.designSkillsTitleZh} items={siteConfig.about.designSkills} />
-            <ToolIconModule label={about.toolsTitleEn} titleZh={about.toolsTitleZh} items={siteConfig.about.tools} />
-            <TagCloudModule label={about.aigcToolsTitleEn} titleZh={about.aigcToolsTitleZh} items={siteConfig.about.aigcTools} />
-            <TagCloudModule label={about.softSkillsTitleEn} titleZh={about.softSkillsTitleZh} items={siteConfig.about.softSkills} />
+          <div className="about-more-content">
+            <div className="about-more-content-inner">
+              <Reveal className="about-board-screen about-index-screen" delay={120}>
+                <div className="about-index-top">
+                  <WorkExperienceGroup />
+                  <ProjectExperienceGroup />
+                  <ObjectiveModule />
+                </div>
+
+                <div className="about-index-bottom">
+                  <TagCloudModule label={about.designSkillsTitleEn} titleZh={about.designSkillsTitleZh} items={siteConfig.about.designSkills} />
+                  <ToolIconModule label={about.toolsTitleEn} titleZh={about.toolsTitleZh} items={siteConfig.about.tools} />
+                  <TagCloudModule label={about.aigcToolsTitleEn} titleZh={about.aigcToolsTitleZh} items={siteConfig.about.aigcTools} />
+                  <TagCloudModule label={about.softSkillsTitleEn} titleZh={about.softSkillsTitleZh} items={siteConfig.about.softSkills} />
+                </div>
+              </Reveal>
+            </div>
           </div>
-        </Reveal>
+        </details>
       </div>
     </section>
   );

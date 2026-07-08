@@ -883,6 +883,138 @@ h3,
   gap: clamp(2.4rem, 5vw, 6rem);
 }
 
+.about-more-panel {
+  display: grid;
+  min-width: 0;
+  gap: clamp(1.4rem, 2.8vw, 2.5rem);
+}
+
+.about-more-trigger {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-self: center;
+  gap: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-background) 92%, white), color-mix(in srgb, var(--color-highlight) 22%, var(--color-background)));
+  color: var(--color-primary);
+  cursor: pointer;
+  list-style: none;
+  padding: 0.62rem 0.72rem 0.62rem 1.15rem;
+  box-shadow:
+    0 16px 36px color-mix(in srgb, var(--color-primary) 8%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 62%, transparent);
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-more-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.about-more-trigger::marker {
+  content: "";
+}
+
+.about-more-trigger:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-highlight) 72%, var(--color-primary));
+  box-shadow:
+    0 18px 42px color-mix(in srgb, var(--color-primary) 11%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--color-highlight) 20%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 66%, transparent);
+}
+
+.about-more-trigger-copy {
+  display: grid;
+  gap: 0.12rem;
+  text-align: left;
+}
+
+.about-more-main,
+.about-more-hint {
+  line-height: 1.1;
+}
+
+.about-more-main {
+  font-size: clamp(0.78rem, 0.72vw, 0.96rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+}
+
+.about-more-hint {
+  color: color-mix(in srgb, var(--color-primary) 54%, transparent);
+  font-size: clamp(0.58rem, 0.48vw, 0.72rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.18em;
+}
+
+.about-more-icon {
+  display: grid;
+  width: 2rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-highlight);
+  color: var(--color-primary);
+  font-size: 1.05rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-more-panel[open] .about-more-icon {
+  transform: rotate(45deg);
+}
+
+.about-more-panel[open] .about-more-main {
+  font-size: 0;
+}
+
+.about-more-panel[open] .about-more-main::before {
+  content: "收起 ABOUT";
+  font-size: clamp(0.78rem, 0.72vw, 0.96rem);
+}
+
+.about-more-panel[open] .about-more-hint {
+  font-size: 0;
+}
+
+.about-more-panel[open] .about-more-hint::before {
+  content: "HIDE PROFILE DETAILS";
+  font-size: clamp(0.58rem, 0.48vw, 0.72rem);
+}
+
+.about-more-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  min-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition:
+    grid-template-rows 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-more-content-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.about-more-panel[open] .about-more-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .about-profile-info {
   display: grid;
   grid-column: 2;
@@ -910,12 +1042,12 @@ h3,
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  min-height: 31px;
+  min-height: 28px;
   border-radius: 999px;
   background: var(--color-primary);
   color: var(--color-background);
-  padding: 0.44rem 0.9rem;
-  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
+  padding: 0.38rem 0.78rem;
+  font-size: clamp(0.62rem, 0.48vw, 0.88rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -923,7 +1055,7 @@ h3,
 
 .about-module-title {
   color: var(--color-primary);
-  font-size: clamp(1.1rem, 1.55vw, 1.55rem);
+  font-size: clamp(1rem, 1.4vw, 1.4rem);
   line-height: 1.18;
 }
 
@@ -936,31 +1068,31 @@ h3,
 }
 
 .about-profile-name {
-  font-size: clamp(4.2rem, 8vw, 8.8rem);
+  font-size: clamp(3.8rem, 7.2vw, 8rem);
   line-height: 0.9;
   letter-spacing: 0.04em;
 }
 
 .about-profile-en {
-  font-size: clamp(1.35rem, 2.1vw, 2.2rem);
+  font-size: clamp(1.2rem, 1.85vw, 2rem);
 }
 
 .about-profile-line {
   width: fit-content;
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-highlight) 72%, transparent);
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 0.88rem;
   color: var(--color-primary);
-  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-size: clamp(0.9rem, 1.25vw, 1.2rem);
   font-weight: var(--font-weight-semibold);
   line-height: 1.35;
 }
 
 .about-profile-bio {
   max-width: 58rem;
-  font-size: clamp(1.1rem, 1.45vw, 1.45rem);
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
   font-weight: var(--font-weight-semibold);
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .about-keyword-row,
@@ -985,14 +1117,14 @@ h3,
 }
 
 .about-highlight-line {
-  font-size: clamp(0.72rem, 0.55vw, 1rem);
+  font-size: clamp(0.65rem, 0.5vw, 0.9rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
 }
 
 .about-mini-tag {
   background: color-mix(in srgb, var(--color-highlight) 54%, var(--color-background));
-  font-size: clamp(0.88rem, 0.68vw, 1.08rem);
+  font-size: clamp(0.8rem, 0.62vw, 0.98rem);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -1007,7 +1139,7 @@ h3,
   display: grid;
   gap: 0.5rem;
   color: var(--color-primary);
-  font-size: clamp(0.92rem, 1.08vw, 1.2rem);
+  font-size: clamp(0.85rem, 1vw, 1.1rem);
   line-height: 1.45;
 }
 
@@ -1024,13 +1156,13 @@ h3,
 }
 
 .about-line-label {
-  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
+  font-size: clamp(0.62rem, 0.48vw, 0.88rem);
   font-weight: var(--font-weight-bold);
 }
 
 .about-strong-line {
   color: var(--color-primary);
-  font-size: clamp(1rem, 1.1vw, 1.2rem);
+  font-size: clamp(0.92rem, 1.02vw, 1.1rem);
   font-weight: var(--font-weight-bold);
 }
 
@@ -1210,7 +1342,7 @@ h3,
 .about-experience-item h4,
 .about-project-item h4 {
   color: var(--color-primary);
-  font-size: clamp(0.98rem, 1.08vw, 1.14rem);
+  font-size: clamp(0.9rem, 1vw, 1.05rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.45;
 }
@@ -1226,16 +1358,16 @@ h3,
   width: fit-content;
   border-radius: 999px;
   background: var(--color-highlight);
-  padding: 0.35rem 0.62rem;
+  padding: 0.3rem 0.55rem;
   color: var(--color-primary);
-  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
+  font-size: clamp(0.62rem, 0.48vw, 0.88rem);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
 }
 
 .about-project-item .font-en {
   color: color-mix(in srgb, var(--color-primary) 56%, transparent);
-  font-size: clamp(0.68rem, 0.52vw, 0.95rem);
+  font-size: clamp(0.62rem, 0.48vw, 0.88rem);
   letter-spacing: 0.12em;
   line-height: 1.55;
   text-transform: uppercase;
@@ -1243,13 +1375,13 @@ h3,
 
 .about-objective-text {
   color: var(--color-primary);
-  font-size: clamp(1.02rem, 1.22vw, 1.2rem);
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
   font-weight: var(--font-weight-semibold);
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .about-tag-module .about-module-title {
-  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  font-size: clamp(0.92rem, 1.15vw, 1.15rem);
 }
 
 .about-tool-icon-grid {
