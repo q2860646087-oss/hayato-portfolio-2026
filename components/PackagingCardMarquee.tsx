@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 
 // ── 路径前缀（GitHub Pages basePath） ──────────────────
@@ -44,12 +44,16 @@ const DOUBLE_COUNT = CARDS_DATA.length * 2;
 function Card({
   data,
   flipped,
-  onFlip,
+  highlighted,
+  onPointerEnter,
+  onPointerLeave,
   style,
 }: {
   data: (typeof CARDS_DATA)[0];
   flipped: boolean;
-  onFlip: () => void;
+  highlighted: boolean;
+  onPointerEnter: () => void;
+  onPointerLeave: () => void;
   style?: React.CSSProperties;
 }) {
   return (
@@ -58,10 +62,16 @@ function Card({
         width: CARD_WIDTH,
         aspectRatio: "558 / 697",
         perspective: "800px",
-        cursor: "pointer",
+        cursor: "default",
+        borderRadius: 12,
+        boxShadow: highlighted
+          ? "0 0 0 1px rgba(238, 190, 64, 0.48), 0 0 18px rgba(255, 210, 90, 0.34), 0 10px 26px rgba(115, 84, 22, 0.16)"
+          : "0 0 0 1px rgba(238, 190, 64, 0), 0 0 0 rgba(255, 210, 90, 0), 0 0 0 rgba(115, 84, 22, 0)",
+        transition: "box-shadow 260ms ease",
         ...style,
       }}
-      onClick={onFlip}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     >
       <div
         style={{
@@ -129,7 +139,7 @@ const BOX3D_OPEN_EVENT = "box3d:open-change";
 const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
 
 export function PackagingCardMarquee() {
-  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
+  const [hoveredCardKey, setHoveredCardKey] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [visible, setVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -190,15 +200,6 @@ export function PackagingCardMarquee() {
       cancelAnimationFrame(raf1);
     };
   }, [visible]);
-
-  const toggleFlip = useCallback((id: number) => {
-    setFlippedCards((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }, []);
 
   // ── GSAP 跑马灯动画（替代 RAF） ──────────────────────
   // visible=true 后自动 play，不再等 hover 事件
@@ -399,22 +400,31 @@ export function PackagingCardMarquee() {
           willChange: "transform",
         }}
       >
-        {doubledCards.map((card, i) => (
-          <div
-            key={`${card.id}-${i}`}
-            ref={(el) => {
-              cardRefs.current[i] = el;
-            }}
-            style={{ flexShrink: 0 }}
-          >
-            <Card
-              data={card}
-              flipped={flippedCards.has(card.id)}
-              onFlip={() => toggleFlip(card.id)}
-              style={{ width: CARD_WIDTH }}
-            />
-          </div>
-        ))}
+        {doubledCards.map((card, i) => {
+          const cardKey = `${card.id}-${i}`;
+          const isHovered = hoveredCardKey === cardKey;
+
+          return (
+            <div
+              key={cardKey}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+              style={{ flexShrink: 0 }}
+            >
+              <Card
+                data={card}
+                flipped={isHovered}
+                highlighted={isHovered}
+                onPointerEnter={() => setHoveredCardKey(cardKey)}
+                onPointerLeave={() => {
+                  setHoveredCardKey((current) => (current === cardKey ? null : current));
+                }}
+                style={{ width: CARD_WIDTH }}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
