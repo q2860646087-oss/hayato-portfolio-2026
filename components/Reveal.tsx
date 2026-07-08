@@ -18,14 +18,11 @@ export function Reveal({ children, className = "", delay = 0 }: RevealProps) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        setIsVisible(entry.isIntersecting);
       },
       {
-        rootMargin: "-10% 0px -10% 0px",
-        threshold: 0.15,
+        rootMargin: "-8% 0px -8% 0px",
+        threshold: 0.12,
       },
     );
 

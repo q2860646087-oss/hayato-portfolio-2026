@@ -5,15 +5,18 @@ import { projects } from "@/data/projects";
 
 export default function ProjectNavigator() {
   const [visible, setVisible] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  // 检测是否为触屏设备（无 hover 能力）
+  const isTouchOnly = typeof window !== "undefined" && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
   const checkVisibility = useCallback(() => {
     const hero = document.getElementById("hero");
     if (hero) {
       const rect = hero.getBoundingClientRect();
-      // 使用滞后区间避免在临界值附近反复 toggle
-      setVisible(rect.bottom < window.innerHeight * 0.30);
+      setVisible(rect.bottom < window.innerHeight * 0.35);
     } else {
-      setVisible(window.scrollY > window.innerHeight * 0.70);
+      setVisible(window.scrollY > window.innerHeight * 0.75);
     }
   }, []);
 
@@ -35,6 +38,13 @@ export default function ProjectNavigator() {
     });
   };
 
+  // 触屏端：点击切换展开/收起
+  const handleItemClick = (index: number) => {
+    if (isTouchOnly) {
+      setExpandedIndex((prev) => (prev === index ? null : index));
+    }
+  };
+
   return (
     <nav
       className={`project-rail ${visible ? "is-visible" : ""}`}
@@ -44,8 +54,11 @@ export default function ProjectNavigator() {
         <button
           key={project.slug}
           type="button"
-          className="project-rail__item"
-          onClick={() => scrollToProject(project.slug)}
+          className={`project-rail__item${expandedIndex === index ? " expanded" : ""}`}
+          onClick={() => {
+            scrollToProject(project.slug);
+            handleItemClick(index);
+          }}
           aria-label={project.title.zh}
         >
           <span className="project-rail__index">

@@ -1775,6 +1775,11 @@ h3,
     padding: 0.5rem 0.85rem;
   }
 
+  /* 触屏端 Header 安全边距，避免贴状态栏 */
+  header {
+    padding-inline: 12px;
+  }
+
   .mobile-nav-menu {
     background: var(--color-background);
     box-shadow: 0 18px 42px color-mix(in srgb, var(--color-primary) 12%, transparent);
@@ -2242,6 +2247,122 @@ h3,
   .work-square-image {
     width: min(100%, 560px);
   }
+
+  /* ── 手机端字号修正 ── */
+  .styled-hero-title {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+    letter-spacing: -0.04em;
+    transform: rotate(-1deg) skewX(-2deg) scaleX(1.01);
+  }
+
+  .styled-hero-title::before {
+    -webkit-text-stroke: clamp(0.24rem, 1vw, 0.4rem) var(--color-background);
+  }
+
+  .hero-title-zh {
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+  }
+
+  .about-profile-name {
+    font-size: clamp(2.8rem, 16vw, 4rem);
+  }
+
+  .about-profile-en {
+    font-size: clamp(1rem, 4vw, 1.3rem);
+  }
+
+  .about-module-title {
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+  }
+
+  .about-profile-bio {
+    font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+    line-height: 1.65;
+  }
+
+  .about-profile-line {
+    font-size: clamp(0.88rem, 3vw, 1.1rem);
+  }
+
+  .about-soft-highlight,
+  .about-mini-tag {
+    font-size: clamp(0.78rem, 2.8vw, 0.95rem);
+  }
+
+  .about-highlight-line {
+    font-size: clamp(0.68rem, 2.5vw, 0.88rem);
+  }
+
+  .about-experience-item h4,
+  .about-project-item h4 {
+    font-size: clamp(0.88rem, 3vw, 1.05rem);
+  }
+
+  .about-info-line {
+    font-size: clamp(0.85rem, 2.8vw, 1rem);
+  }
+
+  .work-section-title-image {
+    width: min(100%, 560px);
+  }
+
+  .work-h2-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .work-h2-title.ink-reveal {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .work-project-title.ink-reveal {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .work-h3-title {
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+  }
+
+  .work-heading p {
+    font-size: clamp(0.88rem, 3vw, 1rem);
+  }
+
+  .work-project-cover p {
+    font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  }
+
+  .contact-chip {
+    font-size: clamp(0.88rem, 3vw, 1rem);
+  }
+
+  /* ── 手机端安全边距 ── */
+  .page-shell {
+    padding-inline: 16px;
+  }
+
+  .section-space {
+    padding-block: clamp(3rem, 8vw, 5rem);
+  }
+
+  .about-board-section {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .work-project {
+    padding-inline: 0;
+  }
+
+  /* ── 手机端 Reveal 动画加速，减少边缘闪烁感知 ── */
+  .reveal {
+    transition-duration: 450ms;
+  }
+
+  /* ── 手机端正文行距优化 ── */
+  .about-profile-bio,
+  .work-heading p,
+  .work-project-cover p,
+  .contact-chip {
+    line-height: 1.65;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2462,6 +2583,11 @@ h3,
       0 0 12px color-mix(in srgb, var(--color-primary) 12%, transparent);
     transition-duration: 0.9s;
   }
+
+  /* 触屏端：禁用 hero-box-link hover 加速动画，避免误触 */
+  .hero-box-link:hover {
+    animation-duration: 2.1s;
+  }
 }
 
 /* ============================================================
@@ -2470,7 +2596,7 @@ h3,
 
 .project-rail {
   position: fixed;
-  right: 32px;
+  right: 24px;
   top: 50%;
   z-index: 40;
   display: flex;
@@ -2603,10 +2729,114 @@ h3,
   transform: scale(1.4);
 }
 
-/* 移动端隐藏 */
-@media (max-width: 768px) {
+/* 项目导航 — 手机端：触屏设备显示，PC 端隐藏 */
+
+/* 触屏设备：显示 project-rail */
+@media (max-width: 768px) and (hover: none) and (pointer: coarse) {
   .project-rail {
-    display: none;
+    position: fixed;
+    right: 16px;
+    top: 50%;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%) translateX(16px);
+    transition:
+      opacity 350ms ease,
+      transform 350ms ease;
+  }
+
+  .project-rail.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .project-rail__item {
+    width: 44px;
+    height: 40px;
+    padding: 0 6px;
+    transition:
+      width 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 280ms ease,
+      color 280ms ease;
+  }
+
+  /* 触屏端：禁用 hover 展开动画，改为点击控制 */
+  .project-rail__item:hover,
+  .project-rail__item:focus-visible {
+    width: 44px;
+    height: 52px;
+    padding-right: 6px;
+    transform: translateX(-4px);
+    background: color-mix(in srgb, var(--color-background) 88%, transparent);
+    color: var(--color-primary);
+    box-shadow:
+      0 12px 30px color-mix(in srgb, var(--color-primary) 8%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--color-text) 6%, transparent);
+  }
+
+  .project-rail__item.expanded {
+    width: 200px;
+    height: 52px;
+    padding-right: 12px;
+    transform: translateX(-8px);
+    background: color-mix(in srgb, var(--color-background) 88%, transparent);
+    color: var(--color-primary);
+    box-shadow:
+      0 12px 30px color-mix(in srgb, var(--color-primary) 8%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--color-text) 6%, transparent);
+  }
+
+  .project-rail__item.expanded .project-rail__content {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 160px;
+  }
+
+  .project-rail__item.expanded .project-rail__dot {
+    transform: scale(1.4);
+  }
+
+  .project-rail__index {
+    font-size: 12px;
+  }
+
+  .project-rail__content {
+    margin-right: 6px;
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(8px);
+    transition:
+      opacity 280ms ease 40ms,
+      transform 280ms ease 40ms,
+      max-width 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-rail__title {
+    font-size: 12px;
+  }
+
+  .project-rail__subtitle {
+    font-size: 9px;
+  }
+
+  .project-rail__dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* PC 端（非触屏）：隐藏 project-rail */
+@media (min-width: 769px), (hover: hover) {
+  .project-rail {
+    display: none !important;
   }
 }
 
@@ -2638,5 +2868,343 @@ h3,
   .abczoo-title-visual {
     width: min(92vw, 600px);
     margin: 20px auto 24px;
+  }
+
+  /* 触屏端：确保图片不被裁切 */
+  .abczoo-title-visual-image {
+    max-height: 60vh;
+    object-fit: contain;
+  }
+
+  /* ── 手机端 3D Canvas 和跑马灯适配 ── */
+  .work-project > div[style] > div[style*="580"] {
+    width: 100% !important;
+    max-width: calc(100vw - 48px) !important;
+    height: 300px !important;
+  }
+
+  .work-project > div[style] canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* 手机端 Marquee 容器缩小 */
+  .work-project > div[style] > div[style*="margin"] {
+    width: 100% !important;
+    max-width: calc(100vw - 48px) !important;
+  }
+
+  /* ── 手机端瀑布流作品墙（CSS Grid） ── */
+  .mobile-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 16px;
+    margin-bottom: 32px;
+  }
+
+  .mobile-masonry-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-card);
+  }
+
+  .mobile-masonry-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .mobile-masonry-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .mobile-masonry-card--wide .mobile-masonry-img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .mobile-masonry-card:not(.mobile-masonry-card--wide) .mobile-masonry-img {
+    aspect-ratio: 3 / 4;
+  }
+
+  .mobile-masonry-label {
+    display: block;
+    padding: 6px 8px;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+
+  /* ── 手机端 Featured Project ── */
+  .mobile-featured-project {
+    padding: 24px 16px 32px;
+    text-align: center;
+  }
+
+  .mobile-featured-inner {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .mobile-featured-title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+  }
+
+  .mobile-featured-subtitle {
+    font-size: clamp(0.88rem, 3vw, 1rem);
+    color: var(--color-text-muted);
+    margin-top: 4px;
+  }
+
+  .mobile-featured-image {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    display: block;
+    margin-top: 16px;
+  }
+
+  .mobile-featured-desc {
+    font-size: clamp(0.88rem, 3vw, 1rem);
+    line-height: 1.65;
+    color: var(--color-text);
+    margin-top: 16px;
+  }
+
+  .mobile-featured-desc-en {
+    font-size: clamp(0.78rem, 2.5vw, 0.9rem);
+    color: var(--color-text-muted);
+    margin-top: 8px;
+  }
+
+  /* ── 手机端 Project Index ── */
+  .mobile-project-index {
+    padding: 0 16px 32px;
+  }
+
+  .mobile-project-index-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .mobile-project-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-card);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mobile-project-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mobile-project-card-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mobile-project-card-number {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .mobile-project-card-title {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .mobile-project-card-tags {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  /* ── 手机端 About Mini ── */
+  .mobile-about-mini {
+    padding: 32px 16px;
+  }
+
+  .mobile-about-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+
+  .mobile-about-name {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .mobile-about-role {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-top: 4px;
+  }
+
+  .mobile-about-location {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+
+  .mobile-about-bio {
+    font-size: clamp(0.88rem, 3vw, 1rem);
+    line-height: 1.65;
+    color: var(--color-text);
+    margin-top: 12px;
+  }
+
+  .mobile-about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .mobile-about-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    background: var(--color-highlight);
+    color: var(--color-primary);
+  }
+
+  .mobile-about-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .mobile-about-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    background: color-mix(in srgb, var(--color-highlight) 50%, var(--color-background));
+    color: var(--color-text);
+  }
+
+  .mobile-about-tool img {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+
+  .mobile-about-education {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-grid);
+  }
+
+  .mobile-about-edu-period {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  .mobile-about-edu-school {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+
+  .mobile-about-edu-major {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  /* ── 手机端 Experience Mini ── */
+  .mobile-experience-mini {
+    padding: 24px 16px;
+  }
+
+  .mobile-experience-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-grid);
+  }
+
+  .mobile-experience-item:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-experience-period {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  .mobile-experience-org {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 2px;
+  }
+
+  .mobile-experience-role {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  /* ── 通用 section 标签 ── */
+  .mobile-section-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* ── 手机端：桌面端原有模块隐藏 ── */
+  .portfolio-desktop-original {
+    display: none;
+  }
+
+  /* ── 手机端：隐藏"项目图像整理中"占位 ── */
+  .work-square-placeholder {
+    display: none !important;
+  }
+
+  /* ── 锚点 wrapper 响应式显隐 ── */
+  .portfolio-work-anchor .portfolio-mobile-only,
+  .portfolio-about-anchor .portfolio-mobile-only {
+    display: block;
+  }
+
+  .portfolio-work-anchor .portfolio-desktop-original,
+  .portfolio-about-anchor .portfolio-desktop-original {
+    display: none;
+  }
+}
+
+/* ── 桌面端：确保手机端模块隐藏 ── */
+@media (min-width: 769px) {
+  .portfolio-mobile-only {
+    display: none !important;
+  }
+
+  .portfolio-work-anchor .portfolio-desktop-original,
+  .portfolio-about-anchor .portfolio-desktop-original {
+    display: block;
   }
 }

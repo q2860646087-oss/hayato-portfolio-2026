@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { ManagedImage } from "@/components/ManagedImage";
 import { siteConfig } from "@/config/site";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeHref, setActiveHref] = useState(siteConfig.navigation[0]?.href ?? "#about");
-  const activeHrefRef = useRef(siteConfig.navigation[0]?.href ?? "#about");
 
   useEffect(() => {
     const sections = siteConfig.navigation
@@ -18,22 +17,16 @@ export function Header() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // 过滤掉刚刚失去交集的条目，避免在交界处反复切换
-        const intersecting = entries.filter((entry) => entry.isIntersecting);
-        if (intersecting.length === 0) return;
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        // 按交集比例排序，取占比最大的作为当前激活项
-        const dominant = intersecting.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        // 只有当新激活的 section 与当前不同，且其 intersectionRatio 明显占优时才切换
-        const newHref = `#${dominant.target.id}`;
-        if (newHref !== activeHrefRef.current && dominant.intersectionRatio > 0.2) {
-          setActiveHref(newHref);
-          activeHrefRef.current = newHref;
+        if (visible?.target.id) {
+          setActiveHref(`#${visible.target.id}`);
         }
       },
       {
-        rootMargin: "-35% 0px -35% 0px",
+        rootMargin: "-42% 0px -45% 0px",
         threshold: [0.12, 0.3, 0.6],
       },
     );

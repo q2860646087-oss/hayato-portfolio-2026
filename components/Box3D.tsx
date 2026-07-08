@@ -103,6 +103,161 @@ const DEBUG_TEXTURE_LOGS = false;
 const DEBUG_TEXTURE_MATERIALS = false;
 const DEBUG_DEEP_INSIDE_FACES = false;
 
+// ── 渲染模式开关 ────────────────────────────────────────
+const SAFE_RENDER_MODE = false;
+
+// ── 安全渲染：纯色天地盖盒子（不加载任何贴图） ──────────
+function SolidPanel({
+  args,
+  position,
+  color,
+}: {
+  args: [number, number, number];
+  position: [number, number, number];
+  color: string;
+}) {
+  return (
+    <mesh position={position}>
+      <boxGeometry args={args} />
+      <meshBasicMaterial color={color} toneMapped={false} />
+    </mesh>
+  );
+}
+
+function Box3DSafe() {
+  const [open, setOpen] = useState(false);
+  const lidGroupRef = useRef<THREE.Group | null>(null);
+  const progressRef = useRef(0);
+
+  useFrame((_, delta) => {
+    const target = open ? 1 : 0;
+    progressRef.current = THREE.MathUtils.damp(
+      progressRef.current,
+      target,
+      4,
+      delta
+    );
+
+    const lid = lidGroupRef.current;
+    if (!lid) return;
+
+    const p = progressRef.current;
+    lid.position.y = 0.82 + p * 1.1;
+    lid.position.z = -0.08 - p * 0.25;
+    lid.rotation.x = -p * 0.62;
+  });
+
+  const handleClick = useCallback(() => {
+    setOpen((prev) => {
+      const next = !prev;
+
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent(BOX3D_OPEN_EVENT, {
+            detail: { open: next },
+          })
+        );
+      }
+
+      return next;
+    });
+  }, []);
+
+  // 地盒尺寸
+  const BW_S = 2.6;
+  const BD_S = 4.1;
+  const FLOOR_H_S = 0.08;
+  const WALL_H_S = 0.65;
+  const WALL_T_S = 0.06;
+
+  // 天盖尺寸
+  const LW_S = 2.78;
+  const LD_S = 4.28;
+  const LID_TOP_H_S = 0.08;
+  const LID_SKIRT_H_S = 0.55;
+  const LID_T_S = 0.06;
+
+  return (
+    <group
+      onClick={handleClick}
+      scale={0.72}
+      position={[0, -0.45, 0]}
+      rotation={[0.18, -0.42, 0]}
+    >
+      {/* ===== 地盒（5 块纯色面板） ===== */}
+      <group>
+        <SolidPanel
+          args={[BW_S, FLOOR_H_S, BD_S]}
+          position={[0, FLOOR_H_S / 2, 0]}
+          color="#E7D8C7"
+        />
+        <SolidPanel
+          args={[BW_S, WALL_H_S, WALL_T_S]}
+          position={[0, FLOOR_H_S + WALL_H_S / 2, BD_S / 2 - WALL_T_S / 2]}
+          color="#E7D8C7"
+        />
+        <SolidPanel
+          args={[BW_S, WALL_H_S, WALL_T_S]}
+          position={[0, FLOOR_H_S + WALL_H_S / 2, -BD_S / 2 + WALL_T_S / 2]}
+          color="#E7D8C7"
+        />
+        <SolidPanel
+          args={[WALL_T_S, WALL_H_S, BD_S]}
+          position={[-BW_S / 2 + WALL_T_S / 2, FLOOR_H_S + WALL_H_S / 2, 0]}
+          color="#E7D8C7"
+        />
+        <SolidPanel
+          args={[WALL_T_S, WALL_H_S, BD_S]}
+          position={[BW_S / 2 - WALL_T_S / 2, FLOOR_H_S + WALL_H_S / 2, 0]}
+          color="#E7D8C7"
+        />
+      </group>
+
+      {/* ===== 天盖（5 块纯色面板 + 开合动画） ===== */}
+      <group ref={lidGroupRef} position={[0, 0.82, 0]}>
+        <SolidPanel
+          args={[LW_S, LID_TOP_H_S, LD_S]}
+          position={[0, 0, 0]}
+          color="#F6F1E8"
+        />
+        <SolidPanel
+          args={[LW_S, LID_SKIRT_H_S, LID_T_S]}
+          position={[0, -LID_TOP_H_S / 2 - LID_SKIRT_H_S / 2, LD_S / 2 - LID_T_S / 2]}
+          color="#F6F1E8"
+        />
+        <SolidPanel
+          args={[LW_S, LID_SKIRT_H_S, LID_T_S]}
+          position={[0, -LID_TOP_H_S / 2 - LID_SKIRT_H_S / 2, -LD_S / 2 + LID_T_S / 2]}
+          color="#F6F1E8"
+        />
+        <SolidPanel
+          args={[LID_T_S, LID_SKIRT_H_S, LD_S]}
+          position={[-LW_S / 2 + LID_T_S / 2, -LID_TOP_H_S / 2 - LID_SKIRT_H_S / 2, 0]}
+          color="#F6F1E8"
+        />
+        <SolidPanel
+          args={[LID_T_S, LID_SKIRT_H_S, LD_S]}
+          position={[LW_S / 2 - LID_T_S / 2, -LID_TOP_H_S / 2 - LID_SKIRT_H_S / 2, 0]}
+          color="#F6F1E8"
+        />
+      </group>
+
+      {/* ===== 红色 sentinel（确认 Canvas 在渲染） ===== */}
+      <mesh position={[0, 1.7, 0]}>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshBasicMaterial color="#ff0000" toneMapped={false} />
+      </mesh>
+
+      {/* ===== 地面接收阴影 ===== */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
+        <planeGeometry args={[10, 10]} />
+        <shadowMaterial transparent opacity={0.15} />
+      </mesh>
+    </group>
+  );
+}
+
+// ── 旧贴图相关工具函数（SAFE_RENDER_MODE = true 时不执行） ─
 // ── 工具函数：创建带变换的 texture ──────────────────────
 function createTransformedTexture(
   texture: THREE.Texture,
@@ -255,6 +410,11 @@ function _DisabledTexturePlane(_props: any) {
 }
 
 export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
+  // ── 安全渲染入口（不加载贴图、无条件 Hook） ──
+  if (SAFE_RENDER_MODE) {
+    return <Box3DSafe />;
+  }
+
   // ── 状态 ──────────────────────────────────────────────
   const [isOpen, setIsOpen] = useState(false);
   const [animProgress, setAnimProgress] = useState(1);
