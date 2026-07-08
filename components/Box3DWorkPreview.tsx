@@ -24,6 +24,8 @@ export function Box3DWorkPreview() {
         }}
       >
         <Canvas
+          shadows="soft"
+          gl={{ toneMappingExposure: 1.12 }}
           camera={{
             fov: 45,
             near: 0.1,
@@ -31,7 +33,7 @@ export function Box3DWorkPreview() {
             position: [3, 2.5, 4],
           }}
         >
-          <ambientLight intensity={0.6} />
+          <ambientLight intensity={0.4} />
           <directionalLight position={[5, 8, 5]} intensity={1.0} castShadow />
           <directionalLight position={[-3, 4, -2]} intensity={0.4} />
           <Box3D variant="inline" />

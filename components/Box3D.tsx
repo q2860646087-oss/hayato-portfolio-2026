@@ -45,6 +45,18 @@ const ENABLE_FLOATING_TEXTURE_PLANES = false;
 const BASE_BOX_COLOR = "#E7D8C7";
 const LID_BOX_COLOR = "#F6F1E8";
 
+const PAPER_TEXTURE_MATERIAL = {
+  roughness: 0.84,
+  metalness: 0,
+  envMapIntensity: 0.18,
+} as const;
+
+const PAPER_SOLID_MATERIAL = {
+  roughness: 0.88,
+  metalness: 0,
+  envMapIntensity: 0.12,
+} as const;
+
 // 贴图相关事件
 const BOX3D_OPEN_EVENT = "box3d:open-change";
 const BOX3D_MARQUEE_INTERACT_EVENT = "box3d:marquee-interaction";
@@ -314,15 +326,15 @@ function createTransformedTexture(
 function createTextureMaterial(
   texture: THREE.Texture,
   options?: { mirrorX?: boolean; mirrorY?: boolean; rotate90?: boolean }
-): THREE.MeshBasicMaterial {
+): THREE.MeshStandardMaterial {
   const transformed = createTransformedTexture(texture, options);
-  const mat = new THREE.MeshBasicMaterial({
+  const mat = new THREE.MeshStandardMaterial({
     map: transformed,
+    ...PAPER_TEXTURE_MATERIAL,
     transparent: false,
     opacity: 1,
     depthWrite: true,
     depthTest: true,
-    toneMapped: false,
     side: THREE.DoubleSide,
   });
   mat.needsUpdate = true;
@@ -336,13 +348,13 @@ function createTextureMaterial(
 }
 
 // ── 工具函数：创建纯色材质 ──────────────────────────────
-function createSolidMaterial(color: string): THREE.MeshBasicMaterial {
-  const mat = new THREE.MeshBasicMaterial({
+function createSolidMaterial(color: string): THREE.MeshStandardMaterial {
+  const mat = new THREE.MeshStandardMaterial({
     color: new THREE.Color(color),
+    ...PAPER_SOLID_MATERIAL,
     transparent: false,
     depthWrite: true,
     depthTest: true,
-    toneMapped: false,
     side: THREE.DoubleSide,
   });
   mat.needsUpdate = true;
@@ -771,7 +783,7 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
       <group ref={groupRef} scale={MODEL_SCALE} position={[0, -0.3, 0]}>
         {/* 加载时显示一个简单立方体占位 */}
         <mesh geometry={new THREE.BoxGeometry(2.5, 1, 4)}>
-          <meshBasicMaterial color={new THREE.Color(BASE_BOX_COLOR)} />
+          <meshStandardMaterial color={new THREE.Color(BASE_BOX_COLOR)} {...PAPER_SOLID_MATERIAL} />
         </mesh>
         <mesh
           geometry={new THREE.BoxGeometry(5, 5, 5)}
@@ -792,7 +804,36 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
   // ═══════════════════════════════════════════════════════
 
   return (
-    <group ref={groupRef} scale={MODEL_SCALE} position={[0, -0.3, 0]}>
+    <>
+      <hemisphereLight args={["#fff7ec", "#cbb89f", 0.26]} />
+      <directionalLight
+        position={[-3.2, 5.4, 4.4]}
+        intensity={2.45}
+        color="#fff3df"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-left={-4}
+        shadow-camera-right={4}
+        shadow-camera-top={4}
+        shadow-camera-bottom={-4}
+        shadow-camera-near={0.5}
+        shadow-camera-far={12}
+        shadow-radius={10}
+        shadow-bias={-0.00012}
+        shadow-normalBias={0.025}
+      />
+      <directionalLight
+        position={[3.2, 2.4, 4.8]}
+        intensity={1.12}
+        color="#fff8ee"
+      />
+      <directionalLight
+        position={[3.8, 4.4, -4.8]}
+        intensity={0.62}
+        color="#f4f8ff"
+      />
+      <group ref={groupRef} scale={MODEL_SCALE} position={[0, -0.3, 0]}>
       {/* ===== 下盒（固定不动） ===== */}
       <group>
         <Panel
@@ -858,7 +899,7 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
       {/* ===== 地面接收阴影 ===== */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
         <planeGeometry args={[10, 10]} />
-        <shadowMaterial transparent opacity={0.15} />
+        <shadowMaterial transparent opacity={0.26} />
       </mesh>
 
       {/* ===== 点击热区 ===== */}
@@ -874,6 +915,7 @@ export function Box3D({ variant = "page" }: { variant?: "page" | "inline" }) {
         onPointerOver={() => setIsHovered(true)}
         onPointerLeave={() => setIsHovered(false)}
       />
-    </group>
+      </group>
+    </>
   );
 }
