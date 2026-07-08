@@ -2833,12 +2833,7 @@ h3,
   }
 }
 
-/* PC 端（非触屏）：隐藏 project-rail */
-@media (min-width: 769px), (hover: hover) {
-  .project-rail {
-    display: none !important;
-  }
-}
+/* PC 端需要显示 project-rail，不能在 desktop / hover 设备上 display:none */
 
 /* 项目锚点滚动定位 */
 [id^="project-"] {
