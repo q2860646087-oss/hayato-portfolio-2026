@@ -376,7 +376,7 @@ export function PackagingCardMarquee() {
       style={{
         width: "min(94vw, 1400px)",
         maxWidth: "100%",
-        margin: shouldRender ? "8px auto 88px" : "0 auto",
+        margin: "0 auto",
         maxHeight: shouldRender ? 360 : 0,
         overflow: "hidden",
         position: "relative",

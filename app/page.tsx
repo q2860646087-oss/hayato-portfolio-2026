@@ -194,20 +194,20 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
             </h1>
           )}
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
-          <div className="abczoo-title-visual mx-auto mt-8 max-w-[1196px]">
+          <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
+          <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
+          <div className="abczoo-title-visual mx-auto mt-8">
             <img
-              src={assetPath("/images/abczoo/img/zhushijue.webp")}
+              src={assetPath("/images/abczoo/img/abczoo-main-visual-transparent.webp")}
               alt="字母动物园儿童服饰图案系统主视觉"
               className="abczoo-title-visual-image w-full"
               loading="lazy"
             />
           </div>
-          <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
-          <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
         </header>
       </Reveal>
 
-      <div className="mt-16 grid gap-20 md:mt-24 md:gap-28">
+      <div className={`mt-16 grid gap-20 md:mt-24 md:gap-28 ${index === 0 ? "is-letter-zoo-content-flow" : ""}`}>
         {/* 3D 白模预览 — 仅第一个项目 */}
         {index === 0 && ENABLE_BOX3D_WORK_PREVIEW && (
           <Box3DWorkPreview />

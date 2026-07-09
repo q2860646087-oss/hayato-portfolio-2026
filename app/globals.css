@@ -1482,7 +1482,13 @@ h3,
 }
 
 .is-letter-zoo-project {
-  max-width: min(100%, 1360px);
+  width: 100%;
+  max-width: none;
+}
+
+.is-letter-zoo-content-flow {
+  margin-top: 0 !important;
+  gap: 0 !important;
 }
 
 .letter-zoo-title-card {
@@ -2977,8 +2983,9 @@ h3,
    ============================================================ */
 
 .abczoo-title-visual {
-  width: min(82.8vw, 1196px);
-  margin: 28px auto 34px;
+  width: 100vw;
+  max-width: none;
+  margin: 28px calc(50% - 50vw) 34px;
   display: flex;
   justify-content: center;
   pointer-events: none;
@@ -2993,8 +3000,8 @@ h3,
 
 @media (max-width: 768px) {
   .abczoo-title-visual {
-    width: min(92vw, 600px);
-    margin: 20px auto 24px;
+    width: 100vw;
+    margin: 20px calc(50% - 50vw) 24px;
   }
 
   /* 触屏端：确保图片不被裁切 */

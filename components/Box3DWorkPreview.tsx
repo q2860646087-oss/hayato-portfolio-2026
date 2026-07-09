@@ -14,7 +14,7 @@ export function Box3DWorkPreview() {
   return (
     <div
       className="mx-auto w-full"
-      style={{ marginTop: 24, marginBottom: 24, width: "min(1200px, calc(100vw - 160px))", maxWidth: "1200px" }}
+      style={{ marginTop: 0, marginBottom: 0, width: "min(1200px, calc(100vw - 160px))", maxWidth: "1200px" }}
     >
       <div
         style={{
