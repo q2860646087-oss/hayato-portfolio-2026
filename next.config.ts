@@ -1,13 +1,18 @@
 import type { NextConfig } from "next";
 
-const isGitHubActions = process.env.GITHUB_ACTIONS === "true";
+const isGithubPages = process.env.GITHUB_ACTIONS === "true";
+const isCloudBase = process.env.CLOUDBASE === "true";
+const isStaticExport = isGithubPages || isCloudBase;
 
-const githubPagesConfig: NextConfig = {
+const staticExportConfig: NextConfig = {
   output: "export",
   images: {
     unoptimized: true,
   },
   trailingSlash: true,
+};
+
+const githubPagesConfig: NextConfig = {
   basePath: "/hayato-portfolio-2026",
   assetPrefix: "/hayato-portfolio-2026/",
   env: {
@@ -17,7 +22,8 @@ const githubPagesConfig: NextConfig = {
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  ...(isGitHubActions ? githubPagesConfig : {}),
+  ...(isStaticExport ? staticExportConfig : {}),
+  ...(isGithubPages ? githubPagesConfig : {}),
 };
 
 export default nextConfig;

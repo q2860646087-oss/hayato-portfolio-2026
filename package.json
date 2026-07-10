@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1 --port 3020",
     "build": "next build",
-    "build:cloudbase": "GITHUB_ACTIONS=true next build",
+    "build:cloudbase": "CLOUDBASE=true next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "validate:content": "node scripts/validate-projects.mjs"
