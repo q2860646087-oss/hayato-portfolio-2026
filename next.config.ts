@@ -13,10 +13,10 @@ const staticExportConfig: NextConfig = {
 };
 
 const githubPagesConfig: NextConfig = {
-  basePath: "/hayato-portfolio-2026",
-  assetPrefix: "/hayato-portfolio-2026/",
+  basePath: "/portfolio",
+  assetPrefix: "/portfolio",
   env: {
-    NEXT_PUBLIC_ASSET_BASE_PATH: "/hayato-portfolio-2026",
+    NEXT_PUBLIC_ASSET_BASE_PATH: "/portfolio",
   },
 };
 
