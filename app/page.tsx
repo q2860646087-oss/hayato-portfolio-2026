@@ -196,6 +196,25 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
           <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
           <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
+          {index === 0 ? (
+            <div className="abczoo-title-visual-stack">
+              {[
+                "/images/abczoo/img/abczoo-wide-01.webp",
+                "/images/abczoo/img/abczoo-wide-02.webp",
+                "/images/abczoo/img/abczoo-wide-03.webp",
+                "/images/abczoo/img/abczoo-wide-04.webp",
+              ].map((src, imageIndex) => (
+                <div className="abczoo-title-visual mx-auto" key={src}>
+                  <img
+                    src={assetPath(src)}
+                    alt={`字母动物园儿童服饰图案系统主屏 ${imageIndex + 1}`}
+                    className="abczoo-title-visual-image w-full"
+                    loading={imageIndex === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
           <div className="abczoo-title-visual mx-auto mt-8">
             <img
               src={assetPath("/images/abczoo/img/abczoo-main-visual-transparent.webp")}
@@ -204,6 +223,7 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
               loading="lazy"
             />
           </div>
+          )}
         </header>
       </Reveal>
 

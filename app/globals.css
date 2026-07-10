@@ -2991,6 +2991,16 @@ h3,
   pointer-events: none;
 }
 
+.abczoo-title-visual-stack {
+  display: grid;
+  gap: 0;
+  margin-top: 2rem;
+}
+
+.abczoo-title-visual-stack .abczoo-title-visual {
+  margin: 0 calc(50% - 50vw);
+}
+
 .abczoo-title-visual-image {
   width: 100%;
   height: auto;
