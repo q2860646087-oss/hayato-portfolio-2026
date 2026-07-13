@@ -4067,6 +4067,27 @@ h3,
   line-height: 1.1;
 }
 
+@media (min-width: 769px) {
+  .abczoo-copy-page--character-system .abczoo-copy-title,
+  .abczoo-copy-page--character-system .abczoo-copy-title-zh,
+  .abczoo-copy-page--packaging-application .abczoo-copy-title,
+  .abczoo-copy-page--packaging-application .abczoo-copy-title-zh {
+    font-size: 2.5vw;
+    line-height: 1;
+    letter-spacing: 0.25vw;
+  }
+
+  .abczoo-copy-page--character-system .abczoo-copy-title,
+  .abczoo-copy-page--packaging-application .abczoo-copy-title {
+    top: clamp(2.75rem, 3.75vw, 4.25rem);
+  }
+
+  .abczoo-copy-page--character-system .abczoo-copy-title-zh,
+  .abczoo-copy-page--packaging-application .abczoo-copy-title-zh {
+    top: calc(clamp(2.75rem, 3.75vw, 4.25rem) + 2.5vw + clamp(0.6rem, 1.25vw, 1.5rem));
+  }
+}
+
 .abczoo-copy-body {
   top: 57%;
   max-width: 52rem;
