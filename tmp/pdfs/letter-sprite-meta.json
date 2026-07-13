@@ -1,0 +1,210 @@
+[
+  {
+    "letter": "A",
+    "file": "codexpaiban-02.svg",
+    "w": 164.97,
+    "h": 184.9,
+    "left": 0,
+    "top": 0
+  },
+  {
+    "letter": "B",
+    "file": "codexpaiban_画板 1 副本.svg",
+    "w": 137.92,
+    "h": 164.18,
+    "left": 200,
+    "top": 0
+  },
+  {
+    "letter": "C",
+    "file": "codexpaiban_画板 1 副本 2.svg",
+    "w": 137.96,
+    "h": 173.15,
+    "left": 400,
+    "top": 0
+  },
+  {
+    "letter": "D",
+    "file": "codexpaiban-05.svg",
+    "w": 135.29,
+    "h": 158.84,
+    "left": 600,
+    "top": 0
+  },
+  {
+    "letter": "E",
+    "file": "codexpaiban-06.svg",
+    "w": 165.22,
+    "h": 157.26,
+    "left": 800,
+    "top": 0
+  },
+  {
+    "letter": "F",
+    "file": "codexpaiban-07.svg",
+    "w": 132.52,
+    "h": 172.97,
+    "left": 1000,
+    "top": 0
+  },
+  {
+    "letter": "G",
+    "file": "codexpaiban-08.svg",
+    "w": 141.83,
+    "h": 174.16,
+    "left": 1200,
+    "top": 0
+  },
+  {
+    "letter": "H",
+    "file": "codexpaiban-09.svg",
+    "w": 135.71,
+    "h": 158.3,
+    "left": 1400,
+    "top": 0
+  },
+  {
+    "letter": "I",
+    "file": "codexpaiban-10.svg",
+    "w": 124.27,
+    "h": 141.45,
+    "left": 1600,
+    "top": 0
+  },
+  {
+    "letter": "J",
+    "file": "codexpaiban-11.svg",
+    "w": 111.99,
+    "h": 151.82,
+    "left": 1800,
+    "top": 0
+  },
+  {
+    "letter": "K",
+    "file": "codexpaiban-12.svg",
+    "w": 127.4,
+    "h": 169.57,
+    "left": 2000,
+    "top": 0
+  },
+  {
+    "letter": "L",
+    "file": "codexpaiban-13.svg",
+    "w": 133.05,
+    "h": 148.24,
+    "left": 2200,
+    "top": 0
+  },
+  {
+    "letter": "M",
+    "file": "codexpaiban-14.svg",
+    "w": 156.06,
+    "h": 127.8,
+    "left": 2400,
+    "top": 0
+  },
+  {
+    "letter": "N",
+    "file": "codexpaiban-15.svg",
+    "w": 157.12,
+    "h": 141.8,
+    "left": 0,
+    "top": 220
+  },
+  {
+    "letter": "O",
+    "file": "codexpaiban-16.svg",
+    "w": 116.09,
+    "h": 125.95,
+    "left": 200,
+    "top": 220
+  },
+  {
+    "letter": "P",
+    "file": "codexpaiban-17.svg",
+    "w": 145.08,
+    "h": 138.39,
+    "left": 400,
+    "top": 220
+  },
+  {
+    "letter": "Q",
+    "file": "codexpaiban-18.svg",
+    "w": 129.83,
+    "h": 164.58,
+    "left": 600,
+    "top": 220
+  },
+  {
+    "letter": "R",
+    "file": "codexpaiban-19.svg",
+    "w": 107.2,
+    "h": 162.27,
+    "left": 800,
+    "top": 220
+  },
+  {
+    "letter": "S",
+    "file": "codexpaiban-20.svg",
+    "w": 134.6,
+    "h": 155.17,
+    "left": 1000,
+    "top": 220
+  },
+  {
+    "letter": "T",
+    "file": "codexpaiban-21.svg",
+    "w": 149.3,
+    "h": 136.12,
+    "left": 1200,
+    "top": 220
+  },
+  {
+    "letter": "U",
+    "file": "codexpaiban-22.svg",
+    "w": 174.93,
+    "h": 145.68,
+    "left": 1400,
+    "top": 220
+  },
+  {
+    "letter": "V",
+    "file": "codexpaiban-23.svg",
+    "w": 165.68,
+    "h": 169.56,
+    "left": 1600,
+    "top": 220
+  },
+  {
+    "letter": "W",
+    "file": "codexpaiban-24.svg",
+    "w": 172.96,
+    "h": 142.82,
+    "left": 1800,
+    "top": 220
+  },
+  {
+    "letter": "X",
+    "file": "codexpaiban-25.svg",
+    "w": 149.38,
+    "h": 179.55,
+    "left": 2000,
+    "top": 220
+  },
+  {
+    "letter": "Y",
+    "file": "codexpaiban-26.svg",
+    "w": 145.13,
+    "h": 158.79,
+    "left": 2200,
+    "top": 220
+  },
+  {
+    "letter": "Z",
+    "file": "codexpaiban-27.svg",
+    "w": 158.21,
+    "h": 160.32,
+    "left": 2400,
+    "top": 220
+  }
+]

@@ -1,0 +1,781 @@
+{
+  "name": "ABC Zoo PDF-matched showcase",
+  "referencePdf": "??????.pdf",
+  "coordinateSystem": {
+    "origin": "top-left",
+    "unit": "design-pixel",
+    "responsiveRule": "x/1920 and y/pageHeight are converted to percentages"
+  },
+  "pages": [
+    {
+      "id": "cover",
+      "width": 1920,
+      "height": 1080,
+      "background": {
+        "sequence": 1,
+        "sourceFile": "codexpaiban_画板 1.svg",
+        "file": "/images/abczoo/showcase/background-pattern.svg",
+        "role": "reusable-background",
+        "page": "all"
+      },
+      "assets": [
+        {
+          "sequence": 2,
+          "sourceFile": "codexpaiban-02.svg",
+          "file": "/images/abczoo/showcase/letter-a.svg",
+          "role": "letter-A",
+          "page": 1,
+          "x": 243,
+          "y": 252,
+          "width": 164.97,
+          "height": 184.9,
+          "matchMse": 170.91
+        },
+        {
+          "sequence": 3,
+          "sourceFile": "codexpaiban_画板 1 副本.svg",
+          "file": "/images/abczoo/showcase/letter-b.svg",
+          "role": "letter-B",
+          "page": 1,
+          "x": 441,
+          "y": 252,
+          "width": 137.92,
+          "height": 164.18,
+          "matchMse": 1.046
+        },
+        {
+          "sequence": 4,
+          "sourceFile": "codexpaiban_画板 1 副本 2.svg",
+          "file": "/images/abczoo/showcase/letter-c.svg",
+          "role": "letter-C",
+          "page": 1,
+          "x": 625,
+          "y": 231,
+          "width": 137.96,
+          "height": 173.15,
+          "matchMse": 96.312
+        },
+        {
+          "sequence": 5,
+          "sourceFile": "codexpaiban-05.svg",
+          "file": "/images/abczoo/showcase/letter-d.svg",
+          "role": "letter-D",
+          "page": 1,
+          "x": 803,
+          "y": 253,
+          "width": 135.29,
+          "height": 158.84,
+          "matchMse": 61.764
+        },
+        {
+          "sequence": 6,
+          "sourceFile": "codexpaiban-06.svg",
+          "file": "/images/abczoo/showcase/letter-e.svg",
+          "role": "letter-E",
+          "page": 1,
+          "x": 972,
+          "y": 252,
+          "width": 165.22,
+          "height": 157.26,
+          "matchMse": 5.169
+        },
+        {
+          "sequence": 7,
+          "sourceFile": "codexpaiban-07.svg",
+          "file": "/images/abczoo/showcase/letter-f.svg",
+          "role": "letter-F",
+          "page": 1,
+          "x": 1174,
+          "y": 252,
+          "width": 132.52,
+          "height": 172.97,
+          "matchMse": 97.621
+        },
+        {
+          "sequence": 8,
+          "sourceFile": "codexpaiban-08.svg",
+          "file": "/images/abczoo/showcase/letter-g.svg",
+          "role": "letter-G",
+          "page": 1,
+          "x": 1340,
+          "y": 253,
+          "width": 141.83,
+          "height": 174.16,
+          "matchMse": 53.381
+        },
+        {
+          "sequence": 9,
+          "sourceFile": "codexpaiban-09.svg",
+          "file": "/images/abczoo/showcase/letter-h.svg",
+          "role": "letter-H",
+          "page": 1,
+          "x": 1522,
+          "y": 253,
+          "width": 135.71,
+          "height": 158.3,
+          "matchMse": 19.789
+        },
+        {
+          "sequence": 10,
+          "sourceFile": "codexpaiban-10.svg",
+          "file": "/images/abczoo/showcase/letter-i.svg",
+          "role": "letter-I",
+          "page": 1,
+          "x": 326,
+          "y": 451,
+          "width": 124.27,
+          "height": 141.45,
+          "matchMse": 15.379
+        },
+        {
+          "sequence": 11,
+          "sourceFile": "codexpaiban-11.svg",
+          "file": "/images/abczoo/showcase/letter-j.svg",
+          "role": "letter-J",
+          "page": 1,
+          "x": 523,
+          "y": 421,
+          "width": 111.99,
+          "height": 151.82,
+          "matchMse": 150.622
+        },
+        {
+          "sequence": 12,
+          "sourceFile": "codexpaiban-12.svg",
+          "file": "/images/abczoo/showcase/letter-k.svg",
+          "role": "letter-K",
+          "page": 1,
+          "x": 705,
+          "y": 397,
+          "width": 127.4,
+          "height": 169.57,
+          "matchMse": 21.527
+        },
+        {
+          "sequence": 13,
+          "sourceFile": "codexpaiban-13.svg",
+          "file": "/images/abczoo/showcase/letter-l.svg",
+          "role": "letter-L",
+          "page": 1,
+          "x": 885,
+          "y": 422,
+          "width": 133.05,
+          "height": 148.24,
+          "matchMse": 160.431
+        },
+        {
+          "sequence": 14,
+          "sourceFile": "codexpaiban-14.svg",
+          "file": "/images/abczoo/showcase/letter-m.svg",
+          "role": "letter-M",
+          "page": 1,
+          "x": 1063,
+          "y": 427,
+          "width": 156.06,
+          "height": 127.8,
+          "matchMse": 31.982
+        },
+        {
+          "sequence": 15,
+          "sourceFile": "codexpaiban-15.svg",
+          "file": "/images/abczoo/showcase/letter-n.svg",
+          "role": "letter-N",
+          "page": 1,
+          "x": 1255,
+          "y": 435,
+          "width": 157.12,
+          "height": 141.8,
+          "matchMse": 49.722
+        },
+        {
+          "sequence": 16,
+          "sourceFile": "codexpaiban-16.svg",
+          "file": "/images/abczoo/showcase/letter-o.svg",
+          "role": "letter-O",
+          "page": 1,
+          "x": 1464,
+          "y": 442,
+          "width": 116.09,
+          "height": 125.95,
+          "matchMse": 123.537
+        },
+        {
+          "sequence": 17,
+          "sourceFile": "codexpaiban-17.svg",
+          "file": "/images/abczoo/showcase/letter-p.svg",
+          "role": "letter-P",
+          "page": 1,
+          "x": 393,
+          "y": 599,
+          "width": 145.08,
+          "height": 138.39,
+          "matchMse": 49.922
+        },
+        {
+          "sequence": 18,
+          "sourceFile": "codexpaiban-18.svg",
+          "file": "/images/abczoo/showcase/letter-q.svg",
+          "role": "letter-Q",
+          "page": 1,
+          "x": 596,
+          "y": 572,
+          "width": 129.83,
+          "height": 164.58,
+          "matchMse": 24.687
+        },
+        {
+          "sequence": 19,
+          "sourceFile": "codexpaiban-19.svg",
+          "file": "/images/abczoo/showcase/letter-r.svg",
+          "role": "letter-R",
+          "page": 1,
+          "x": 806,
+          "y": 564,
+          "width": 107.2,
+          "height": 162.27,
+          "matchMse": 49.626
+        },
+        {
+          "sequence": 20,
+          "sourceFile": "codexpaiban-20.svg",
+          "file": "/images/abczoo/showcase/letter-s.svg",
+          "role": "letter-S",
+          "page": 1,
+          "x": 987,
+          "y": 582,
+          "width": 134.6,
+          "height": 155.17,
+          "matchMse": 27.045
+        },
+        {
+          "sequence": 21,
+          "sourceFile": "codexpaiban-21.svg",
+          "file": "/images/abczoo/showcase/letter-t.svg",
+          "role": "letter-T",
+          "page": 1,
+          "x": 1167,
+          "y": 584,
+          "width": 149.3,
+          "height": 136.12,
+          "matchMse": 104.209
+        },
+        {
+          "sequence": 22,
+          "sourceFile": "codexpaiban-22.svg",
+          "file": "/images/abczoo/showcase/letter-u.svg",
+          "role": "letter-U",
+          "page": 1,
+          "x": 1354,
+          "y": 587,
+          "width": 174.93,
+          "height": 145.68,
+          "matchMse": 17.891
+        },
+        {
+          "sequence": 23,
+          "sourceFile": "codexpaiban-23.svg",
+          "file": "/images/abczoo/showcase/letter-v.svg",
+          "role": "letter-V",
+          "page": 1,
+          "x": 492,
+          "y": 738,
+          "width": 165.68,
+          "height": 169.56,
+          "matchMse": 45.018
+        },
+        {
+          "sequence": 24,
+          "sourceFile": "codexpaiban-24.svg",
+          "file": "/images/abczoo/showcase/letter-w.svg",
+          "role": "letter-W",
+          "page": 1,
+          "x": 685,
+          "y": 754,
+          "width": 172.96,
+          "height": 142.82,
+          "matchMse": 19.175
+        },
+        {
+          "sequence": 25,
+          "sourceFile": "codexpaiban-25.svg",
+          "file": "/images/abczoo/showcase/letter-x.svg",
+          "role": "letter-X",
+          "page": 1,
+          "x": 885,
+          "y": 730,
+          "width": 149.38,
+          "height": 179.55,
+          "matchMse": 128.682
+        },
+        {
+          "sequence": 26,
+          "sourceFile": "codexpaiban-26.svg",
+          "file": "/images/abczoo/showcase/letter-y.svg",
+          "role": "letter-Y",
+          "page": 1,
+          "x": 1093,
+          "y": 738,
+          "width": 145.13,
+          "height": 158.79,
+          "matchMse": 2.385
+        },
+        {
+          "sequence": 27,
+          "sourceFile": "codexpaiban-27.svg",
+          "file": "/images/abczoo/showcase/letter-z.svg",
+          "role": "letter-Z",
+          "page": 1,
+          "x": 1281,
+          "y": 745,
+          "width": 158.21,
+          "height": 160.32,
+          "matchMse": 15.912
+        }
+      ],
+      "text": [
+        {
+          "text": "? 2026 ????????????????",
+          "x": 101.67,
+          "y": 45.28,
+          "size": 14
+        },
+        {
+          "text": "Portfolio shell for selected design works.",
+          "x": 101.67,
+          "y": 78.88,
+          "size": 14
+        },
+        {
+          "text": "?????? IP ??????",
+          "x": 1566.61,
+          "y": 42.13,
+          "size": 21.54
+        },
+        {
+          "text": "ABC ZOO",
+          "x": 779.99,
+          "y": 97.87,
+          "size": 80.63
+        },
+        {
+          "text": "Animal Letter Collection",
+          "x": 783.28,
+          "y": 200.92,
+          "size": 28.2
+        },
+        {
+          "text": "Made for little adventures",
+          "x": 838.99,
+          "y": 1023.26,
+          "size": 17
+        }
+      ]
+    },
+    {
+      "id": "overview",
+      "width": 1920,
+      "height": 645.372,
+      "background": {
+        "sequence": 1,
+        "sourceFile": "codexpaiban_画板 1.svg",
+        "file": "/images/abczoo/showcase/background-pattern.svg",
+        "role": "reusable-background",
+        "page": "all"
+      },
+      "assets": [
+        {
+          "sequence": 28,
+          "sourceFile": "codexpaiban-28.svg",
+          "file": "/images/abczoo/showcase/overview-children.svg",
+          "role": "overview-children",
+          "page": 2,
+          "x": 1128,
+          "y": -14,
+          "width": 633,
+          "height": 710,
+          "matchScore": 3178.079
+        }
+      ],
+      "text": [
+        {
+          "text": "What is ABC ZOO?",
+          "x": 256.26,
+          "y": 81.2,
+          "size": 48
+        },
+        {
+          "text": "????",
+          "x": 256.26,
+          "y": 153.06,
+          "size": 48
+        },
+        {
+          "text": "ABC ZOO ??????????????????????? 26 ???????????????????????????????????????????????????????? Pattern ????????????????????????????????????????????????",
+          "x": 256.26,
+          "y": 264.97,
+          "width": 843,
+          "size": 21,
+          "lineHeight": 30.8
+        }
+      ]
+    },
+    {
+      "id": "background",
+      "width": 1920,
+      "height": 967.695,
+      "background": {
+        "sequence": 1,
+        "sourceFile": "codexpaiban_画板 1.svg",
+        "file": "/images/abczoo/showcase/background-pattern.svg",
+        "role": "reusable-background",
+        "page": "all"
+      },
+      "assets": [
+        {
+          "sequence": 29,
+          "sourceFile": "codexpaiban-29.svg",
+          "file": "/images/abczoo/showcase/background-card-01.svg",
+          "role": "background-card-01",
+          "page": 3,
+          "x": 365,
+          "y": 260,
+          "width": 329,
+          "height": 410,
+          "matchScore": 3301.107
+        },
+        {
+          "sequence": 30,
+          "sourceFile": "codexpaiban-30.svg",
+          "file": "/images/abczoo/showcase/background-card-02.svg",
+          "role": "background-card-02",
+          "page": 3,
+          "x": 777,
+          "y": 238,
+          "width": 366,
+          "height": 456,
+          "matchScore": 550.686
+        },
+        {
+          "sequence": 31,
+          "sourceFile": "codexpaiban-31.svg",
+          "file": "/images/abczoo/showcase/background-card-03.svg",
+          "role": "background-card-03",
+          "page": 3,
+          "x": 1207,
+          "y": 261,
+          "width": 324,
+          "height": 404,
+          "matchScore": 5164.671
+        }
+      ],
+      "shapes": [
+        {
+          "type": "rounded-rect",
+          "x": 379.16,
+          "y": 246.76,
+          "width": 1161.68,
+          "height": 494.38,
+          "radius": 34.18,
+          "fill": "#fbecd8"
+        }
+      ]
+    },
+    {
+      "id": "audience",
+      "width": 1920,
+      "height": 1164.09,
+      "background": {
+        "sequence": 1,
+        "sourceFile": "codexpaiban_画板 1.svg",
+        "file": "/images/abczoo/showcase/background-pattern.svg",
+        "role": "reusable-background",
+        "page": "all"
+      },
+      "assets": [
+        {
+          "sequence": 32,
+          "sourceFile": "codexpaiban-32.svg",
+          "file": "/images/abczoo/showcase/audience-01.svg",
+          "role": "audience-01",
+          "page": 4,
+          "x": 232,
+          "y": 341,
+          "width": 448,
+          "height": 559,
+          "matchScore": 50.65
+        },
+        {
+          "sequence": 33,
+          "sourceFile": "codexpaiban-33.svg",
+          "file": "/images/abczoo/showcase/audience-02.svg",
+          "role": "audience-02",
+          "page": 4,
+          "x": 738,
+          "y": 338,
+          "width": 449,
+          "height": 560,
+          "matchScore": 338.114
+        },
+        {
+          "sequence": 34,
+          "sourceFile": "codexpaiban-34-34.svg",
+          "file": "/images/abczoo/showcase/audience-03.svg",
+          "role": "audience-03",
+          "page": 4,
+          "x": 1248,
+          "y": 345,
+          "width": 448,
+          "height": 559,
+          "matchScore": 245.707
+        }
+      ],
+      "shapes": [
+        {
+          "type": "path",
+          "d": "M 1920 1083.51 L 952.18 1014.01 L 0 1083.51 L 0 697.91 C 316 742 640 790 962.07 822.67 C 1280 790 1600 742 1920 697.91 Z",
+          "fill": "#fff9f1"
+        }
+      ]
+    }
+  ],
+  "sourceMapping": [
+    {
+      "sequence": 1,
+      "sourceFile": "codexpaiban_画板 1.svg",
+      "file": "/images/abczoo/showcase/background-pattern.svg",
+      "role": "reusable-background",
+      "page": "all"
+    },
+    {
+      "sequence": 2,
+      "sourceFile": "codexpaiban-02.svg",
+      "file": "/images/abczoo/showcase/letter-a.svg",
+      "role": "letter-A",
+      "page": 1
+    },
+    {
+      "sequence": 3,
+      "sourceFile": "codexpaiban_画板 1 副本.svg",
+      "file": "/images/abczoo/showcase/letter-b.svg",
+      "role": "letter-B",
+      "page": 1
+    },
+    {
+      "sequence": 4,
+      "sourceFile": "codexpaiban_画板 1 副本 2.svg",
+      "file": "/images/abczoo/showcase/letter-c.svg",
+      "role": "letter-C",
+      "page": 1
+    },
+    {
+      "sequence": 5,
+      "sourceFile": "codexpaiban-05.svg",
+      "file": "/images/abczoo/showcase/letter-d.svg",
+      "role": "letter-D",
+      "page": 1
+    },
+    {
+      "sequence": 6,
+      "sourceFile": "codexpaiban-06.svg",
+      "file": "/images/abczoo/showcase/letter-e.svg",
+      "role": "letter-E",
+      "page": 1
+    },
+    {
+      "sequence": 7,
+      "sourceFile": "codexpaiban-07.svg",
+      "file": "/images/abczoo/showcase/letter-f.svg",
+      "role": "letter-F",
+      "page": 1
+    },
+    {
+      "sequence": 8,
+      "sourceFile": "codexpaiban-08.svg",
+      "file": "/images/abczoo/showcase/letter-g.svg",
+      "role": "letter-G",
+      "page": 1
+    },
+    {
+      "sequence": 9,
+      "sourceFile": "codexpaiban-09.svg",
+      "file": "/images/abczoo/showcase/letter-h.svg",
+      "role": "letter-H",
+      "page": 1
+    },
+    {
+      "sequence": 10,
+      "sourceFile": "codexpaiban-10.svg",
+      "file": "/images/abczoo/showcase/letter-i.svg",
+      "role": "letter-I",
+      "page": 1
+    },
+    {
+      "sequence": 11,
+      "sourceFile": "codexpaiban-11.svg",
+      "file": "/images/abczoo/showcase/letter-j.svg",
+      "role": "letter-J",
+      "page": 1
+    },
+    {
+      "sequence": 12,
+      "sourceFile": "codexpaiban-12.svg",
+      "file": "/images/abczoo/showcase/letter-k.svg",
+      "role": "letter-K",
+      "page": 1
+    },
+    {
+      "sequence": 13,
+      "sourceFile": "codexpaiban-13.svg",
+      "file": "/images/abczoo/showcase/letter-l.svg",
+      "role": "letter-L",
+      "page": 1
+    },
+    {
+      "sequence": 14,
+      "sourceFile": "codexpaiban-14.svg",
+      "file": "/images/abczoo/showcase/letter-m.svg",
+      "role": "letter-M",
+      "page": 1
+    },
+    {
+      "sequence": 15,
+      "sourceFile": "codexpaiban-15.svg",
+      "file": "/images/abczoo/showcase/letter-n.svg",
+      "role": "letter-N",
+      "page": 1
+    },
+    {
+      "sequence": 16,
+      "sourceFile": "codexpaiban-16.svg",
+      "file": "/images/abczoo/showcase/letter-o.svg",
+      "role": "letter-O",
+      "page": 1
+    },
+    {
+      "sequence": 17,
+      "sourceFile": "codexpaiban-17.svg",
+      "file": "/images/abczoo/showcase/letter-p.svg",
+      "role": "letter-P",
+      "page": 1
+    },
+    {
+      "sequence": 18,
+      "sourceFile": "codexpaiban-18.svg",
+      "file": "/images/abczoo/showcase/letter-q.svg",
+      "role": "letter-Q",
+      "page": 1
+    },
+    {
+      "sequence": 19,
+      "sourceFile": "codexpaiban-19.svg",
+      "file": "/images/abczoo/showcase/letter-r.svg",
+      "role": "letter-R",
+      "page": 1
+    },
+    {
+      "sequence": 20,
+      "sourceFile": "codexpaiban-20.svg",
+      "file": "/images/abczoo/showcase/letter-s.svg",
+      "role": "letter-S",
+      "page": 1
+    },
+    {
+      "sequence": 21,
+      "sourceFile": "codexpaiban-21.svg",
+      "file": "/images/abczoo/showcase/letter-t.svg",
+      "role": "letter-T",
+      "page": 1
+    },
+    {
+      "sequence": 22,
+      "sourceFile": "codexpaiban-22.svg",
+      "file": "/images/abczoo/showcase/letter-u.svg",
+      "role": "letter-U",
+      "page": 1
+    },
+    {
+      "sequence": 23,
+      "sourceFile": "codexpaiban-23.svg",
+      "file": "/images/abczoo/showcase/letter-v.svg",
+      "role": "letter-V",
+      "page": 1
+    },
+    {
+      "sequence": 24,
+      "sourceFile": "codexpaiban-24.svg",
+      "file": "/images/abczoo/showcase/letter-w.svg",
+      "role": "letter-W",
+      "page": 1
+    },
+    {
+      "sequence": 25,
+      "sourceFile": "codexpaiban-25.svg",
+      "file": "/images/abczoo/showcase/letter-x.svg",
+      "role": "letter-X",
+      "page": 1
+    },
+    {
+      "sequence": 26,
+      "sourceFile": "codexpaiban-26.svg",
+      "file": "/images/abczoo/showcase/letter-y.svg",
+      "role": "letter-Y",
+      "page": 1
+    },
+    {
+      "sequence": 27,
+      "sourceFile": "codexpaiban-27.svg",
+      "file": "/images/abczoo/showcase/letter-z.svg",
+      "role": "letter-Z",
+      "page": 1
+    },
+    {
+      "sequence": 28,
+      "sourceFile": "codexpaiban-28.svg",
+      "file": "/images/abczoo/showcase/overview-children.svg",
+      "role": "overview-children",
+      "page": 2
+    },
+    {
+      "sequence": 29,
+      "sourceFile": "codexpaiban-29.svg",
+      "file": "/images/abczoo/showcase/background-card-01.svg",
+      "role": "background-card-01",
+      "page": 3
+    },
+    {
+      "sequence": 30,
+      "sourceFile": "codexpaiban-30.svg",
+      "file": "/images/abczoo/showcase/background-card-02.svg",
+      "role": "background-card-02",
+      "page": 3
+    },
+    {
+      "sequence": 31,
+      "sourceFile": "codexpaiban-31.svg",
+      "file": "/images/abczoo/showcase/background-card-03.svg",
+      "role": "background-card-03",
+      "page": 3
+    },
+    {
+      "sequence": 32,
+      "sourceFile": "codexpaiban-32.svg",
+      "file": "/images/abczoo/showcase/audience-01.svg",
+      "role": "audience-01",
+      "page": 4
+    },
+    {
+      "sequence": 33,
+      "sourceFile": "codexpaiban-33.svg",
+      "file": "/images/abczoo/showcase/audience-02.svg",
+      "role": "audience-02",
+      "page": 4
+    },
+    {
+      "sequence": 34,
+      "sourceFile": "codexpaiban-34-34.svg",
+      "file": "/images/abczoo/showcase/audience-03.svg",
+      "role": "audience-03",
+      "page": 4
+    }
+  ]
+}

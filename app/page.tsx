@@ -15,10 +15,8 @@ import {
   type ProjectWorkChapter,
 } from "@/data/projects";
 import { assetPath } from "@/lib/assetPath";
-import { Box3DWorkPreview } from "@/components/Box3DWorkPreview";
-
-// ── 临时开关：是否在首页 Work 第一个项目中嵌入 3D 白模预览 ──
-const ENABLE_BOX3D_WORK_PREVIEW = true;
+import { AbcZooShowcase } from "@/components/AbcZooShowcase";
+import { ProjectOneRibbon } from "@/components/ProjectOneRibbon";
 
 const workVisualAssets = {
   designWorksTitle: assetPath("/assets/work/design-works-title.png"),
@@ -180,7 +178,10 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
       <Reveal delay={index * 70}>
         <header className={`work-project-cover mx-auto max-w-5xl text-center ${index === 0 ? "is-letter-zoo-project" : ""}`}>
           {index === 0 ? (
-            <LetterZooProjectTitle title={project.title.zh} />
+            <>
+              <LetterZooProjectTitle title={project.title.zh} />
+              <ProjectOneRibbon />
+            </>
           ) : (
             <h1 className="work-project-title mt-9 text-5xl leading-[1.18] tracking-[0.05em] md:text-8xl">
               <BlurText
@@ -196,25 +197,7 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
           <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
           <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
-          {index === 0 ? (
-            <div className="abczoo-title-visual-stack">
-              {[
-                "/images/abczoo/img/abczoo-wide-01.webp",
-                "/images/abczoo/img/abczoo-wide-02.webp",
-                "/images/abczoo/img/abczoo-wide-03.webp",
-                "/images/abczoo/img/abczoo-wide-04.webp",
-              ].map((src, imageIndex) => (
-                <div className="abczoo-title-visual mx-auto" key={src}>
-                  <img
-                    src={assetPath(src)}
-                    alt={`字母动物园儿童服饰图案系统主屏 ${imageIndex + 1}`}
-                    className="abczoo-title-visual-image w-full"
-                    loading={imageIndex === 0 ? "eager" : "lazy"}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
+          {index !== 0 ? (
           <div className="abczoo-title-visual mx-auto mt-8">
             <img
               src={assetPath("/images/abczoo/img/abczoo-main-visual-transparent.webp")}
@@ -223,43 +206,41 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
               loading="lazy"
             />
           </div>
-          )}
+          ) : null}
         </header>
       </Reveal>
 
-      <div className={`mt-16 grid gap-20 md:mt-24 md:gap-28 ${index === 0 ? "is-letter-zoo-content-flow" : ""}`}>
-        {/* 3D 白模预览 — 仅第一个项目 */}
-        {index === 0 && ENABLE_BOX3D_WORK_PREVIEW && (
-          <Box3DWorkPreview />
-        )}
+      {index === 0 ? <AbcZooShowcase /> : null}
 
-        {coverChapter ? (
-          <ProjectWorkChapterBlock
-            project={project}
-            chapter={coverChapter}
-            priority={index === 0}
-            delay={index * 70 + 60}
-          />
-        ) : null}
+      {index !== 0 ? (
+        <div className="mt-16 grid gap-20 md:mt-24 md:gap-28">
+          {coverChapter ? (
+            <ProjectWorkChapterBlock
+              project={project}
+              chapter={coverChapter}
+              priority={false}
+              delay={index * 70 + 60}
+            />
+          ) : null}
 
-        <Reveal delay={index * 70 + 90}>
-          <ProjectInfoTriptych project={project} />
-        </Reveal>
+          <Reveal delay={index * 70 + 90}>
+            <ProjectInfoTriptych project={project} />
+          </Reveal>
 
-        <Reveal delay={index * 70 + 120}>
-          <ProjectMetaList project={project} />
-        </Reveal>
+          <Reveal delay={index * 70 + 120}>
+            <ProjectMetaList project={project} />
+          </Reveal>
 
-        {chapters.map((chapter, chapterIndex) => (
-          <ProjectWorkChapterBlock
-            key={`${project.slug}-${chapter.titleEn}`}
-            project={project}
-            chapter={chapter}
-            delay={index * 70 + 150 + chapterIndex * 45}
-          />
-        ))}
-
-      </div>
+          {chapters.map((chapter, chapterIndex) => (
+            <ProjectWorkChapterBlock
+              key={`${project.slug}-${chapter.titleEn}`}
+              project={project}
+              chapter={chapter}
+              delay={index * 70 + 150 + chapterIndex * 45}
+            />
+          ))}
+        </div>
+      ) : null}
     </article>
   );
 }

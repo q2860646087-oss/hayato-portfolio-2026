@@ -1,0 +1,165 @@
+{
+  "desktop": {
+    "pageCount": 22,
+    "pageNumbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "duplicatePageNumbers": [],
+    "boxInsertCount": 1,
+    "canvasCount": 1,
+    "failedImages": [],
+    "horizontalOverflow": 0,
+    "transparentBackgrounds": [
+      [
+        5,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        7,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        9,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        10,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        11,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        12,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        13,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        14,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        15,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        17,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        18,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        19,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        20,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        21,
+        "rgba(0, 0, 0, 0)"
+      ],
+      [
+        22,
+        "rgba(0, 0, 0, 0)"
+      ]
+    ],
+    "page6Source": "/images/abczoo/showcase/moodboard-applications.svg",
+    "page11Source": "/images/abczoo/final/extracted/page-11-transparent.webp",
+    "page13Source": "/images/abczoo/final/extracted/page-13-transparent.webp",
+    "page14Source": "/images/abczoo/final/extracted/page-14-01.webp",
+    "craftRows": 12,
+    "characterRows": 8,
+    "page7Motion": [
+      "matrix(1, 0, 0, 1, 0, 0)",
+      "matrix(1, 0, 0, 1, 0, 0)"
+    ]
+  },
+  "marquee": {
+    "clicked": true,
+    "maxHeight": "360px",
+    "imageCount": 40
+  },
+  "errors": [],
+  "browserConsole": [
+    "warning: THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: Invalid property forceCSS set to true Missing plugin? gsap.registerPlugin()",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.",
+    "warning: THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+  ],
+  "mobile": {
+    "pageCount": 22,
+    "horizontalOverflow": 0,
+    "failedImages": [],
+    "keywordAnimation": "none",
+    "logoTransforms": [
+      "none",
+      "none"
+    ]
+  },
+  "mobileErrors": []
+}
