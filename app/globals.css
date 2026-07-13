@@ -3411,7 +3411,7 @@ h3,
   position: relative;
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-  margin-top: clamp(3rem, 5vw, 6rem);
+  margin-top: clamp(2rem, 3vw, 3.5rem);
   display: grid;
   gap: 0;
   isolation: isolate;

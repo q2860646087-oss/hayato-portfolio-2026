@@ -180,7 +180,6 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
           {index === 0 ? (
             <>
               <LetterZooProjectTitle title={project.title.zh} />
-              <ProjectOneRibbon />
             </>
           ) : (
             <h1 className="work-project-title mt-9 text-5xl leading-[1.18] tracking-[0.05em] md:text-8xl">
@@ -197,6 +196,7 @@ function ProjectChapter({ project, index }: { project: Project; index: number })
           <p className="mt-6 font-en text-sm uppercase tracking-[0.2em]">{project.title.en}</p>
           <p className="mx-auto mt-9 max-w-3xl text-xl leading-9">{project.summary.zh}</p>
           <p className="mx-auto mt-4 max-w-3xl font-en text-sm leading-7">{project.summary.en}</p>
+          {index === 0 ? <ProjectOneRibbon /> : null}
           {index !== 0 ? (
           <div className="abczoo-title-visual mx-auto mt-8">
             <img
